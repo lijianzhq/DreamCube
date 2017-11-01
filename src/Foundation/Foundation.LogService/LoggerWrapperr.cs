@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Diagnostics;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     /// <summary>
     /// 自定义的logger包装器

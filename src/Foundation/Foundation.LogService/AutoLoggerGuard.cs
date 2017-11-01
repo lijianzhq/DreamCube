@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     public struct AutoLoggerGuard : IDisposable
     {

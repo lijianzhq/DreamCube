@@ -8,8 +8,8 @@
     <ProjectGuid>{FE59C574-8B97-471A-AF5E-B07435BB7588}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>DreamCube.Foundation.Trace</RootNamespace>
-    <AssemblyName>DreamCube.Foundation.Trace</AssemblyName>
+    <RootNamespace>DreamCube.Foundation.TraceService</RootNamespace>
+    <AssemblyName>DreamCube.Foundation.TraceService</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
@@ -18,11 +18,11 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>..\..\..\Output\</OutputPath>
+    <OutputPath>..\..\Output\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\..\Output\DreamCube.Foundation.Trace.XML</DocumentationFile>
+    <DocumentationFile>..\..\Output\DreamCube.Foundation.TraceService.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -31,7 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <DocumentationFile>..\..\publish\DreamCube.Foundation.Trace.XML</DocumentationFile>
+    <DocumentationFile>..\..\publish\DreamCube.Foundation.TraceService.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>

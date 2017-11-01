@@ -4,7 +4,7 @@ using System.Text;
 using System.Security;
 using System.Security.Cryptography;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     class SecurityHelper
     {

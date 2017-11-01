@@ -1,7 +1,7 @@
 ﻿using System;
 using D = System.Diagnostics;
 
-namespace DreamCube.Foundation.Trace
+namespace DreamCube.Foundation.TraceService
 {
     /// <summary>
     /// 系统的trace封装类
@@ -10,7 +10,7 @@ namespace DreamCube.Foundation.Trace
     {
         #region field
 
-        private static D.TraceSwitch tSwitch = new D.TraceSwitch("traceSwitch", "DreamCube.Foundation.Trace.traceSwitch");
+        private static D.TraceSwitch tSwitch = new D.TraceSwitch("traceSwitch", "DreamCube.Foundation.TraceService.traceSwitch");
 
         #endregion
 

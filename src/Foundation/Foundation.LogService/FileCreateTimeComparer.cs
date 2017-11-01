@@ -2,7 +2,7 @@
 using System.IO;
 using System.Collections.Generic;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     class FileCreateTimeComparer : IComparer<string>
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     /// <summary>
     /// 日志密钥帮助类

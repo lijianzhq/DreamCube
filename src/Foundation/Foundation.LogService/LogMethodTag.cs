@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     [Flags]
     public enum LogMethodTag

@@ -8,12 +8,12 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-using DreamCube.Foundation.Trace;
+using DreamCube.Foundation.TraceService;
 
 using log4net;
 using log4net.Config;
 
-namespace DreamCube.Foundation.Log.LogWrapper
+namespace DreamCube.Foundation.LogService.LogWrapper
 {
     public class Log4netWrapper : ILogger
     {

@@ -8,7 +8,7 @@ using System.Xml;
 using System.Diagnostics;
 using System.IO;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     /// <summary>
     /// 日志管理类（主要用于定时压缩/删除日志文件）

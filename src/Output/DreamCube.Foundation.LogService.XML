@@ -1,0 +1,439 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DreamCube.Foundation.LogService</name>
+    </assembly>
+    <members>
+        <member name="F:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.s_appsettingKey">
+            <summary>
+            从app.config或者web.config文件的appsetting节点读取日志文件的路径（注意：是相对程序运行的路径）
+            </summary>
+        </member>
+        <member name="F:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.s_configFileName">
+            <summary>
+            日志模块的配置文件名
+            </summary>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.#ctor(log4net.ILog,System.String)">
+            <summary>
+            构造函数
+            </summary>
+            <param name="iLog">log4net对象实例</param>
+            <param name="argName">logger的name值</param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.DreamCube#Foundation#LogService#ILogger#Log(System.String,DreamCube.Foundation.LogService.LogLevel)">
+            <summary>
+            记录日志
+            </summary>
+            <param name="message">日志内容</param>
+            <param name="level">日志级别</param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.DreamCube#Foundation#LogService#ILogger#Log(System.String,DreamCube.Foundation.LogService.LogLevel,System.Exception)">
+            <summary>
+            记录日志
+            </summary>
+            <param name="message">日志内容</param>
+            <param name="level">日志级别</param>
+            <param name="exp">异常对象</param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.DreamCube#Foundation#LogService#ILogger#Log(System.String,System.String,DreamCube.Foundation.LogService.LogLevel)">
+            <summary>
+            记录日志
+            </summary>
+            <param name="message">日志内容</param>
+            <param name="key">自定义过滤器的key（通过此方法可以方便的开启/屏蔽某些日志信息）</param>
+            <param name="level">日志级别</param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.DreamCube#Foundation#LogService#ILogger#Log(System.String,System.String,DreamCube.Foundation.LogService.LogLevel,System.Exception)">
+            <summary>
+            记录日志
+            </summary>
+            <param name="message">日志内容</param>
+            <param name="key">自定义过滤器的key（通过此方法可以方便的开启/屏蔽某些日志信息）</param>
+            <param name="level">日志级别</param>
+            <param name="exp">异常对象</param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.DreamCube#Foundation#LogService#ILogger#LogFormat(System.String,DreamCube.Foundation.LogService.LogLevel,System.Object[])">
+            <summary>
+            记录日志
+            </summary>
+            <param name="format">需要格式化的日志内容</param>
+            <param name="level">日志级别</param>
+            <param name="args">格式化参数列表</param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.DreamCube#Foundation#LogService#ILogger#LogFormat(System.String,System.String,DreamCube.Foundation.LogService.LogLevel,System.Object[])">
+            <summary>
+            记录日志
+            </summary>
+            <param name="format">需要格式化的日志内容</param>
+            <param name="key">日志级别</param>
+            <param name="level">日志级别</param>
+            <param name="args">格式化参数列表</param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.GetLogConfigFile">
+            <summary>
+            获取日志配置信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.GetLogConfigXmlDoc(System.String)">
+            <summary>
+            获取日志配置信息
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="F:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.m_bIsOpen">
+            <summary>
+            标识日志模块是否正确被打开（创建对象的时候没有出错）
+            </summary>
+        </member>
+        <member name="F:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.m_dicFilter">
+            <summary>
+            自定义的过滤器
+            </summary>
+        </member>
+        <member name="P:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.Opened">
+            <summary>
+            标识日志模块是否正确被打开
+            </summary>
+        </member>
+        <member name="P:DreamCube.Foundation.LogService.LogWrapper.Log4netWrapper.Filters">
+            <summary>
+            自定义的过滤器
+            </summary>
+        </member>
+        <member name="T:DreamCube.Foundation.LogService.XdcEJLogKeyItem">
+            <summary>
+            The definition of the electronic log configuration item
+            </summary>
+        </member>
+        <member name="T:DreamCube.Foundation.LogService.XdcPJLogKeyItem">
+            <summary>
+            The definition of the printer data log configuration item
+            </summary>
+        </member>
+        <member name="T:DreamCube.Foundation.LogService.XdcTraceLogKeyItem">
+            <summary>
+            Trace log key item 
+            </summary>
+        </member>
+        <member name="T:DreamCube.Foundation.LogService.XdcLogKeyDictionary">
+            <summary>
+            The dictionary container for EJ log configuration
+            </summary>
+        </member>
+        <member name="F:DreamCube.Foundation.LogService.XdcLogKeyDictionary.s_objXdcLogKeyDictionary">
+            <summary>
+            Define the instance of the current object
+            </summary>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.XdcLogKeyDictionary.#cctor">
+            <summary>
+             static construct function
+            </summary>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.XdcLogKeyDictionary.bXdcWriteLogByGivenConfig(System.String)">
+            <summary>
+            Write log by given configuration item defined in XDC configuration file
+            </summary>
+            <returns>Continue write log or not</returns>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.XdcLogKeyDictionary.LoadSetting(System.Collections.Generic.Dictionary{System.String,System.Int32})">
+            <summary>
+            Load setting with EJ configuration items
+            </summary>
+            <param name="argDictEJLogItem">The dictionary container to set </param>
+        </member>
+        <member name="F:DreamCube.Foundation.LogService.XdcLogKeyDictionary.m_xdclogKeyDictionary">
+            <summary>
+            The definition of the log key dictionary container
+            </summary>
+        </member>
+        <member name="F:DreamCube.Foundation.LogService.XdcLogKeyDictionary.m_iProtocolType">
+            <summary>
+            The definition of the protocol type
+            0 - ISO8583, other value - NDC/DC
+            </summary>
+        </member>
+        <member name="P:DreamCube.Foundation.LogService.XdcLogKeyDictionary.Instance">
+            <summary>
+            Get the instance of the XDC log key dictionary object
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:DreamCube.Foundation.LogService.XdcLogKeyDictionary.ProtocolType">
+            <summary>
+            Protocol type setting
+            </summary>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.SecurityHelper.EncryptByKey(System.String,System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="unEncryptString">明文</param>
+            <param name="key">密钥(长度必须8位以上)</param>
+            <returns>密文数组</returns>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.SecurityHelper.ByteArrayToHexString(System.Byte[])">
+            <summary>
+            byte数组转换为16进制字符串
+            </summary>
+            <param name="byteArray"></param>
+            <returns></returns>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.SecurityHelper.EncryptToHexString(System.String,System.String)">
+            <summary>
+            加密
+            </summary>
+            <param name="unEncryptString">明文</param>
+            <param name="key">密钥(长度必须8位以上)</param>
+            <returns>密文（16进制表示的串）</returns>
+        </member>
+        <member name="T:DreamCube.Foundation.LogService.LoggerWrapper">
+            <summary>
+            自定义的logger包装器
+            </summary>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogDebug(System.String)">
+            <summary>
+            DEBUG Level指出细粒度信息事件对调试应用程序是非常有帮助的。 
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogDebug(System.String,System.String)">
+            <summary>
+            DEBUG Level指出细粒度信息事件对调试应用程序是非常有帮助的。 
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogDebug(System.String,System.Exception)">
+            <summary>
+            DEBUG Level指出细粒度信息事件对调试应用程序是非常有帮助的。 
+            </summary>
+            <param name="message"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogDebug(System.Exception)">
+            <summary>
+            DEBUG Level指出细粒度信息事件对调试应用程序是非常有帮助的。 
+            </summary>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogDebug(System.String,System.String,System.Exception)">
+            <summary>
+            DEBUG Level指出细粒度信息事件对调试应用程序是非常有帮助的。 
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogDebugFormat(System.String,System.Object[])">
+            <summary>
+            DEBUG Level指出细粒度信息事件对调试应用程序是非常有帮助的。 
+            </summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogInfo(System.String)">
+            <summary>
+            INFO level表明 消息在粗粒度级别上突出强调应用程序的运行过程。 
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogInfo(System.String,System.String)">
+            <summary>
+            INFO level表明 消息在粗粒度级别上突出强调应用程序的运行过程。 
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogInfo(System.String,System.Exception)">
+            <summary>
+            INFO level表明 消息在粗粒度级别上突出强调应用程序的运行过程。 
+            </summary>
+            <param name="message"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogInfo(System.Exception)">
+            <summary>
+            INFO level表明 消息在粗粒度级别上突出强调应用程序的运行过程。 
+            </summary>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogInfo(System.String,System.String,System.Exception)">
+            <summary>
+            INFO level表明 消息在粗粒度级别上突出强调应用程序的运行过程。 
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogInfoFormat(System.String,System.Object[])">
+            <summary>
+            INFO level表明 消息在粗粒度级别上突出强调应用程序的运行过程。 
+            </summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogWarn(System.String)">
+            <summary>
+            WARN level表明会出现潜在错误的情形。 
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogWarn(System.String,System.String)">
+            <summary>
+            WARN level表明会出现潜在错误的情形。 
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogWarn(System.String,System.Exception)">
+            <summary>
+            WARN level表明会出现潜在错误的情形。 
+            </summary>
+            <param name="message"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogWarn(System.Exception)">
+            <summary>
+            WARN level表明会出现潜在错误的情形。 
+            </summary>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogWarn(System.String,System.String,System.Exception)">
+            <summary>
+            WARN level表明会出现潜在错误的情形。 
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogWarnFormat(System.String,System.Object[])">
+            <summary>
+            WARN level表明会出现潜在错误的情形。 
+            </summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogError(System.String)">
+            <summary>
+            ERROR level指出虽然发生错误事件，但仍然不影响系统的继续运行。 
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogError(System.String,System.String)">
+            <summary>
+            ERROR level指出虽然发生错误事件，但仍然不影响系统的继续运行。 
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogError(System.String,System.Exception)">
+            <summary>
+            ERROR level指出虽然发生错误事件，但仍然不影响系统的继续运行。 
+            </summary>
+            <param name="message"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogError(System.Exception)">
+            <summary>
+            ERROR level指出虽然发生错误事件，但仍然不影响系统的继续运行。 
+            </summary>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogError(System.String,System.String,System.Exception)">
+            <summary>
+            ERROR level指出虽然发生错误事件，但仍然不影响系统的继续运行。 
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogErrorFormat(System.String,System.Object[])">
+            <summary>
+            ERROR level指出虽然发生错误事件，但仍然不影响系统的继续运行。 
+            </summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogFatal(System.String)">
+            <summary>
+            FATAL level指出每个严重的错误事件将会导致应用程序的退出。
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogFatal(System.String,System.String)">
+            <summary>
+            FATAL level指出每个严重的错误事件将会导致应用程序的退出。
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogFatal(System.String,System.Exception)">
+            <summary>
+            FATAL level指出每个严重的错误事件将会导致应用程序的退出。
+            </summary>
+            <param name="message"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogFatal(System.Exception)">
+            <summary>
+            FATAL level指出每个严重的错误事件将会导致应用程序的退出。
+            </summary>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogFatal(System.String,System.String,System.Exception)">
+            <summary>
+            FATAL level指出每个严重的错误事件将会导致应用程序的退出。
+            </summary>
+            <param name="message"></param>
+            <param name="key"></param>
+            <param name="exp"></param>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.LoggerWrapper.LogFatalFormat(System.String,System.Object[])">
+            <summary>
+            FATAL level指出每个严重的错误事件将会导致应用程序的退出。
+            </summary>
+            <param name="format"></param>
+            <param name="args"></param>
+        </member>
+        <member name="T:DreamCube.Foundation.LogService.LoggerKeyHelper">
+            <summary>
+            日志密钥帮助类
+            </summary>
+        </member>
+        <member name="P:DreamCube.Foundation.LogService.LoggerKeyHelper.EncryptLoggerAppenders">
+            <summary>
+            加密LoggerAppender列表
+            </summary>
+        </member>
+        <member name="P:DreamCube.Foundation.LogService.LoggerKeyHelper.Key">
+            <summary>
+            密钥(长度必须8位以上)
+            </summary>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.Log.GetLogger(System.String)">
+            <summary>
+            根据logger文件中配置的名字获取对应的log对象
+            </summary>
+            <param name="loggerName"></param>
+            <returns></returns>
+        </member>
+        <member name="T:DreamCube.Foundation.LogService.LogManager">
+            <summary>
+            日志管理类（主要用于定时压缩/删除日志文件）
+            </summary>
+        </member>
+        <member name="M:DreamCube.Foundation.LogService.EncryptRollingFileAppender.SetQWForFiles(System.IO.TextWriter)">
+            <summary>
+            Sets the quiet writer being used.
+            </summary>
+            <remarks>
+            This method can be overridden by sub classes.
+            </remarks>
+            <param name="writer">the writer to set</param>
+        </member>
+    </members>
+</doc>

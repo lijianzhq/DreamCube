@@ -5,13 +5,14 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>8.0.30703</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{A68CBFEB-392D-40A4-8EBB-8797491529C5}</ProjectGuid>
+    <ProjectGuid>{89B28A67-63A3-4985-AE3E-9D2E0F4C1830}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>LogService</RootNamespace>
-    <AssemblyName>LogService</AssemblyName>
+    <RootNamespace>DreamCube.Foundation.LogService</RootNamespace>
+    <AssemblyName>DreamCube.Foundation.LogService</AssemblyName>
     <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -21,62 +22,65 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\Output\DreamCube.Foundation.LogService.XML</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>..\..\..\..\Execute\iVTMCService\</OutputPath>
+    <OutputPath>..\..\publish\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\..\publish\DreamCube.Foundation.LogService.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
-    <AssemblyOriginatorKeyFile>eCATService.snk</AssemblyOriginatorKeyFile>
+    <AssemblyOriginatorKeyFile>foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+    <Reference Include="DreamCube.Foundation.TraceService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=231623ac3bf3e7d5, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Output\log4net.dll</HintPath>
-      <Private>False</Private>
+      <HintPath>..\..\Output\DreamCube.Foundation.TraceService.dll</HintPath>
+    </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\..\Imports\log4net\4.0\release\log4net.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
     <Reference Include="System.XML" />
     <Reference Include="System.Xml.Linq" />
-    <Reference Include="TraceService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\TraceService\obj\Debug\TraceService.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AutoLoggerGuard.cs" />
     <Compile Include="CompressStrategyParam.cs" />
     <Compile Include="ConsoleLog.cs" />
+    <Compile Include="LogLevel.cs" />
     <Compile Include="EncryptCountingQuietTextWriter.cs" />
     <Compile Include="EncryptRollingFileAppender.cs" />
     <Compile Include="FileCreateTimeComparer.cs" />
-    <Compile Include="ILogger.cs" />
-    <Compile Include="Log.cs" />
-    <Compile Include="LoggerKeyHelper.cs" />
+    <Compile Include="AutoLoggerGuard.cs" />
     <Compile Include="LoggerWrapperr.cs" />
-    <Compile Include="LogKeyDictionary.cs" />
-    <Compile Include="LogLevel.cs" />
     <Compile Include="LogManager.cs" />
-    <Compile Include="LogMethodTag.cs" />
     <Compile Include="LogWrapper\Log4netWrapper.cs" />
+    <Compile Include="LoggerKeyHelper.cs" />
+    <Compile Include="LogKeyDictionary.cs" />
+    <Compile Include="LogMethodTag.cs" />
+    <Compile Include="Log.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ILogger.cs" />
     <Compile Include="SecurityHelper.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ConfigDemo\（log4net的配置Demo）LogConfig.xml" />
+    <Content Include="ConfigDemo\（log4net的配置Demo）LogConfig.xml">
+      <SubType>Designer</SubType>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="说明.txt" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="eCATService.snk" />
+    <None Include="foundation.snk" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

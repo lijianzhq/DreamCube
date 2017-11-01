@@ -6,7 +6,7 @@ using System.Linq;
 using log4net.Core;
 using log4net.Util;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     public class EncryptCountingQuietTextWriter : CountingQuietTextWriter
     {

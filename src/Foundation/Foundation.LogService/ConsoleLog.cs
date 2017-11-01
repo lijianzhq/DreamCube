@@ -20,7 +20,7 @@ using System.Text;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     public static class Win32Api
     {

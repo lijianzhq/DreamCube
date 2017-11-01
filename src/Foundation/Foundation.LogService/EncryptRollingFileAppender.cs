@@ -4,7 +4,7 @@ using System.IO;
 using System.Linq;
 using log4net.Appender;
 
-namespace DreamCube.Foundation.Log
+namespace DreamCube.Foundation.LogService
 {
     public class EncryptRollingFileAppender : RollingFileAppender
     {

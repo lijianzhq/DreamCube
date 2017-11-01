@@ -1,0 +1,244 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{203C8B6E-0D5D-4BD9-983E-4B7BBA048567}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>DreamCube.Foundation.Basic</RootNamespace>
+    <AssemblyName>DreamCube.Foundation.Basic</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\..\Output\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET20</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NET40|AnyCPU' ">
+    <OutputPath>bin\NET4\</OutputPath>
+    <DefineConstants>NET40</DefineConstants>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'NET30|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>bin\NET3\</OutputPath>
+    <DefineConstants>DEBUG;NET2</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\NET2\DreamCube.Foundation.Basic.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;D:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;D:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'NET20|AnyCPU'">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\..\Output\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;NET20</DefineConstants>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisLogFile>bin\Debug\DreamCube.Foundation.Basic.dll.CodeAnalysisLog.xml</CodeAnalysisLogFile>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+    <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>MinimumRecommendedRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSetDirectories>;D:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\\Rule Sets</CodeAnalysisRuleSetDirectories>
+    <CodeAnalysisIgnoreBuiltInRuleSets>false</CodeAnalysisIgnoreBuiltInRuleSets>
+    <CodeAnalysisRuleDirectories>;D:\Program Files\Microsoft Visual Studio 10.0\Team Tools\Static Analysis Tools\FxCop\\Rules</CodeAnalysisRuleDirectories>
+    <CodeAnalysisIgnoreBuiltInRules>false</CodeAnalysisIgnoreBuiltInRules>
+    <CodeAnalysisFailOnMissingRules>false</CodeAnalysisFailOnMissingRules>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>..\..\..\Output\DreamCube.Foundation.Basic.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>true</SignAssembly>
+  </PropertyGroup>
+  <PropertyGroup>
+    <AssemblyOriginatorKeyFile>foundation.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Configuration.Install" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.DirectoryServices" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Management" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Cache\BasicWeakDictionaryCachePool.cs" />
+    <Compile Include="Cache\DictionaryCachePool.cs" />
+    <Compile Include="Cache\DictionaryCachePoolStringKey.cs" />
+    <Compile Include="Cache\HashtableCachePoolStringKey.cs" />
+    <Compile Include="Cache\ICache`2.cs" />
+    <Compile Include="Cache\Interface\IDictionaryCachePool.cs" />
+    <Compile Include="Cache\Interface\IListCachePool.cs" />
+    <Compile Include="Cache\Interface\IQueueCachePool.cs" />
+    <Compile Include="Cache\Interface\IWeakDictionaryCachePool.cs" />
+    <Compile Include="Cache\ListCachePool.cs" />
+    <Compile Include="Cache\Net20\DictionaryCachePool_Net20.cs" />
+    <Compile Include="Cache\Net20\ListCachePool_Net20.cs" />
+    <Compile Include="Cache\Net20\QueueCachePool_Net20.cs" />
+    <Compile Include="Cache\Net20\WeakDictionaryCachePool_Net20.cs" />
+    <Compile Include="Cache\Net40\DictionaryCachePool_Net40.cs" />
+    <Compile Include="Cache\Net40\ListCachePool_Net40.cs" />
+    <Compile Include="Cache\Net40\QueueCachePool_Net40.cs" />
+    <Compile Include="Cache\Net40\WeakDictionaryCachePool_Net40.cs" />
+    <Compile Include="Cache\QueueCachePool.cs" />
+    <Compile Include="Cache\WeakDictionaryCachePool.cs" />
+    <Compile Include="Cache\WeakDictionaryCachePoolStringKey.cs" />
+    <Compile Include="Delegates.cs" />
+    <Compile Include="Enums\CollectionsAddOper.cs" />
+    <Compile Include="Enums\CollectionsGetOper.cs" />
+    <Compile Include="Enums\HandleExceptionInLoop.cs" />
+    <Compile Include="Enums\HandleExceptionInTry.cs" />
+    <Compile Include="Enums\HttpContentType.cs" />
+    <Compile Include="Enums\HttpMethod.cs" />
+    <Compile Include="Objects\Attributes\DataColumnAttribute.cs" />
+    <Compile Include="Utility\MyArrayList.cs" />
+    <Compile Include="Objects\CmdRunParameters.cs" />
+    <Compile Include="Objects\Converters\ConverterKey.cs" />
+    <Compile Include="Objects\Converters\ConvertersMapper.cs" />
+    <Compile Include="Objects\Converters\BasicConverter.cs" />
+    <Compile Include="Objects\Converters\IConverter.cs" />
+    <Compile Include="Objects\Converters\Int32ToBoolean.cs" />
+    <Compile Include="Objects\CurrentContext.cs" />
+    <Compile Include="Objects\DefaultValue\MyDefaultValue.cs" />
+    <Compile Include="Objects\DefaultValue\NullValue.cs" />
+    <Compile Include="Objects\EnumItem.cs" />
+    <Compile Include="Objects\EqualityComparers\StringEqualityIgnoreCaseComparer.cs" />
+    <Compile Include="Objects\EqualityComparers\StringEqualityIgnoreCaseComparerGeneric.cs" />
+    <Compile Include="Objects\FileSystemSize.cs" />
+    <Compile Include="Objects\FuncResult.cs" />
+    <Compile Include="Objects\PerformanceCounter.cs" />
+    <Compile Include="Objects\Task.cs" />
+    <Compile Include="Objects\ThreadLocker.cs" />
+    <Compile Include="Objects\WeakReference.cs" />
+    <Compile Include="Objects\DefaultValue\NullValuesMappers.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Enums\AssemblyLoadType.cs" />
+    <Compile Include="Utility\MyAssembly.cs" />
+    <Compile Include="Utility\MyConfig.cs" />
+    <Compile Include="Utility\MyDataRow.cs" />
+    <Compile Include="Utility\MyDll.cs" />
+    <Compile Include="Utility\MyEncoding.cs" />
+    <Compile Include="Utility\MyEnvironment.cs" />
+    <Compile Include="Utility\MyFont.cs" />
+    <Compile Include="Utility\MyMachine.cs" />
+    <Compile Include="Utility\MyMemory.cs" />
+    <Compile Include="Utility\MyNet.cs" />
+    <Compile Include="Utility\MyNumber.cs" />
+    <Compile Include="Utility\MyNVCol.cs" />
+    <Compile Include="Utility\MyObject.cs" />
+    <Compile Include="Utility\MyPage.cs" />
+    <Compile Include="Utility\MyPath.cs" />
+    <Compile Include="Utility\MyReflection.cs" />
+    <Compile Include="Utility\MySession.cs" />
+    <Compile Include="Utility\MyType.cs" />
+    <Compile Include="Utility\MyApp.cs" />
+    <Compile Include="Utility\MyCMD.cs" />
+    <Compile Include="Utility\MyConverter.cs" />
+    <Compile Include="Utility\MyDataTable.cs" />
+    <Compile Include="Utility\MyDatetime.cs" />
+    <Compile Include="Utility\MyDictionary.cs" />
+    <Compile Include="Utility\MyEnum.cs" />
+    <Compile Include="Utility\MyEnumerable.cs" />
+    <Compile Include="Utility\MyGuid.cs" />
+    <Compile Include="Utility\MyImage.cs" />
+    <Compile Include="Utility\MyInt32.cs" />
+    <Compile Include="Utility\MyInterlock.cs" />
+    <Compile Include="Utility\MyIO.cs" />
+    <Compile Include="Utility\MyList.cs" />
+    <Compile Include="Utility\MyProcess.cs" />
+    <Compile Include="Utility\MyQueue.cs" />
+    <Compile Include="Utility\MyRand.cs" />
+    <Compile Include="Utility\MyArray.cs" />
+    <Compile Include="Utility\MyByte.cs" />
+    <Compile Include="Utility\MyLog.cs" />
+    <Compile Include="Utility\MyRegistry.cs" />
+    <Compile Include="Utility\MySecurity.cs" />
+    <Compile Include="Utility\MyString.cs" />
+    <Compile Include="Utility\MyUrl.cs" />
+    <Compile Include="Utility\MyUtility.cs" />
+    <Compile Include="Utility\MyWeb.cs" />
+    <Compile Include="Utility\MyWebsite.cs" />
+    <Compile Include="Utility\MyWebUtility.cs" />
+    <Compile Include="Utility\MyWinFormApp.cs" />
+    <Compile Include="Utility\MyWinService.cs" />
+    <Compile Include="Utility\MyXml.cs" />
+    <Compile Include="Utility\MyWebCache.cs" />
+    <Compile Include="Win32API\API\ADVAPI32.cs" />
+    <Compile Include="Win32API\API\Delegates.cs" />
+    <Compile Include="Win32API\API\gdi32.cs" />
+    <Compile Include="Win32API\API\Iphlpapi.cs" />
+    <Compile Include="Win32API\API\kernel32.cs" />
+    <Compile Include="Win32API\API\user32.cs" />
+    <Compile Include="Win32API\API\Ws2_32.cs" />
+    <Compile Include="Win32API\Enums\KeyModifiers.cs" />
+    <Compile Include="Win32API\Enums\WindowShowMode.cs" />
+    <Compile Include="Win32API\Enums\WindowStyle.cs" />
+    <Compile Include="Win32API\Enums\WindowStyleOffset.cs" />
+    <Compile Include="Win32API\Structs\Memory_INFO.cs" />
+    <Compile Include="Win32API\Structs\SystemTime.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Enums\枚举类.txt" />
+    <Content Include="Objects\EqualityComparers\比较器.txt" />
+    <Content Include="Objects\基础对象.txt" />
+    <Content Include="Utility\Z_msiexec parameters.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Objects\FormatProvider\" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="foundation.snk" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<log4net showHex="1" backupDay="90" reservedSize="1000">
+  <!--
+    Debug = 0,
+    Info,
+    Warn,
+    Error,
+    Fatal
+  -->
+  <appender name="Debug_Info_Warn" type="DreamCube.Foundation.Log.EncryptRollingFileAppender,DreamCube.Foundation.Log">
+    <!--自定义的过滤条件；value对应log方法的key参数；enable：0表示不记；enable：1表示记；（通过此方法可以方便的开启/屏蔽某些日志信息）-->
+    <filter>
+      <key value="password" enable="0" />
+    </filter>
+    <!--控制输出日志的级别范围-->
+    <filter type="log4net.Filter.LevelRangeFilter">
+      <levelMin value="Debug" />
+      <LevelMax value="WARN" />
+    </filter>
+    <file value="log\Debug_Info_Warn"/>
+    <appendToFile value="true"/>
+    <rollingStyle value="Composite"/>
+    <encoding value="utf-8"/>
+    <maxSizeRollBackups value="10"/>
+    <staticLogFileName value="false"/>
+    <maximumFileSize value="64MB"/>
+    <PreserveLogFileNameExtension value="true"/>
+    <param name="DatePattern" value="yyyyMMdd&quot;.txt&quot;"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- 
+        如果使用pattern布局就要指定的打印信息的具体格式ConversionPattern，打印参数如下：
+        %m 输出代码中指定的消息 
+        %p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL 
+        %r 输出自应用启动到输出该log信息耗费的毫秒数 
+        %c 输出所属的类目，通常就是所在类的全名 
+        %t 输出产生该日志事件的线程名 
+        %n 输出一个回车换行符，Windows平台为“rn”，Unix平台为“n” 
+        %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyyy MMM dd HH:mm:ss,SSS}，输出类似：2002年10月18日 ：10：28，921
+        %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。
+        %x Used to output the NDC (nested diagnostic context) associated with the thread that generated the logging event
+        %X Used to output the MDC (mapped diagnostic context) associated with the thread that generated the logging event for specified key
+       -->
+      <conversionPattern value="%date{HH:mm:ss.fff} [%t] {%-5level} [%logger] - %message%newline"/>
+    </layout>
+  </appender>
+  <appender name="Error_Fatal" type="DreamCube.Foundation.Log.EncryptRollingFileAppender,DreamCube.Foundation.Log">
+    <!--自定义的过滤条件；value对应log方法的key参数；enable：0表示不记；enable：1表示记；（通过此方法可以方便的开启/屏蔽某些日志信息）-->
+    <filter>
+      <key value="password" enable="0" />
+    </filter>
+    <!--控制输出日志的级别范围-->
+    <filter type="log4net.Filter.LevelRangeFilter">
+      <levelMin value="ERROR" />
+      <LevelMax value="FATAL" />
+    </filter>
+    <file value="log\Error_Fatal"/>
+    <appendToFile value="true"/>
+    <rollingStyle value="Composite"/>
+    <encoding value="utf-8"/>
+    <maxSizeRollBackups value="10"/>
+    <staticLogFileName value="false"/>
+    <maximumFileSize value="64MB"/>
+    <PreserveLogFileNameExtension value="true"/>
+    <param name="DatePattern" value="yyyyMMdd&quot;.txt&quot;"/>
+    <layout type="log4net.Layout.PatternLayout">
+      <!-- 
+        如果使用pattern布局就要指定的打印信息的具体格式ConversionPattern，打印参数如下：
+        %m 输出代码中指定的消息 
+        %p 输出优先级，即DEBUG，INFO，WARN，ERROR，FATAL 
+        %r 输出自应用启动到输出该log信息耗费的毫秒数 
+        %c 输出所属的类目，通常就是所在类的全名 
+        %t 输出产生该日志事件的线程名 
+        %n 输出一个回车换行符，Windows平台为“rn”，Unix平台为“n” 
+        %d 输出日志时间点的日期或时间，默认格式为ISO8601，也可以在其后指定格式，比如：%d{yyyy MMM dd HH:mm:ss,SSS}，输出类似：2002年10月18日 ：10：28，921
+        %l 输出日志事件的发生位置，包括类目名、发生的线程，以及在代码中的行数。
+        %x Used to output the NDC (nested diagnostic context) associated with the thread that generated the logging event
+        %X Used to output the MDC (mapped diagnostic context) associated with the thread that generated the logging event for specified key
+       -->
+      <conversionPattern value="%date{HH:mm:ss.fff} [%t] {%-5level} [%logger] - %message%newline"/>
+    </layout>
+  </appender>
+  <root>
+    <level value="ALL" />
+    <appender-ref ref="Debug_Info_Warn"/>
+    <appender-ref ref="Error_Fatal"/>
+  </root>
+  <CompressStrategy>
+    <Item folder="log\" filePattern="*.txt" />
+  </CompressStrategy>
+  <!--<EncryptLog value="Debug_Info_Warn|Error_Fatal"/>-->
+</log4net>

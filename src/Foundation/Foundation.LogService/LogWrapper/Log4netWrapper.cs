@@ -8,10 +8,10 @@ using System.Linq;
 using System.Xml;
 using System.Xml.Linq;
 
-using DreamCube.Foundation.TraceService;
-
 using log4net;
 using log4net.Config;
+
+using DreamCube.Foundation.TraceService;
 
 namespace DreamCube.Foundation.LogService.LogWrapper
 {
@@ -66,6 +66,7 @@ namespace DreamCube.Foundation.LogService.LogWrapper
                 //收集filters
                 XmlDocument doc = GetLogConfigXmlDoc();
                 XmlNode refNode = doc.DocumentElement.SelectSingleNode(string.Format(s_appendRefFormat, argName));
+
                 if (null != refNode)
                 {
                     XmlAttribute refAttri = refNode.Attributes[s_refAttri];
@@ -81,7 +82,7 @@ namespace DreamCube.Foundation.LogService.LogWrapper
                             {
                                 valueAttri = filterNode.Attributes[s_valueAttri];
                                 enableAttri = filterNode.Attributes[s_enableAttri];
-                                if (null == valueAttri || 
+                                if (null == valueAttri ||
                                     string.IsNullOrEmpty(valueAttri.Value) ||
                                     null == enableAttri ||
                                     string.IsNullOrEmpty(enableAttri.Value))

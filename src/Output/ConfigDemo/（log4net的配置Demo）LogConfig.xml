@@ -87,5 +87,4 @@
   <CompressStrategy>
     <Item folder="log\" filePattern="*.txt" />
   </CompressStrategy>
-  <!--<EncryptLog value="Debug_Info_Warn|Error_Fatal"/>-->
 </log4net>

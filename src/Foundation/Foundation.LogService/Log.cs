@@ -14,9 +14,15 @@ namespace DreamCube.Foundation.LogService
 
         #region property
 
+        private static LoggerWrapper s_rootLogger = null;
         public static LoggerWrapper Root
         {
-            get { return GetLogger("root"); }
+            get
+            {
+                if (s_rootLogger == null)
+                    s_rootLogger = GetLogger("root");
+                return s_rootLogger;
+            }
         }
 
         #endregion

@@ -17,6 +17,12 @@ namespace DreamCube.Foundation.LogService.Logger
 {
     public class Log4netLogger : ILogger
     {
+        /// <summary>
+        /// 公开一个委托给外部定定制自己的config文件路径获取方案
+        /// 避免直接修改这个类（支持直接拷贝去用）
+        /// </summary>
+        public static Func<String> GetLogConfigFile;
+
         #region constructor
 
         static Log4netLogger()
@@ -24,7 +30,7 @@ namespace DreamCube.Foundation.LogService.Logger
             try
             {
                 //先读取自定义的字段
-                string cfgFile = GetLogConfigFile();
+                string cfgFile = InnerGetLogConfigFile();
                 XmlDocument doc = GetLogConfigXmlDoc(cfgFile);
                 XmlNode encryptNode = doc.DocumentElement.SelectSingleNode(s_encryptNode);
                 if (null != encryptNode)
@@ -292,10 +298,12 @@ namespace DreamCube.Foundation.LogService.Logger
         /// 获取日志配置信息
         /// </summary>
         /// <returns></returns>
-        private static String GetLogConfigFile()
+        private static String InnerGetLogConfigFile()
         {
             try
             {
+                if (GetLogConfigFile != null)
+                    return GetLogConfigFile();
                 String cfgFilePath = ConfigurationManager.AppSettings["LogConfigFilePath"];
                 cfgFilePath = String.IsNullOrEmpty(cfgFilePath) ? @"config\logconfig.xml" : cfgFilePath;
                 String cfgFileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, cfgFilePath);
@@ -318,7 +326,7 @@ namespace DreamCube.Foundation.LogService.Logger
             {
                 XmlDocument doc = new XmlDocument();
                 if (String.IsNullOrEmpty(cfgFilePath))
-                    cfgFilePath = GetLogConfigFile();
+                    cfgFilePath = InnerGetLogConfigFile();
                 //doc.Load(GetLogConfigFile());
                 doc.Load(cfgFilePath);
                 return doc;

@@ -42,10 +42,14 @@
       <conversionPattern value="%date{HH:mm:ss.fff} [%t] {%-5level} [%logger] - %message%newline"/>
     </layout>
   </appender>
-  <root>
+  <!--<root>
     <level value="ALL" />
     <appender-ref ref="all"/>
-  </root>
+  </root>-->
+  <logger name="root">
+    <level value="ALL" />
+    <appender-ref ref="all"/>
+  </logger>
   <!--value填写appender name-->
   <!--<EncryptLog value="all"/>-->
 </log4net>

@@ -55,6 +55,8 @@
   <ItemGroup>
     <Compile Include="EncryptCountingQuietTextWriter.cs" />
     <Compile Include="EncryptRollingFileAppender.cs" />
+    <Compile Include="Logger\DefaultLogerConfigFileProvider.cs" />
+    <Compile Include="Logger\ILogerConfigFileProvider.cs" />
     <Compile Include="Logger\Log4netLogger.cs" />
     <Compile Include="LoggerKeyHelper.cs" />
     <Compile Include="Log.cs" />

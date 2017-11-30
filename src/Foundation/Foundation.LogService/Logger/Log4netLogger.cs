@@ -17,102 +17,25 @@ namespace DreamCube.Foundation.LogService.Logger
 {
     public class Log4netLogger : ILogger
     {
-        /// <summary>
-        /// 公开一个委托给外部定定制自己的config文件路径获取方案
-        /// 避免直接修改这个类（支持直接拷贝去用）
-        /// </summary>
-        public static Func<String> GetLogConfigFile;
+        ///// <summary>
+        ///// 公开一个委托给外部定定制自己的config文件路径获取方案
+        ///// 避免直接修改这个类（支持直接拷贝去用）
+        ///// </summary>
+        //public static Func<String> GetLogConfigFile;
 
         #region constructor
-
-        static Log4netLogger()
-        {
-            try
-            {
-                //先读取自定义的字段
-                string cfgFile = InnerGetLogConfigFile();
-                XmlDocument doc = GetLogConfigXmlDoc(cfgFile);
-                XmlNode encryptNode = doc.DocumentElement.SelectSingleNode(s_encryptNode);
-                if (null != encryptNode)
-                {
-                    XmlAttribute valueAttri = encryptNode.Attributes[s_valueAttri];
-                    if (null != valueAttri && !string.IsNullOrEmpty(valueAttri.Value))
-                    {
-                        LoggerKeyHelper.EncryptLoggerAppenders = valueAttri.Value.Split(
-                            new[] { '|' },
-                            StringSplitOptions.RemoveEmptyEntries
-                        );
-                    }
-                }
-
-                //配置log4net模块
-                FileInfo cfgInfo = new FileInfo(cfgFile);
-                XmlConfigurator.Configure(cfgInfo);
-                m_bIsOpen = true;
-                doc.RemoveAll();
-                doc = null;
-            }
-            catch (System.Exception ex)
-            {
-                MyTrace.TraceError("Failed to startup the log4net service with error {0}", ex.Message);
-            }
-        }
 
         /// <summary>
         /// 构造函数
         /// </summary>
-        /// <param name="iLog">log4net对象实例</param>
         /// <param name="argName">logger的name值</param>
-        private Log4netLogger(ILog iLog, String argName)
+        private Log4netLogger(String argName)
         {
-            Debug.Assert(null != iLog && Opened && !string.IsNullOrEmpty(argName));
-            m_iLog = iLog;
             try
             {
-                //收集filters
-                XmlDocument doc = GetLogConfigXmlDoc();
-                XmlNode refNode = doc.DocumentElement.SelectSingleNode(string.Format(s_appendRefFormat, argName));
-
-                if (null != refNode)
-                {
-                    XmlAttribute refAttri = refNode.Attributes[s_refAttri];
-                    if (null != refAttri && !string.IsNullOrEmpty(refAttri.Value))
-                    {
-                        XmlNodeList listFilterNodes = doc.DocumentElement.SelectNodes(string.Format(s_filterFormat, refAttri.Value));
-                        if (0 != listFilterNodes.Count)
-                        {
-                            XmlAttribute valueAttri = null;
-                            XmlAttribute enableAttri = null;
-                            int temp = 0;
-                            foreach (XmlNode filterNode in listFilterNodes)
-                            {
-                                valueAttri = filterNode.Attributes[s_valueAttri];
-                                enableAttri = filterNode.Attributes[s_enableAttri];
-                                if (null == valueAttri ||
-                                    string.IsNullOrEmpty(valueAttri.Value) ||
-                                    null == enableAttri ||
-                                    string.IsNullOrEmpty(enableAttri.Value))
-                                {
-                                    continue;
-                                }
-
-                                if (!int.TryParse(enableAttri.Value, out temp))
-                                {
-                                    continue;
-                                }
-
-                                try
-                                {
-                                    Filters.Add(valueAttri.Value, 0 == temp ? false : true);
-                                }
-                                catch (System.Exception ex)
-                                {
-                                    MyTrace.TraceWarning("The filter [{0}] is duplicate,ex:{1}", valueAttri.Value, ex.Message);
-                                }
-                            }
-                        }
-                    }
-                }
+                this.Initial(argName);
+                //创建log4net的logger对象
+                this.m_iLog = log4net.LogManager.GetLogger(argName);
             }
             catch (System.Exception ex)
             {
@@ -123,13 +46,26 @@ namespace DreamCube.Foundation.LogService.Logger
 
         #endregion
 
-        #region public method
+        #region static method
 
         public static ILogger Create(String name)
         {
-            Debug.Assert(!string.IsNullOrEmpty(name) && Opened);
-            return new Log4netLogger(log4net.LogManager.GetLogger(name), name) as ILogger;
+            Debug.Assert(!string.IsNullOrEmpty(name));
+            return new Log4netLogger(name) as ILogger;
         }
+
+        /// <summary>
+        /// 外部提供获取日志文件的provider对象
+        /// </summary>
+        /// <param name="configFileProvider"></param>
+        public static void RegisterLogConfigFileProvider(ILogerConfigFileProvider configFileProvider)
+        {
+            m_configFileProvider = configFileProvider;
+        }
+
+        #endregion
+
+        #region public method
 
         public void LogDebug(string strMsg, Exception objExp = null)
         {
@@ -298,36 +234,11 @@ namespace DreamCube.Foundation.LogService.Logger
         /// 获取日志配置信息
         /// </summary>
         /// <returns></returns>
-        private static String InnerGetLogConfigFile()
-        {
-            try
-            {
-                if (GetLogConfigFile != null)
-                    return GetLogConfigFile();
-                String cfgFilePath = ConfigurationManager.AppSettings["LogConfigFilePath"];
-                cfgFilePath = String.IsNullOrEmpty(cfgFilePath) ? @"config\logconfig.xml" : cfgFilePath;
-                String cfgFileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, cfgFilePath);
-                return cfgFileFullPath;
-            }
-            catch (Exception ex)
-            {
-                MyTrace.TraceError("GetLogConfigFile() error:{0}", ex.Message);
-            }
-            return null;
-        }
-
-        /// <summary>
-        /// 获取日志配置信息
-        /// </summary>
-        /// <returns></returns>
-        private static XmlDocument GetLogConfigXmlDoc(string cfgFilePath = "")
+        protected XmlDocument GetLogConfigXmlDoc(string cfgFilePath = "")
         {
             try
             {
                 XmlDocument doc = new XmlDocument();
-                if (String.IsNullOrEmpty(cfgFilePath))
-                    cfgFilePath = InnerGetLogConfigFile();
-                //doc.Load(GetLogConfigFile());
                 doc.Load(cfgFilePath);
                 return doc;
             }
@@ -336,6 +247,112 @@ namespace DreamCube.Foundation.LogService.Logger
                 MyTrace.TraceError("GetLogConfigXmlDoc() error:{0}", ex.Message);
             }
             return null;
+        }
+
+        /// <summary>
+        /// 初始化
+        /// </summary>
+        /// <param name="argName"></param>
+        protected void Initial(String argName)
+        {
+            try
+            {
+                //先读取自定义的字段
+                string cfgFile = ConfigFileProvider.GetLogConfigFile();
+                XmlDocument doc = GetLogConfigXmlDoc(cfgFile);
+                InitEncryptConfig(doc);
+                InitFiltersConfig(doc, argName);
+                InitLog4netConfig(cfgFile);
+                //配置log4net模块
+                doc.RemoveAll();
+                doc = null;
+                m_bIsOpen = true;
+            }
+            catch (System.Exception ex)
+            {
+                MyTrace.TraceError("Failed to startup the log4net service with error {0}", ex.Message);
+            }
+        }
+
+        /// <summary>
+        /// 初始化log4net
+        /// </summary>
+        /// <param name="configFile"></param>
+        protected void InitLog4netConfig(String configFile)
+        {
+            FileInfo cfgInfo = new FileInfo(configFile);
+            XmlConfigurator.Configure(cfgInfo);
+        }
+
+        /// <summary>
+        /// 处理加密的配置
+        /// </summary>
+        /// <param name="configDoc"></param>
+        protected void InitEncryptConfig(XmlDocument configDoc)
+        {
+            //处理加密的情况
+            XmlNode encryptNode = configDoc.DocumentElement.SelectSingleNode(s_encryptNode);
+            if (null != encryptNode)
+            {
+                XmlAttribute valueAttri = encryptNode.Attributes[s_valueAttri];
+                if (null != valueAttri && !string.IsNullOrEmpty(valueAttri.Value))
+                {
+                    LoggerKeyHelper.EncryptLoggerAppenders = valueAttri.Value.Split(
+                        new[] { '|' },
+                        StringSplitOptions.RemoveEmptyEntries
+                    );
+                }
+            }
+        }
+
+        /// <summary>
+        /// 处理Filter的配置
+        /// </summary>
+        /// <param name="configDoc"></param>
+        /// <param name="argName"></param>
+        protected void InitFiltersConfig(XmlDocument configDoc, String argName)
+        {
+            XmlNode refNode = configDoc.DocumentElement.SelectSingleNode(string.Format(s_appendRefFormat, argName));
+            if (null != refNode)
+            {
+                XmlAttribute refAttri = refNode.Attributes[s_refAttri];
+                if (null != refAttri && !string.IsNullOrEmpty(refAttri.Value))
+                {
+                    XmlNodeList listFilterNodes = configDoc.DocumentElement.SelectNodes(string.Format(s_filterFormat, refAttri.Value));
+                    if (0 != listFilterNodes.Count)
+                    {
+                        XmlAttribute valueAttri = null;
+                        XmlAttribute enableAttri = null;
+                        int temp = 0;
+                        foreach (XmlNode filterNode in listFilterNodes)
+                        {
+                            valueAttri = filterNode.Attributes[s_valueAttri];
+                            enableAttri = filterNode.Attributes[s_enableAttri];
+                            if (null == valueAttri ||
+                                string.IsNullOrEmpty(valueAttri.Value) ||
+                                null == enableAttri ||
+                                string.IsNullOrEmpty(enableAttri.Value))
+                            {
+                                continue;
+                            }
+
+                            if (!int.TryParse(enableAttri.Value, out temp))
+                            {
+                                continue;
+                            }
+
+                            try
+                            {
+                                Filters.Add(valueAttri.Value, 0 == temp ? false : true);
+                            }
+                            catch (System.Exception ex)
+                            {
+                                MyTrace.TraceWarning("The filter [{0}] is duplicate,ex:{1}", valueAttri.Value, ex.Message);
+                            }
+                        }
+                    }
+                }
+            }
         }
 
         #endregion
@@ -350,6 +367,19 @@ namespace DreamCube.Foundation.LogService.Logger
             get
             {
                 return m_bIsOpen;
+            }
+        }
+
+        /// <summary>
+        /// 配置文件provider对象
+        /// </summary>
+        public static ILogerConfigFileProvider ConfigFileProvider
+        {
+            get
+            {
+                if (m_configFileProvider == null)
+                    m_configFileProvider = new DefaultLogerConfigFileProvider();
+                return m_configFileProvider;
             }
         }
 
@@ -371,6 +401,8 @@ namespace DreamCube.Foundation.LogService.Logger
         #endregion
 
         #region field
+
+        private static ILogerConfigFileProvider m_configFileProvider = null;
 
         private ILog m_iLog = null;
 

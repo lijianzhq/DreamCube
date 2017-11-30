@@ -42,14 +42,10 @@
     <AssemblyOriginatorKeyFile>foundation.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="DreamCube.Foundation.TraceService, Version=1.0.0.0, Culture=neutral, PublicKeyToken=231623ac3bf3e7d5, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\Output\DreamCube.Foundation.TraceService.dll</HintPath>
-    </Reference>
     <Reference Include="log4net, Version=1.2.15.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\Imports\log4net\4.0\log4net.dll</HintPath>
-      <Private>False</Private>
+      <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -75,6 +71,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="foundation.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Foundation.TraceService\DreamCube.Foundation.TraceService.csproj">
+      <Project>{FE59C574-8B97-471A-AF5E-B07435BB7588}</Project>
+      <Name>DreamCube.Foundation.TraceService</Name>
+      <Private>True</Private>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

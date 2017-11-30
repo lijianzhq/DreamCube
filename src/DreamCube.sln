@@ -1,15 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foundation.Basic", "Foundation\Foundation.Basic\Foundation.Basic.csproj", "{203C8B6E-0D5D-4BD9-983E-4B7BBA048567}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamCube.Foundation.Basic", "Foundation\Foundation.Basic\DreamCube.Foundation.Basic.csproj", "{203C8B6E-0D5D-4BD9-983E-4B7BBA048567}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Foundation", "Foundation", "{34268316-47CC-4968-9557-88EFE0148E7E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foundation.LogService", "Foundation\Foundation.LogService\Foundation.LogService.csproj", "{89B28A67-63A3-4985-AE3E-9D2E0F4C1830}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamCube.Foundation.LogService", "Foundation\Foundation.LogService\DreamCube.Foundation.LogService.csproj", "{89B28A67-63A3-4985-AE3E-9D2E0F4C1830}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foundation.LogService.Test", "Foundation\Foundation.LogService.Test\Foundation.LogService.Test.csproj", "{7D197464-7FA8-4929-9B3E-A13F143FECB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamCube.Foundation.LogService.Test", "Foundation\Foundation.LogService.Test\DreamCube.Foundation.LogService.Test.csproj", "{7D197464-7FA8-4929-9B3E-A13F143FECB1}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Foundation.TraceService", "Foundation\Foundation.TraceService\Foundation.TraceService.csproj", "{FE59C574-8B97-471A-AF5E-B07435BB7588}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DreamCube.Foundation.TraceService", "Foundation\Foundation.TraceService\DreamCube.Foundation.TraceService.csproj", "{FE59C574-8B97-471A-AF5E-B07435BB7588}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

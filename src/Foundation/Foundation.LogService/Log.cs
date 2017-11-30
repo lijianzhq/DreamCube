@@ -7,15 +7,15 @@ namespace DreamCube.Foundation.LogService
     {
         #region field
 
-        private static Dictionary<String, LoggerWrapper> logDic = new Dictionary<String, LoggerWrapper>();
+        private static Dictionary<String, ILogger> logDic = new Dictionary<String, ILogger>();
         private static Object locker = new Object();
 
         #endregion
 
         #region property
 
-        private static LoggerWrapper s_rootLogger = null;
-        public static LoggerWrapper Root
+        private static ILogger s_rootLogger = null;
+        public static ILogger Root
         {
             get
             {
@@ -34,9 +34,11 @@ namespace DreamCube.Foundation.LogService
         /// </summary>
         /// <param name="loggerName"></param>
         /// <returns></returns>
-        public static LoggerWrapper GetLogger(String loggerName)
+        public static ILogger GetLogger(String loggerName)
         {
-            return LoggerWrapper.Create(loggerName);
+            //这里可以采用IOC容器来优化，以后再进一步优化
+            return Logger.Log4netLogger.Create(loggerName);
+            //return LoggerWrapper.Create(loggerName);
         }
 
         #endregion

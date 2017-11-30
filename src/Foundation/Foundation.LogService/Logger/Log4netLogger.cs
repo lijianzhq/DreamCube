@@ -13,13 +13,13 @@ using log4net.Config;
 
 using DreamCube.Foundation.TraceService;
 
-namespace DreamCube.Foundation.LogService.LogWrapper
+namespace DreamCube.Foundation.LogService.Logger
 {
-    public class Log4netWrapper : ILogger
+    public class Log4netLogger : ILogger
     {
         #region constructor
 
-        static Log4netWrapper()
+        static Log4netLogger()
         {
             try
             {
@@ -57,7 +57,7 @@ namespace DreamCube.Foundation.LogService.LogWrapper
         /// </summary>
         /// <param name="iLog">log4net对象实例</param>
         /// <param name="argName">logger的name值</param>
-        private Log4netWrapper(ILog iLog, String argName)
+        private Log4netLogger(ILog iLog, String argName)
         {
             Debug.Assert(null != iLog && Opened && !string.IsNullOrEmpty(argName));
             m_iLog = iLog;
@@ -117,315 +117,12 @@ namespace DreamCube.Foundation.LogService.LogWrapper
 
         #endregion
 
-        #region mehtods of the ILogger interface
-
-        /// <summary>
-        /// 记录日志
-        /// </summary>
-        /// <param name="message">日志内容</param>
-        /// <param name="level">日志级别</param>
-        void ILogger.Log(String message, LogLevel level)
-        {
-            lock (m_synLocker)
-            {
-                switch (level)
-                {
-                    case LogLevel.Debug:
-                        {
-                            LogDebug(message);
-                        }
-                        break;
-
-                    case LogLevel.Info:
-                        {
-                            LogInfo(message);
-                        }
-                        break;
-
-                    case LogLevel.Warn:
-                        {
-                            LogWarn(message);
-                        }
-                        break;
-
-                    case LogLevel.Error:
-                        {
-                            LogError(message);
-                        }
-                        break;
-
-                    case LogLevel.Fatal:
-                        {
-                            LogFatal(message);
-                        }
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 记录日志
-        /// </summary>
-        /// <param name="message">日志内容</param>
-        /// <param name="level">日志级别</param>
-        /// <param name="exp">异常对象</param>
-        void ILogger.Log(String message, LogLevel level, Exception exp)
-        {
-            lock (m_synLocker)
-            {
-                switch (level)
-                {
-                    case LogLevel.Debug:
-                        {
-                            LogDebug(message, exp);
-                        }
-                        break;
-
-                    case LogLevel.Info:
-                        {
-                            LogInfo(message, exp);
-                        }
-                        break;
-
-                    case LogLevel.Warn:
-                        {
-                            LogWarn(message, exp);
-                        }
-                        break;
-
-                    case LogLevel.Error:
-                        {
-                            LogError(message, exp);
-                        }
-                        break;
-
-                    case LogLevel.Fatal:
-                        {
-                            LogFatal(message, exp);
-                        }
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 记录日志
-        /// </summary>
-        /// <param name="message">日志内容</param>
-        /// <param name="key">自定义过滤器的key（通过此方法可以方便的开启/屏蔽某些日志信息）</param>
-        /// <param name="level">日志级别</param>
-        void ILogger.Log(String message, String key, LogLevel level)
-        {
-            if (null != m_dicFilter)
-            {
-                bool enable = false;
-                if (m_dicFilter.TryGetValue(key, out enable))
-                {
-                    if (!enable)
-                    {
-                        return;
-                    }
-                }
-            }
-
-            lock (m_synLocker)
-            {
-                switch (level)
-                {
-                    case LogLevel.Debug:
-                        {
-                            LogDebug(message);
-                        }
-                        break;
-
-                    case LogLevel.Info:
-                        {
-                            LogInfo(message);
-                        }
-                        break;
-
-                    case LogLevel.Warn:
-                        {
-                            LogWarn(message);
-                        }
-                        break;
-
-                    case LogLevel.Error:
-                        {
-                            LogError(message);
-                        }
-                        break;
-
-                    case LogLevel.Fatal:
-                        {
-                            LogFatal(message);
-                        }
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 记录日志
-        /// </summary>
-        /// <param name="message">日志内容</param>
-        /// <param name="key">自定义过滤器的key（通过此方法可以方便的开启/屏蔽某些日志信息）</param>
-        /// <param name="level">日志级别</param>
-        /// <param name="exp">异常对象</param>
-        void ILogger.Log(String message, String key, LogLevel level, Exception exp)
-        {
-            if (null != m_dicFilter)
-            {
-                bool enable = false;
-                if (m_dicFilter.TryGetValue(key, out enable))
-                {
-                    if (!enable)
-                    {
-                        return;
-                    }
-                }
-            }
-
-            lock (m_synLocker)
-            {
-                switch (level)
-                {
-                    case LogLevel.Debug:
-                        {
-                            LogDebug(message, exp);
-                        }
-                        break;
-                    case LogLevel.Info:
-                        {
-                            LogInfo(message, exp);
-                        }
-                        break;
-                    case LogLevel.Warn:
-                        {
-                            LogWarn(message, exp);
-                        }
-                        break;
-                    case LogLevel.Error:
-                        {
-                            LogError(message, exp);
-                        }
-                        break;
-                    case LogLevel.Fatal:
-                        {
-                            LogFatal(message, exp);
-                        }
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 记录日志
-        /// </summary>
-        /// <param name="format">需要格式化的日志内容</param>
-        /// <param name="level">日志级别</param>
-        /// <param name="args">格式化参数列表</param>
-        void ILogger.LogFormat(String format, LogLevel level, params object[] args)
-        {
-            lock (m_synLocker)
-            {
-                switch (level)
-                {
-                    case LogLevel.Debug:
-                        {
-                            LogDebugFormat(format, args);
-                        }
-                        break;
-                    case LogLevel.Info:
-                        {
-                            LogInfoFormat(format, args);
-                        }
-                        break;
-                    case LogLevel.Warn:
-                        {
-                            LogWarnFormat(format, args);
-                        }
-                        break;
-                    case LogLevel.Error:
-                        {
-                            LogErrorFormat(format, args);
-                        }
-                        break;
-                    case LogLevel.Fatal:
-                        {
-                            LogFataFormat(format, args);
-                        }
-                        break;
-                }
-            }
-        }
-
-        /// <summary>
-        /// 记录日志
-        /// </summary>
-        /// <param name="format">需要格式化的日志内容</param>
-        /// <param name="key">日志级别</param>
-        /// <param name="level">日志级别</param>
-        /// <param name="args">格式化参数列表</param>
-        void ILogger.LogFormat(String format, String key, LogLevel level, params object[] args)
-        {
-            if (null != m_dicFilter)
-            {
-                bool enable = false;
-                if (m_dicFilter.TryGetValue(key, out enable))
-                {
-                    if (!enable)
-                    {
-                        return;
-                    }
-                }
-            }
-
-            lock (m_synLocker)
-            {
-                switch (level)
-                {
-                    case LogLevel.Debug:
-                        {
-                            LogDebugFormat(format, args);
-                        }
-                        break;
-
-                    case LogLevel.Info:
-                        {
-                            LogInfoFormat(format, args);
-                        }
-                        break;
-
-                    case LogLevel.Warn:
-                        {
-                            LogWarnFormat(format, args);
-                        }
-                        break;
-
-                    case LogLevel.Error:
-                        {
-                            LogErrorFormat(format, args);
-                        }
-                        break;
-
-                    case LogLevel.Fatal:
-                        {
-                            LogFataFormat(format, args);
-                        }
-                        break;
-                }
-            }
-        }
-
-        #endregion
-
         #region public method
 
         public static ILogger Create(String name)
         {
             Debug.Assert(!string.IsNullOrEmpty(name) && Opened);
-            return new Log4netWrapper(log4net.LogManager.GetLogger(name), name) as ILogger;
+            return new Log4netLogger(log4net.LogManager.GetLogger(name), name) as ILogger;
         }
 
         public void LogDebug(string strMsg, Exception objExp = null)

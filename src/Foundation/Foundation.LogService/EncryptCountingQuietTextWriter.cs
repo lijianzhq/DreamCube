@@ -23,8 +23,8 @@ namespace DreamCube.Foundation.LogService
             try
             {
                 var encryptString = SecurityHelper.EncryptToHexString(string.Join("", value), _key);
-                encryptString = string.Format("{0}{1}{0}\n", "VvvvV", encryptString);
-                //将加密串首尾加上"VvvvV"以区分加密串和非加密串混合出现的情况
+                encryptString = string.Format("{0}{1}{0}\n", "Foundation.LogService", encryptString);
+                //将加密串首尾加上"Foundation.LogService"以区分加密串和非加密串混合出现的情况
                 base.Write(encryptString);
                 Count += this.Encoding.GetByteCount(encryptString);
             }
@@ -41,8 +41,8 @@ namespace DreamCube.Foundation.LogService
                 try
                 {
                     var encryptString = SecurityHelper.EncryptToHexString(string.Join("", buffer.Skip(index).Take(count)), _key);
-                    encryptString = string.Format("{0}{1}{0}\n", "VvvvV", encryptString);
-                    //将加密串首尾加上"VvvvV"以区分加密串和非加密串混合出现的情况
+                    encryptString = string.Format("{0}{1}{0}\n", "Foundation.LogService", encryptString);
+                    //将加密串首尾加上"Foundation.LogService"以区分加密串和非加密串混合出现的情况
                     base.Write(encryptString);
                     Count += this.Encoding.GetByteCount(encryptString);
                 }
@@ -60,8 +60,8 @@ namespace DreamCube.Foundation.LogService
             try
             {
                 var encryptString = SecurityHelper.EncryptToHexString(string.Join("", str), _key);
-                encryptString = string.Format("{0}{1}{0}\n", "VvvvV", encryptString);
-                //将加密串首尾加上"VvvvV"以区分加密串和非加密串混合出现的情况
+                encryptString = string.Format("{0}{1}{0}\n", "Foundation.LogService", encryptString);
+                //将加密串首尾加上"Foundation.LogService"以区分加密串和非加密串混合出现的情况
                 base.Write(encryptString);
                 Count += this.Encoding.GetByteCount(encryptString);
             }

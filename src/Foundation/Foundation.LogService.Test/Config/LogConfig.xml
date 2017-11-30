@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<log4net showHex="1" backupDay="90" reservedSize="1000">
+<log4net>
   <!--
     Debug = 0,
     Info,
@@ -7,17 +7,16 @@
     Error,
     Fatal
   -->
-  <appender name="Debug_Info_Warn" type="DreamCube.Foundation.Log.EncryptRollingFileAppender,DreamCube.Foundation.Log">
+  <appender name="Debug_Info_Warn" type="DreamCube.Foundation.LogService.EncryptRollingFileAppender,DreamCube.Foundation.LogService">
     <!--自定义的过滤条件；value对应log方法的key参数；enable：0表示不记；enable：1表示记；（通过此方法可以方便的开启/屏蔽某些日志信息）-->
     <filter>
       <key value="password" enable="0" />
-    </filter>
-    <!--控制输出日志的级别范围-->
+    </filter><!--控制输出日志的级别范围-->
     <filter type="log4net.Filter.LevelRangeFilter">
       <levelMin value="Debug" />
       <LevelMax value="WARN" />
     </filter>
-    <file value="log\iHotel_Debug_Info_Warn"/>
+    <file value="log\Debug_Info_Warn"/>
     <appendToFile value="true"/>
     <rollingStyle value="Composite"/>
     <encoding value="utf-8"/>
@@ -43,7 +42,7 @@
       <conversionPattern value="%date{HH:mm:ss.fff} [%t] {%-5level} [%logger] - %message%newline"/>
     </layout>
   </appender>
-  <appender name="Error_Fatal" type="DreamCube.Foundation.Log.EncryptRollingFileAppender,DreamCube.Foundation.Log">
+  <appender name="Error_Fatal" type="DreamCube.Foundation.LogService.EncryptRollingFileAppender,DreamCube.Foundation.LogService">
     <!--自定义的过滤条件；value对应log方法的key参数；enable：0表示不记；enable：1表示记；（通过此方法可以方便的开启/屏蔽某些日志信息）-->
     <filter>
       <key value="password" enable="0" />
@@ -53,7 +52,7 @@
       <levelMin value="ERROR" />
       <LevelMax value="FATAL" />
     </filter>
-    <file value="log\iHotel_Error_Fatal"/>
+    <file value="log\Error_Fatal"/>
     <appendToFile value="true"/>
     <rollingStyle value="Composite"/>
     <encoding value="utf-8"/>
@@ -82,9 +81,8 @@
   <root>
     <level value="ALL" />
     <appender-ref ref="Debug_Info_Warn"/>
-    <appender-ref ref="Error_Fatal"/>
+    <!--<appender-ref ref="Error_Fatal"/>-->
   </root>
-  <CompressStrategy>
-    <Item folder="log\" filePattern="*.txt" />
-  </CompressStrategy>
+  <!--value填写appender name-->
+  <EncryptLog value="Debug_Info_Warn"/>
 </log4net>

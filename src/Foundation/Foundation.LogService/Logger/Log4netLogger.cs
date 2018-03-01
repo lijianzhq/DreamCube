@@ -65,7 +65,7 @@ namespace DreamCube.Foundation.LogService.Logger
 
         #endregion
 
-        #region public method
+        #region ILogger method
 
         public void LogDebug(string strMsg, Exception objExp = null)
         {

@@ -6,7 +6,7 @@ namespace DreamCube.Foundation.Basic.Cache
 {
 #if NET40
 
-    internal class ListCachePool_Net40<T>:Interface.IListCachePool<T>
+    internal class ListCachePool_Net40<T> : Interface.IListCachePool<T>
     {
         #region "字段"
 
@@ -95,6 +95,40 @@ namespace DreamCube.Foundation.Basic.Cache
                 try
                 { cacheBlock.Clear(); }
                 finally { rwl.ExitWriteLock(); }
+            }
+        }
+
+        /// <summary>
+        /// 是否包含指定项
+        /// </summary>
+        /// <param name="item"></param>
+        /// <returns></returns>
+        public bool Contains(T item)
+        {
+            if (rwl.TryEnterReadLock(readLockTimeout))
+            {
+                try
+                {
+                    return cacheBlock.Contains(item);
+                }
+                finally { rwl.ExitWriteLock(); }
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// 移除项
+        /// </summary>
+        /// <param name="item"></param>
+        public void Remove(T item)
+        {
+            if (rwl.TryEnterReadLock(readLockTimeout))
+            {
+                try
+                {
+                    cacheBlock.Remove(item);
+                }
+                finally { rwl.ExitReadLock(); }
             }
         }
 

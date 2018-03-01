@@ -556,7 +556,8 @@ namespace DreamCube.Foundation.Basic.Utility
                                                  SearchOption searchOption = SearchOption.TopDirectoryOnly)
 #else
         public static Boolean TryGetDirsAndFiles(this String target,
-                                                 out String[] dirsAndFiles,
+                                                 out String[] dirs,
+                                                 out String[] files,
                                                  String searchPattern = "*",
                                                  SearchOption searchOption = SearchOption.TopDirectoryOnly)
 #endif
@@ -789,7 +790,7 @@ namespace DreamCube.Foundation.Basic.Utility
 #if NET20
         public static void Write(String filePath, String textValue, Boolean append = true, Encoding encoding = null)
 #else
-        public static void Write(this String filePath, String textValue, Boolean append = true)
+        public static void Write(this String filePath, String textValue, Boolean append = true, Encoding encoding = null)
 #endif
         {
             if (String.IsNullOrEmpty(filePath)) return;

@@ -19,7 +19,7 @@ namespace DreamCube.Foundation.Basic.Objects
         /// 静态字段在每一个线程中都是唯一的
         /// </summary>
         [ThreadStatic]
-        private static Dictionary<String,Object> innerCache = null;
+        private static Dictionary<String, Object> innerCache = null;
 
         #endregion
 
@@ -43,6 +43,29 @@ namespace DreamCube.Foundation.Basic.Objects
         #endregion
 
         #region "公共方法"
+
+        /// <summary>
+        /// 尝试在当前上下文中缓存对象；
+        /// 如果指定的键值存在，则替换对应的值，否则添加值
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns></returns>
+        public static void CacheItem(String key, Object value)
+        {
+            Utility.MyDictionary.TryAdd(InnerCache, key, value, Enums.CollectionsAddOper.ReplaceIfExist);
+        }
+
+        /// <summary>
+        /// 从缓存中移除指定的项
+        /// </summary>
+        /// <param name="key"></param>
+        /// <returns></returns>
+        public static void RemoveItem(String key)
+        {
+            if (InnerCache.ContainsKey(key))
+                InnerCache.Remove(key);
+        }
 
         /// <summary>
         /// 尝试在当前上下文中缓存对象；

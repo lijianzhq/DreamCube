@@ -24,8 +24,8 @@ namespace DreamCube.Foundation.Basic.Utility
         /// <param name="type">添加操作的类型</param>
 #if NET20
         public static Boolean TryAdd<TKey, TValue>(IDictionary<TKey, TValue> target,
-                                                  KeyValuePair<TKey, TValue> item,
-                                                  CollectionsAddOper type = CollectionsAddOper.NotSet)
+                                                   KeyValuePair<TKey, TValue> item,
+                                                   CollectionsAddOper type = CollectionsAddOper.NotSet)
 #else
         public static Boolean TryAdd<TKey, TValue>(this IDictionary<TKey, TValue> target,
                                                   KeyValuePair<TKey, TValue> item,
@@ -54,43 +54,57 @@ namespace DreamCube.Foundation.Basic.Utility
                                                    CollectionsAddOper type = CollectionsAddOper.NotSet)
 #endif
         {
-            try
-            {
-                if (type == CollectionsAddOper.NotSet)
-                {
-                    target.Add(key, value);
-                    return true;
-                }
-                if (target.ContainsKey(key))
-                {
-                    switch (type)
-                    {
-                        case CollectionsAddOper.IgnoreIfExist:
-                            return false;
-                        case CollectionsAddOper.ExceptionIfExist:
-                            throw new ArgumentException(
-                                    String.Format(Properties.Resources.ExceptionKeyExist, key));
-                        case CollectionsAddOper.ReplaceIfExist:
-                            target[key] = value;
-                            return true;
-                        default:
-                            throw new ArgumentException(
-                                        String.Format(Properties.Resources.ExceptionArgumentEnumError
-                                                        , "type"
-                                                        , type.ToString()));
-                    }
-                }
-                else
-                {
-                    target.Add(key, value);
-                    return true;
-                }
-            }
-            catch (ArgumentException)
-            {
-                //多线程环境的时候，会发生重复添加key值的情况，所以直接忽略此情况
-                return true;
-            }
+            //2018-03-01重新实现
+            #region "旧版本逻辑"
+            //try
+            //{
+            //    if (type == CollectionsAddOper.NotSet)
+            //    {
+            //        target.Add(key, value);
+            //        return true;
+            //    }
+            //    if (target.ContainsKey(key))
+            //    {
+            //        switch (type)
+            //        {
+            //            case CollectionsAddOper.IgnoreIfExist:
+            //                return false;
+            //            case CollectionsAddOper.ExceptionIfExist:
+            //                throw new ArgumentException(
+            //                        String.Format(Properties.Resources.ExceptionKeyExist, key));
+            //            case CollectionsAddOper.ReplaceIfExist:
+            //                target[key] = value;
+            //                return true;
+            //            default:
+            //                throw new ArgumentException(
+            //                            String.Format(Properties.Resources.ExceptionArgumentEnumError
+            //                                            , "type"
+            //                                            , type.ToString()));
+            //        }
+            //    }
+            //    else
+            //    {
+            //        target.Add(key, value);
+            //        return true;
+            //    }
+            //}
+            //catch (ArgumentException)
+            //{
+            //    //多线程环境的时候，会发生重复添加key值的情况，所以直接忽略此情况
+            //    return true;
+            //}
+            #endregion
+
+            #region "新版本逻辑"
+
+            if (type == CollectionsAddOper.ExceptionIfExist && target.ContainsKey(key))
+                throw new ArgumentException(String.Format(Properties.Resources.ExceptionKeyExist, key));
+            else if (type == CollectionsAddOper.IgnoreIfExist && target.ContainsKey(key))
+                return false;
+            target[key] = value;
+            return true;
+
+            #endregion
         }
 
         /// <summary>
@@ -237,7 +251,7 @@ namespace DreamCube.Foundation.Basic.Utility
                                                      TKey key,
                                                      CollectionsGetOper type = CollectionsGetOper.DefaultValueIfNotExist,
                                                      TValue defaultValue = default(TValue),
-                                                     Func<TKey,TKey,Boolean > keyComparer = null)
+                                                     Func<TKey, TKey, Boolean> keyComparer = null)
         {
             if (keyComparer == null)
             {

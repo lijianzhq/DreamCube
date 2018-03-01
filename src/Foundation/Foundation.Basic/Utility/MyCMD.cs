@@ -67,7 +67,7 @@ namespace DreamCube.Foundation.Basic.Utility
 #if NET20
         public static String RunCmd(String[] cmd, String workingDirectory = "")
 #else
-        public static String RunCmd(this String[] cmd)
+        public static String RunCmd(this String[] cmd, String workingDirectory = "")
 #endif
         {
             Process p = new Process();
@@ -122,7 +122,7 @@ namespace DreamCube.Foundation.Basic.Utility
 #if NET20
         public static String RunEXE(String fileName, String arguments, Int32? millisecondTimeOut = 3000, Boolean waitForExit = true)
 #else
-        public static String RunEXE(this String fileName, String arguments, Int32? millisecondTimeOut = 3000)
+        public static String RunEXE(this String fileName, String arguments, Int32? millisecondTimeOut = 3000, Boolean waitForExit = true)
 #endif
 
         {

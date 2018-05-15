@@ -13,7 +13,6 @@ using Microsoft.VisualBasic;
 using DreamCube.Foundation.Basic.Enums;
 using DreamCube.Foundation.Basic.Utility;
 using DreamCube.Foundation.Basic.Cache;
-using DreamCube.Foundation.Basic.Win32API;
 using DreamCube.Foundation.Basic.Win32API.API;
 
 namespace DreamCube.Foundation.Office
@@ -21,7 +20,7 @@ namespace DreamCube.Foundation.Office
     /// <summary>
     /// Excel操作辅助类
     /// </summary>
-    public class MyExcel : IDisposable
+    public class MyExcel 
     {
         #region "私有字段"
 
@@ -466,8 +465,10 @@ namespace DreamCube.Foundation.Office
             Excel.Range useRange = this.currentWorksheet.UsedRange;
             Int32 columnCount = useRange.Columns.Count;
             Int32 rowCount = useRange.Rows.Count;
-            for (var i = 1; i <= rowCount; i++) {
-                for (var j = 1; j <= columnCount; j++) {
+            for (var i = 1; i <= rowCount; i++)
+            {
+                for (var j = 1; j <= columnCount; j++)
+                {
                     String itemValue = MyObject.ToStringEx(GetCellValueEx(i, j), "");
                     if (String.Compare(itemValue, text, true) == 0)
                     {

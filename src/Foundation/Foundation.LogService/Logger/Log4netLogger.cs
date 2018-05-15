@@ -39,7 +39,7 @@ namespace DreamCube.Foundation.LogService.Logger
             }
             catch (System.Exception ex)
             {
-                MyTrace.TraceError("Failed to startup the log4net service with error {0}", ex.Message);
+                Tracer.Instance.TraceError("Failed to startup the log4net service with error {0}", ex.Message);
                 return;
             }
         }
@@ -244,7 +244,7 @@ namespace DreamCube.Foundation.LogService.Logger
             }
             catch (Exception ex)
             {
-                MyTrace.TraceError("GetLogConfigXmlDoc() error:{0}", ex.Message);
+                Tracer.Instance.TraceError("GetLogConfigXmlDoc() error:{0}", ex.Message);
             }
             return null;
         }
@@ -270,7 +270,7 @@ namespace DreamCube.Foundation.LogService.Logger
             }
             catch (System.Exception ex)
             {
-                MyTrace.TraceError("Failed to startup the log4net service with error {0}", ex.Message);
+                Tracer.Instance.TraceError("Failed to startup the log4net service with error {0}", ex.Message);
             }
         }
 
@@ -347,7 +347,7 @@ namespace DreamCube.Foundation.LogService.Logger
                             }
                             catch (System.Exception ex)
                             {
-                                MyTrace.TraceWarning("The filter [{0}] is duplicate,ex:{1}", valueAttri.Value, ex.Message);
+                                Tracer.Instance.TraceWarning("The filter [{0}] is duplicate,ex:{1}", valueAttri.Value, ex.Message);
                             }
                         }
                     }

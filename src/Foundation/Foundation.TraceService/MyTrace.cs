@@ -6,11 +6,42 @@ namespace DreamCube.Foundation.TraceService
     /// <summary>
     /// 系统的trace封装类
     /// </summary>
-    public static class MyTrace
+    public class Tracer
     {
         #region field
 
-        private static D.TraceSwitch tSwitch = new D.TraceSwitch("traceSwitch", "DreamCube.Foundation.TraceService.traceSwitch");
+        private D.TraceSwitch _tSwitch = null;
+        private static Tracer _instance = new Tracer();
+        private const String _description = "DreamCube.Foundation.TraceService.traceSwitch";
+
+        #endregion
+
+        #region property
+
+        public static Tracer Instance
+        {
+            get
+            {
+                return _instance;
+            }
+        }
+
+        protected virtual String SwitchName
+        {
+            get
+            {
+                return "traceSwitch";
+            }
+        }
+
+        protected D.TraceSwitch TraceSwitch
+        {
+            get
+            {
+                if (_tSwitch == null) _tSwitch = new D.TraceSwitch(SwitchName, _description);
+                return _tSwitch;
+            }
+        }
 
         #endregion
 
@@ -21,9 +52,9 @@ namespace DreamCube.Foundation.TraceService
         /// </summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public static void TraceError(string format, params Object[] args)
+        public virtual void TraceError(String format, params Object[] args)
         {
-            if (tSwitch.TraceError)
+            if (TraceSwitch.TraceError)
                 D.Trace.TraceError(format, args);
         }
 
@@ -31,21 +62,20 @@ namespace DreamCube.Foundation.TraceService
         /// 使用指定的消息向 Listeners 集合中的跟踪侦听器中写入错误消息。 traceSwitch>0
         /// </summary>
         /// <param name="message"></param>
-        public static void TraceError(string message)
+        public virtual void TraceError(String message)
         {
-            if (tSwitch.TraceError)
+            if (TraceSwitch.TraceError)
                 D.Trace.TraceError(message);
         }
-
 
         /// <summary>
         /// 使用指定的对象数组和格式设置信息向 Listeners 集合中的跟踪侦听器中写入警告信息。traceSwitch>1
         /// </summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public static void TraceWarning(string format, params Object[] args)
+        public virtual void TraceWarning(String format, params Object[] args)
         {
-            if (tSwitch.TraceWarning)
+            if (TraceSwitch.TraceWarning)
                 D.Trace.TraceWarning(format, args);
         }
 
@@ -53,9 +83,9 @@ namespace DreamCube.Foundation.TraceService
         /// 使用指定的消息向 Listeners 集合中的跟踪侦听器中写入警告消息。  traceSwitch>1
         /// </summary>
         /// <param name="message"></param>
-        public static void TraceWarning(string message)
+        public virtual void TraceWarning(String message)
         {
-            if (tSwitch.TraceWarning)
+            if (TraceSwitch.TraceWarning)
                 D.Trace.TraceInformation(message);
         }
 
@@ -64,9 +94,9 @@ namespace DreamCube.Foundation.TraceService
         /// </summary>
         /// <param name="format"></param>
         /// <param name="args"></param>
-        public static void TraceInformation(string format, params Object[] args)
+        public virtual void TraceInformation(String format, params Object[] args)
         {
-            if (tSwitch.TraceInfo)
+            if (TraceSwitch.TraceInfo)
                 D.Trace.TraceInformation(format, args);
         }
 
@@ -74,9 +104,9 @@ namespace DreamCube.Foundation.TraceService
         /// 使用指定的消息向 Listeners 集合中的跟踪侦听器中写入信息性消息。 traceSwitch>2
         /// </summary>
         /// <param name="message"></param>
-        public static void TraceInformation(string message)
+        public virtual void TraceInformation(String message)
         {
-            if (tSwitch.TraceInfo)
+            if (TraceSwitch.TraceInfo)
                 D.Trace.TraceInformation(message);
         }
 
@@ -85,9 +115,9 @@ namespace DreamCube.Foundation.TraceService
         /// </summary>
         /// <param name="message">要写入的消息。</param>
         /// <param name="category">用于组织输出的类别名称。</param>
-        public static void WriteLine(string message, string category)
+        public virtual void WriteLine(String message, String category)
         {
-            if (tSwitch.TraceVerbose)
+            if (TraceSwitch.TraceVerbose)
                 D.Trace.WriteLine(message, category);
         }
 
@@ -95,9 +125,9 @@ namespace DreamCube.Foundation.TraceService
         /// 将消息写入 Listeners 集合中的跟踪侦听器。  traceSwitch>3
         /// </summary>
         /// <param name="message"></param>
-        public static void WriteLine(string message)
+        public virtual void WriteLine(String message)
         {
-            if (tSwitch.TraceVerbose)
+            if (TraceSwitch.TraceVerbose)
                 D.Trace.WriteLine(message);
         }
 

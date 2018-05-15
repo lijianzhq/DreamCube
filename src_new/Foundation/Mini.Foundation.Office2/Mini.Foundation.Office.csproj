@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.0" />
+    <PackageReference Include="Mini.Foundation.IOC" Version="1.0.0" />
+    <PackageReference Include="NPOI" Version="2.3.0" />
+  </ItemGroup>
+
+</Project>

@@ -6,7 +6,7 @@ using DreamCube.Foundation.Basic.Win32API.Structs;
 
 namespace DreamCube.Foundation.Basic.Win32API.API
 {
-    public class kernel32
+    public static class kernel32
     {
         [DllImport("kernel32", SetLastError = true)]
         public static extern IntPtr GetCurrentThread();
@@ -50,6 +50,11 @@ namespace DreamCube.Foundation.Basic.Win32API.API
         /// <param name="count"></param>
         /// <returns></returns>
         [System.Runtime.InteropServices.DllImport("Kernel32.dll")]
-        public static extern Boolean QueryPerformanceFrequency(ref long count);   
+        public static extern Boolean QueryPerformanceFrequency(ref long count);
+
+
+        [DllImport("kernel32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern Boolean QueryThreadCycleTime(IntPtr threadHandle, ref ulong cycleTime);
     }
 }

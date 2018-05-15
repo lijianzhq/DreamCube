@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>DreamCube.Foundation.Basic</RootNamespace>
     <AssemblyName>DreamCube.Foundation.Basic</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -111,6 +111,7 @@
     <Compile Include="Enums\HttpContentType.cs" />
     <Compile Include="Enums\HttpMethod.cs" />
     <Compile Include="Objects\Attributes\DataColumnAttribute.cs" />
+    <Compile Include="Utility\CodeTimer.cs" />
     <Compile Include="Utility\MyArrayList.cs" />
     <Compile Include="Objects\CmdRunParameters.cs" />
     <Compile Include="Objects\Converters\ConverterKey.cs" />
@@ -188,6 +189,7 @@
     <Compile Include="Utility\MyWinService.cs" />
     <Compile Include="Utility\MyXml.cs" />
     <Compile Include="Utility\MyWebCache.cs" />
+    <Compile Include="Utility\MyValidation.cs" />
     <Compile Include="Win32API\API\ADVAPI32.cs" />
     <Compile Include="Win32API\API\Delegates.cs" />
     <Compile Include="Win32API\API\gdi32.cs" />
@@ -219,6 +221,12 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="foundation.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Foundation.LogService\DreamCube.Foundation.LogService.csproj">
+      <Project>{89b28a67-63a3-4985-ae3e-9d2e0f4c1830}</Project>
+      <Name>DreamCube.Foundation.LogService</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,7 @@ namespace DreamCube.Foundation.LogService.Logger
 {
     public class DefaultLogerConfigFileProvider : ILogerConfigFileProvider
     {
-        public string GetLogConfigFile()
+        public String GetLogConfigFile()
         {
             try
             {
@@ -19,7 +19,7 @@ namespace DreamCube.Foundation.LogService.Logger
             }
             catch (Exception ex)
             {
-                MyTrace.TraceError("GetLogConfigFile() error:{0}", ex.Message);
+                Tracer.Instance.TraceError("GetLogConfigFile() error:{0}", ex.Message);
             }
             return null;
         }

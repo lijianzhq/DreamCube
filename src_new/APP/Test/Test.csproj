@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Foundation\Mini\Mini.Foundation.TraceService\Mini.Foundation.TraceService.csproj" />
+    <PackageReference Include="Mini.Foundation.TraceService" Version="1.0.1" />
   </ItemGroup>
 
 </Project>

@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net40</TargetFrameworks>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
     <LangVersion>latest</LangVersion>
@@ -12,28 +12,30 @@
     <VersionSuffix></VersionSuffix>
     <Authors>Jian Li</Authors>
     <Company>Jian Li</Company>
-    <Product>Mini.Foundation.TraceService</Product>
-    <Description>Mini.Foundation.TraceService</Description>
+    <Product>Mini.Foundation.LogService</Product>
+    <Description>Mini.Foundation.LogService</Description>
     <Copyright>Copyright © Jian Li 2008</Copyright>
-    <Summary>Mini.Foundation.TraceService</Summary>
+    <Summary>Mini.Foundation.LogService</Summary>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Title>Mini.Foundation.TraceService</Title>
-    <PackageId>Mini.Foundation.TraceService</PackageId>
+    <Title>Mini.Foundation.LogService</Title>
+    <PackageId>Mini.Foundation.LogService</PackageId>
     <PackageTags>Mini</PackageTags>
     <PackageIconUrl></PackageIconUrl>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl></RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <RootNamespace>Mini.Foundation.TraceService</RootNamespace>
-    <AssemblyName>Mini.Foundation.TraceService</AssemblyName>
+    <RootNamespace>Mini.Foundation.LogService</RootNamespace>
+    <AssemblyName>Mini.Foundation.LogService</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
-    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
+    <AssemblyTitle>Mini.Foundation.LogService .NET 4.0</AssemblyTitle>
     <DefineConstants>
+      DEBUG;
       HAVE_ADO_NET;
       HAVE_APP_DOMAIN;HAVE_ASYNC;
       HAVE_BIG_INTEGER;
@@ -85,12 +87,13 @@
       HAVE_XML_DOCUMENT;
       HAVE_XML_DOCUMENT_TYPE;
       HAVE_CONCURRENT_DICTIONARY;
-      $(AdditionalConstants)
+
+      ;NET45
     </DefineConstants>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net40'">
-    <AssemblyTitle>Mini.Foundation.TraceService .NET 4.0</AssemblyTitle>
+    <AssemblyTitle>Mini.Foundation.LogService .NET 4.0</AssemblyTitle>
     <DefineConstants>
       NET40;
       HAVE_ADO_NET;
@@ -148,7 +151,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net35'">
-    <AssemblyTitle>Mini.Foundation.TraceService .NET 3.5</AssemblyTitle>
+    <AssemblyTitle>Mini.Foundation.LogService .NET 3.5</AssemblyTitle>
     <DefineConstants>
       NET35;
       HAVE_ADO_NET;
@@ -188,7 +191,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net20'">
-    <AssemblyTitle>Mini.Foundation.TraceService .NET 2.0</AssemblyTitle>
+    <AssemblyTitle>Mini.Foundation.LogService .NET 2.0</AssemblyTitle>
     <DefineConstants>
       NET20;
       HAVE_ADO_NET;
@@ -220,44 +223,8 @@
     </DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.0'">
-    <AssemblyTitle>Mini.Foundation.TraceService .NET Standard 1.0</AssemblyTitle>
-    <DefineConstants>
-      NETSTANDARD1_0;
-      PORTABLE;
-      HAVE_ASYNC;
-      HAVE_COVARIANT_GENERICS;
-      HAVE_DATA_CONTRACTS;
-      HAVE_DATE_TIME_OFFSET;
-      HAVE_DYNAMIC;
-      HAVE_EXPRESSIONS;
-      HAVE_FSHARP_TYPES;
-      HAVE_GUID_TRY_PARSE;
-      HAVE_HASH_SET;
-      HAVE_IGNORE_DATA_MEMBER_ATTRIBUTE;
-      HAVE_INOTIFY_COLLECTION_CHANGED;
-      HAVE_ISET;
-      HAVE_LINQ;
-      HAVE_METHOD_IMPL_ATTRIBUTE;
-      HAVE_READ_ONLY_COLLECTIONS;
-      HAVE_REFLECTION_BINDER;
-      HAVE_SERIALIZATION_BINDER_BIND_TO_NAME;
-      HAVE_STRING_JOIN_WITH_ENUMERABLE;
-      HAVE_TIME_SPAN_PARSE_WITH_CULTURE;
-      HAVE_TIME_SPAN_TO_STRING_WITH_CULTURE;
-      HAVE_TIME_ZONE_INFO;
-      HAVE_TYPE_DESCRIPTOR;
-      HAVE_UNICODE_SURROGATE_DETECTION;
-      HAVE_VARIANT_TYPE_PARAMETERS;
-      HAVE_VERSION_TRY_PARSE;
-      HAVE_XLINQ;
-      HAVE_OBSOLETE_FORMATTER_ASSEMBLY_STYLE;
-      $(AdditionalConstants)
-    </DefineConstants>
-  </PropertyGroup>
-
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <AssemblyTitle>Mini.Foundation.TraceService .NET Standard 1.3</AssemblyTitle>
+    <AssemblyTitle>Mini.Foundation.LogService .NET Standard 1.3</AssemblyTitle>
     <DefineConstants>
       NETSTANDARD1_3;
       PORTABLE;
@@ -299,7 +266,7 @@
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <AssemblyTitle>Mini.Foundation.TraceService .NET Standard 2.0</AssemblyTitle>
+    <AssemblyTitle>Mini.Foundation.LogService .NET Standard 2.0</AssemblyTitle>
     <DefineConstants>
       NETSTANDARD2_0;
       HAVE_ADO_NET;
@@ -355,5 +322,44 @@
       $(AdditionalConstants)
     </DefineConstants>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net35'">
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="log4net">
+      <Version>2.0.8</Version>
+    </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.1" />
+    <PackageReference Include="Mini.Foundation.TraceService" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
 
 </Project>

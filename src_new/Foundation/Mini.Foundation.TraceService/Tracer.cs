@@ -8,7 +8,7 @@ namespace Mini.Foundation.TraceService
     /// <summary>
     /// 系统的trace封装类
     /// </summary>
-    public class Tracer
+    public partial class Tracer
     {
         #region field
 

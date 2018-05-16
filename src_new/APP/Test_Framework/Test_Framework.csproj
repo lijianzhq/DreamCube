@@ -107,11 +107,5 @@
       <SubType>Designer</SubType>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Office\Mini.Foundation.Office.csproj">
-      <Project>{b5bcb25d-8114-44c8-bbb7-8577f1d1d6b2}</Project>
-      <Name>Mini.Foundation.Office</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

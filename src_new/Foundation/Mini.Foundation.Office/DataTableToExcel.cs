@@ -12,7 +12,7 @@ using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Foundation.Office
 {
-    public class DataTableToExcel : IDataTableToExcel
+    public partial class DataTableToExcel : IDataTableToExcel
     {
         #region "fields"
 
@@ -132,93 +132,6 @@ namespace Mini.Foundation.Office
         }
 
         /// <summary>
-        /// 图片在单元格等比缩放居中显示
-        /// </summary>
-        /// <param name="cell">单元格</param>
-        /// <param name="image">图片二进制流</param>
-        public virtual void AddCellImage(ICell cell, Byte[] image)
-        {
-            if (image.Length == 0) return;//空图片处理
-            double scalx = 0;//x轴缩放比例
-            double scaly = 0;//y轴缩放比例
-            int Dx1 = 0;//图片左边相对excel格的位置(x偏移) 范围值为:0~1023,超过1023就到右侧相邻的单元格里了
-            int Dy1 = 0;//图片上方相对excel格的位置(y偏移) 范围值为:0~256,超过256就到下方的单元格里了
-            bool bOriginalSize = false;//是否显示图片原始大小 true表示图片显示原始大小  false表示显示图片缩放后的大小
-            ///计算单元格的长度和宽度
-            double CellWidth = cell.Row.Sheet.GetColumnWidth(cell.ColumnIndex);
-            double CellHeight = cell.Sheet.GetRow(cell.RowIndex).Height;
-            //单元格长度和宽度与图片的长宽单位互换是根据实例得出
-            CellWidth = CellWidth / 35;
-            CellHeight = CellHeight / 15;
-            ///计算图片的长度和宽度
-            MemoryStream ms = new MemoryStream(image);
-            Image Img = Bitmap.FromStream(ms, true);
-            double ImageOriginalWidth = Img.Width;//原始图片的长度
-            double ImageOriginalHeight = Img.Height;//原始图片的宽度
-            double ImageScalWidth = 0;//缩放后显示在单元格上的图片长度
-            double ImageScalHeight = 0;//缩放后显示在单元格上的图片宽度
-            if (CellWidth > ImageOriginalWidth && CellHeight > ImageOriginalHeight)//单元格的长度和宽度比图片的大，说明单元格能放下整张图片，不缩放
-            {
-                ImageScalWidth = ImageOriginalWidth;
-                ImageScalHeight = ImageOriginalHeight;
-                bOriginalSize = true;
-            }
-            else
-            {
-                //需要缩放，根据单元格和图片的长宽计算缩放比例
-                bOriginalSize = false;
-                if (ImageOriginalWidth > CellWidth && ImageOriginalHeight > CellHeight)//图片的长和宽都比单元格的大的情况
-                {
-                    double WidthSub = ImageOriginalWidth - CellWidth;//图片长与单元格长的差距
-                    double HeightSub = ImageOriginalHeight - CellHeight;//图片宽与单元格宽的差距
-                    if (WidthSub > HeightSub)//长的差距比宽的差距大时,长度x轴的缩放比为1，表示长度就用单元格的长度大小，宽度y轴的缩放比例需要根据x轴的比例来计算
-                    {
-                        scalx = 1;
-                        scaly = (CellWidth / ImageOriginalWidth) * ImageOriginalHeight / CellHeight;//计算y轴的缩放比例,CellWidth / ImageWidth计算出图片整体的缩放比例,然后 * ImageHeight计算出单元格应该显示的图片高度,然后/ CellHeight就是高度的缩放比例
-                    }
-                    else
-                    {
-                        scaly = 1;
-                        scalx = (CellHeight / ImageOriginalHeight) * ImageOriginalWidth / CellWidth;
-                    }
-                }
-                else if (ImageOriginalWidth > CellWidth && ImageOriginalHeight < CellHeight)//图片长度大于单元格长度但图片高度小于单元格高度，此时长度不需要缩放，直接取单元格的，因此scalx=1，但图片高度需要等比缩放
-                {
-                    scalx = 1;
-                    scaly = (CellWidth / ImageOriginalWidth) * ImageOriginalHeight / CellHeight;
-                }
-                else if (ImageOriginalWidth < CellWidth && ImageOriginalHeight > CellHeight)//图片长度小于单元格长度但图片高度大于单元格高度，此时单元格高度直接取单元格的，scaly = 1,长度需要等比缩放
-                {
-                    scaly = 1;
-                    scalx = (CellHeight / ImageOriginalHeight) * ImageOriginalWidth / CellWidth;
-                }
-                ImageScalWidth = scalx * CellWidth;
-                ImageScalHeight = scaly * CellHeight;
-            }
-            Dx1 = Convert.ToInt32((CellWidth - ImageScalWidth) / CellWidth * 1023 / 2);
-            Dy1 = Convert.ToInt32((CellHeight - ImageScalHeight) / CellHeight * 256 / 2);
-            int pictureIdx = cell.Sheet.Workbook.AddPicture((Byte[])image, PictureType.JPEG);
-            IClientAnchor anchor = cell.Sheet.Workbook.GetCreationHelper().CreateClientAnchor();
-            //anchor.AnchorType = AnchorType.MoveDontResize;
-            anchor.Col1 = cell.ColumnIndex;
-            anchor.Col2 = cell.ColumnIndex + 1;
-            anchor.Row1 = cell.RowIndex;
-            anchor.Row2 = cell.RowIndex + 1;
-            anchor.Dy1 = Dy1;//图片下移量
-            anchor.Dx1 = Dx1;//图片右移量，通过图片下移和右移，使得图片能居中显示，因为图片不同文字，图片是浮在单元格上的，文字是钳在单元格里的
-            IDrawing patriarch = cell.Sheet.CreateDrawingPatriarch();
-            IPicture pic = patriarch.CreatePicture(anchor, pictureIdx);
-            if (bOriginalSize)
-            {
-                pic.Resize();//显示图片原始大小 
-            }
-            else
-            {
-                //pic.Resize(scalx, scaly);//等比缩放   
-            }
-        }
-
-        /// <summary>
         /// 添加一个sheet
         /// </summary>
         /// <param name="table"></param>
@@ -226,7 +139,7 @@ namespace Mini.Foundation.Office
         public virtual void AddSheet(DataTable table, String sheetName = "Sheet1", String[] ignoreColumns = null)
         {
             MyArgumentsHelper.ThrowsIfNull(table, nameof(table));
-            MyArgumentsHelper.ThrowsIfNullOrWhiteSpace(sheetName, nameof(sheetName));
+            MyArgumentsHelper.ThrowsIfIsInvisibleString(sheetName, nameof(sheetName));
             ISheet sheet = null;
             sheet = _workbook.GetSheet(sheetName);
             if (sheet != null) throw new Exception(String.Format("The sheet name[{0}] has already existed!", sheetName));
@@ -326,4 +239,98 @@ namespace Mini.Foundation.Office
         #endregion
     }
 
+    public partial class DataTableToExcel
+    {
+        /// <summary>
+        /// 图片在单元格等比缩放居中显示
+        /// </summary>
+        /// <param name="cell">单元格</param>
+        /// <param name="image">图片二进制流</param>
+        public virtual void AddCellImage(ICell cell, Byte[] image)
+        {
+#if !(NETSTANDARD1_3 || NETSTANDARD2_0)
+            if (image.Length == 0) return;//空图片处理
+            double scalx = 0;//x轴缩放比例
+            double scaly = 0;//y轴缩放比例
+            int Dx1 = 0;//图片左边相对excel格的位置(x偏移) 范围值为:0~1023,超过1023就到右侧相邻的单元格里了
+            int Dy1 = 0;//图片上方相对excel格的位置(y偏移) 范围值为:0~256,超过256就到下方的单元格里了
+            bool bOriginalSize = false;//是否显示图片原始大小 true表示图片显示原始大小  false表示显示图片缩放后的大小
+            ///计算单元格的长度和宽度
+            double CellWidth = cell.Row.Sheet.GetColumnWidth(cell.ColumnIndex);
+            double CellHeight = cell.Sheet.GetRow(cell.RowIndex).Height;
+            //单元格长度和宽度与图片的长宽单位互换是根据实例得出
+            CellWidth = CellWidth / 35;
+            CellHeight = CellHeight / 15;
+            ///计算图片的长度和宽度
+            MemoryStream ms = new MemoryStream(image);
+            Image Img = Bitmap.FromStream(ms, true);
+            double ImageOriginalWidth = Img.Width;//原始图片的长度
+            double ImageOriginalHeight = Img.Height;//原始图片的宽度
+            double ImageScalWidth = 0;//缩放后显示在单元格上的图片长度
+            double ImageScalHeight = 0;//缩放后显示在单元格上的图片宽度
+            if (CellWidth > ImageOriginalWidth && CellHeight > ImageOriginalHeight)//单元格的长度和宽度比图片的大，说明单元格能放下整张图片，不缩放
+            {
+                ImageScalWidth = ImageOriginalWidth;
+                ImageScalHeight = ImageOriginalHeight;
+                bOriginalSize = true;
+            }
+            else
+            {
+                //需要缩放，根据单元格和图片的长宽计算缩放比例
+                bOriginalSize = false;
+                if (ImageOriginalWidth > CellWidth && ImageOriginalHeight > CellHeight)//图片的长和宽都比单元格的大的情况
+                {
+                    double WidthSub = ImageOriginalWidth - CellWidth;//图片长与单元格长的差距
+                    double HeightSub = ImageOriginalHeight - CellHeight;//图片宽与单元格宽的差距
+                    if (WidthSub > HeightSub)//长的差距比宽的差距大时,长度x轴的缩放比为1，表示长度就用单元格的长度大小，宽度y轴的缩放比例需要根据x轴的比例来计算
+                    {
+                        scalx = 1;
+                        scaly = (CellWidth / ImageOriginalWidth) * ImageOriginalHeight / CellHeight;//计算y轴的缩放比例,CellWidth / ImageWidth计算出图片整体的缩放比例,然后 * ImageHeight计算出单元格应该显示的图片高度,然后/ CellHeight就是高度的缩放比例
+                    }
+                    else
+                    {
+                        scaly = 1;
+                        scalx = (CellHeight / ImageOriginalHeight) * ImageOriginalWidth / CellWidth;
+                    }
+                }
+                else if (ImageOriginalWidth > CellWidth && ImageOriginalHeight < CellHeight)//图片长度大于单元格长度但图片高度小于单元格高度，此时长度不需要缩放，直接取单元格的，因此scalx=1，但图片高度需要等比缩放
+                {
+                    scalx = 1;
+                    scaly = (CellWidth / ImageOriginalWidth) * ImageOriginalHeight / CellHeight;
+                }
+                else if (ImageOriginalWidth < CellWidth && ImageOriginalHeight > CellHeight)//图片长度小于单元格长度但图片高度大于单元格高度，此时单元格高度直接取单元格的，scaly = 1,长度需要等比缩放
+                {
+                    scaly = 1;
+                    scalx = (CellHeight / ImageOriginalHeight) * ImageOriginalWidth / CellWidth;
+                }
+                ImageScalWidth = scalx * CellWidth;
+                ImageScalHeight = scaly * CellHeight;
+            }
+            Dx1 = Convert.ToInt32((CellWidth - ImageScalWidth) / CellWidth * 1023 / 2);
+            Dy1 = Convert.ToInt32((CellHeight - ImageScalHeight) / CellHeight * 256 / 2);
+            int pictureIdx = cell.Sheet.Workbook.AddPicture((Byte[])image, PictureType.JPEG);
+            IClientAnchor anchor = cell.Sheet.Workbook.GetCreationHelper().CreateClientAnchor();
+            //anchor.AnchorType = AnchorType.MoveDontResize;
+            anchor.Col1 = cell.ColumnIndex;
+            anchor.Col2 = cell.ColumnIndex + 1;
+            anchor.Row1 = cell.RowIndex;
+            anchor.Row2 = cell.RowIndex + 1;
+            anchor.Dy1 = Dy1;//图片下移量
+            anchor.Dx1 = Dx1;//图片右移量，通过图片下移和右移，使得图片能居中显示，因为图片不同文字，图片是浮在单元格上的，文字是钳在单元格里的
+            IDrawing patriarch = cell.Sheet.CreateDrawingPatriarch();
+            IPicture pic = patriarch.CreatePicture(anchor, pictureIdx);
+            if (bOriginalSize)
+            {
+                pic.Resize();//显示图片原始大小 
+            }
+            else
+            {
+                //pic.Resize(scalx, scaly);//等比缩放   
+            }
+#else
+            throw new NotImplementedException();
+#endif
+
+        }
+    }
 }

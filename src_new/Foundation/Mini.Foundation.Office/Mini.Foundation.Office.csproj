@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net46;netstandard1.3;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net46</TargetFrameworks>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
     <LangVersion>latest</LangVersion>
@@ -12,28 +12,27 @@
     <VersionSuffix></VersionSuffix>
     <Authors>Jian Li</Authors>
     <Company>Jian Li</Company>
-    <Product>Mini.Foundation.IOC</Product>
-    <Description>Mini.Foundation.IOC</Description>
+    <Product>Mini.Foundation.Office</Product>
+    <Description>Mini.Foundation.Office</Description>
     <Copyright>Copyright © Jian Li 2008</Copyright>
     <Summary>Mini.Foundation.IOC</Summary>
     <NeutralLanguage>en-US</NeutralLanguage>
-    <Title>Mini.Foundation.IOC</Title>
-    <PackageId>Mini.Foundation.IOC</PackageId>
+    <Title>Mini.Foundation.Office</Title>
+    <PackageId>Mini.Foundation.Office</PackageId>
     <PackageTags>Mini</PackageTags>
     <PackageIconUrl></PackageIconUrl>
     <PackageProjectUrl></PackageProjectUrl>
     <PackageLicenseUrl></PackageLicenseUrl>
     <RepositoryUrl></RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <RootNamespace>Mini.Foundation.IOC</RootNamespace>
-    <AssemblyName>Mini.Foundation.IOC</AssemblyName>
+    <RootNamespace>Mini.Foundation.Office</RootNamespace>
+    <AssemblyName>Mini.Foundation.Office</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.0.1</Version>
-    
   </PropertyGroup>
-
+  
   <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
     <AssemblyTitle>Mini.Foundation.IOC .NET 4.6</AssemblyTitle>
     <DefineConstants>
@@ -92,49 +91,10 @@
     </DefineConstants>
   </PropertyGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
-    <PackageReference Include="Autofac">
-      <Version>4.8.1</Version>
-    </PackageReference>
-    <PackageReference Include="Autofac.Configuration">
-      <Version>4.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json">
-      <Version>1.1.2</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Xml">
-      <Version>1.1.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.3'">
-    <PackageReference Include="Autofac">
-      <Version>4.8.1</Version>
-    </PackageReference>
-    <PackageReference Include="Autofac.Configuration">
-      <Version>4.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json">
-      <Version>1.1.2</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Xml">
-      <Version>1.1.2</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Autofac">
-      <Version>4.8.1</Version>
-    </PackageReference>
-    <PackageReference Include="Autofac.Configuration">
-      <Version>4.0.1</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Json">
-      <Version>2.0.2</Version>
-    </PackageReference>
-    <PackageReference Include="Microsoft.Extensions.Configuration.Xml">
-      <Version>2.0.2</Version>
-    </PackageReference>
+  <ItemGroup>
+    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.1" />
+    <PackageReference Include="Mini.Foundation.IOC" Version="1.0.1" />
+    <PackageReference Include="NPOI" Version="2.3.0" />
   </ItemGroup>
 
 </Project>

@@ -23,6 +23,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mini.Foundation.Test", "Fou
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mini.Foundation.LogService", "Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj", "{F5CC2C1A-C49E-44D4-856A-EB8646D4FD85}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mini.Foundation.Office", "Foundation\Mini.Foundation.Office\Mini.Foundation.Office.csproj", "{36B7CA84-FF1A-4CAB-93B2-2121460DFA92}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -61,6 +63,10 @@ Global
 		{F5CC2C1A-C49E-44D4-856A-EB8646D4FD85}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F5CC2C1A-C49E-44D4-856A-EB8646D4FD85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F5CC2C1A-C49E-44D4-856A-EB8646D4FD85}.Release|Any CPU.Build.0 = Release|Any CPU
+		{36B7CA84-FF1A-4CAB-93B2-2121460DFA92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{36B7CA84-FF1A-4CAB-93B2-2121460DFA92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{36B7CA84-FF1A-4CAB-93B2-2121460DFA92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{36B7CA84-FF1A-4CAB-93B2-2121460DFA92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -74,6 +80,7 @@ Global
 		{C65582CB-A03C-4BE0-83AB-273FA89A855A} = {AE2FE85B-A1EE-4340-91BF-D29FC744F0DF}
 		{C4B36659-F47F-478C-9BE2-15A631EB866C} = {AE2FE85B-A1EE-4340-91BF-D29FC744F0DF}
 		{F5CC2C1A-C49E-44D4-856A-EB8646D4FD85} = {AE2FE85B-A1EE-4340-91BF-D29FC744F0DF}
+		{36B7CA84-FF1A-4CAB-93B2-2121460DFA92} = {AE2FE85B-A1EE-4340-91BF-D29FC744F0DF}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB25A0FB-6F55-4E56-AF88-7510D3C8D58D}

@@ -89,7 +89,7 @@ namespace Mini.Foundation.Office
         public virtual DataTable GetDataTable(String sheetName = "Sheet1", Boolean isFirstRowColumnName = false)
         {
             ThrowIfNotInitialized();
-            MyArgumentsHelper.ThrowsIfNullOrWhiteSpace(sheetName, nameof(sheetName));
+            MyArgumentsHelper.ThrowsIfIsInvisibleString(sheetName, nameof(sheetName));
             ISheet sheet = null;
             var data = new DataTable();
             data.TableName = sheetName;

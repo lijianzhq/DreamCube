@@ -4,14 +4,27 @@ using System.IO;
 
 namespace Mini.Foundation.Basic.Utility
 {
+    /// <summary>
+    /// 参数帮助类
+    /// </summary>
     public static partial class MyArgumentsHelper
     {
+        /// <summary>
+        /// value为空，抛出空异常
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="parameterName"></param>
         public static void ThrowsIfNull(Object value, String parameterName)
         {
             if (value == null)
                 throw new ArgumentNullException(parameterName);
         }
 
+        /// <summary>
+        /// net20,net35调用String.IsNullOrEmpty，其他类库调用String.IsNullOrWhiteSpace，如果为空，则抛出异常
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="parameterName"></param>
         public static void ThrowsIfIsInvisibleString(String value, String parameterName)
         {
             if (StringEx.IsInvisibleString(value))
@@ -39,6 +52,7 @@ namespace Mini.Foundation.Basic.Utility
         }
 
 #if !NETSTANDARD1_0
+
         /// <summary>
         /// 
         /// </summary>

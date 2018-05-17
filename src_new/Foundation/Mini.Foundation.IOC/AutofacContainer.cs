@@ -33,6 +33,20 @@ namespace Mini.Foundation.IOC
 
         public T Resolve<T>()
         {
+
+            using (var scope = _innerContainer.BeginLifetimeScope())
+            {
+                // Resolve services from a scope that is a child
+                // of the root container.
+                var service = scope.Resolve<IService>();
+
+                // You can also create nested scopes...
+                using (var unitOfWorkScope = scope.BeginLifetimeScope())
+                {
+                    var anotherService = unitOfWorkScope.Resolve<IOther>();
+                }
+            }
+
             return InnerContainer.Resolve<T>();
         }
     }

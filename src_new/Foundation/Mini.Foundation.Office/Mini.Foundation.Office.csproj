@@ -90,10 +90,13 @@
       $(AdditionalConstants)
     </DefineConstants>
   </PropertyGroup>
+  
+  <ItemGroup>
+    <Compile Remove="ExcelHelper.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Mini.Foundation.Basic" Version="1.0.1" />
-    <PackageReference Include="Mini.Foundation.IOC" Version="1.0.1" />
     <PackageReference Include="NPOI" Version="2.3.0" />
   </ItemGroup>
 

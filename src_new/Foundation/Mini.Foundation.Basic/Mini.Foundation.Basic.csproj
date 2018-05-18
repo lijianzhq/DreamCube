@@ -438,7 +438,19 @@
     <Compile Remove="Utility\MyString.cs" />
   </ItemGroup>
 
-  <ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
+    <Reference Include="Microsoft.VisualBasic" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net35'">
+    <Reference Include="Microsoft.VisualBasic" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
+    <Reference Include="Microsoft.VisualBasic" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <Reference Include="Microsoft.VisualBasic" />
   </ItemGroup>
 

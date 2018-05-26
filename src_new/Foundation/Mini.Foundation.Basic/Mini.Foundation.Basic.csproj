@@ -29,8 +29,8 @@
     <AssemblyName>Mini.Foundation.Basic</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.1</Version>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>1.0.3</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net46'">
@@ -427,16 +427,6 @@
       $(AdditionalConstants)
     </DefineConstants>
   </PropertyGroup>
-
-  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
-    <PackageReference Include="Mini.Foundation.IOC">
-      <Version>1.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-
-  <ItemGroup>
-    <Compile Remove="Utility\MyString.cs" />
-  </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
     <Reference Include="Microsoft.VisualBasic" />

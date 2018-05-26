@@ -227,7 +227,7 @@ namespace Mini.Foundation.LogService.Logger
         }
 
         #endregion
-
+        
         #region private method
 
         /// <summary>

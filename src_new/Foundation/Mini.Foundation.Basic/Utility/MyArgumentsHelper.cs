@@ -27,7 +27,7 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="parameterName"></param>
         public static void ThrowsIfIsInvisibleString(String value, String parameterName)
         {
-            if (StringEx.IsInvisibleString(value))
+            if (MyString.IsInvisibleString(value))
                 throw new ArgumentNullException(parameterName);
         }
 
@@ -61,7 +61,7 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="messageTemplate">{0}=value</param>
         public static void ThrowsIfFileNotExist(String value, String parameterName, String messageTemplate = "file [{0}] does not exsit!")
         {
-            if (StringEx.IsInvisibleString(value))
+            if (MyString.IsInvisibleString(value))
                 throw new ArgumentNullException(parameterName);
             if (!File.Exists(value))
                 throw new FileNotFoundException(String.Format(messageTemplate, value));

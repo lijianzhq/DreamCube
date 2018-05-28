@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 #if !NETSTANDARD1_0 && !NETSTANDARD1_3
 using System.Web;
 #endif
@@ -9,6 +10,35 @@ namespace Mini.Foundation.Basic.Utility
 {
     public static class MyWebUtility
     {
+        /// <summary>
+        /// 根据网页的二进制数据，获取对应的编码（从网页的charset字符集去获取）
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="encoding"></param>
+        /// <param name="doNotThrowException">转换编码失败的时候，不要抛出异常</param>
+        /// <returns></returns>
+        public static Boolean TryGetWebPageEncoding(Byte[] data, ref Encoding encoding, Boolean doNotThrowException = true)
+        {
+            if (data == null || data.Length == 0) return false;
+            String strWebData = Encoding.UTF8.GetString(data, 0, data.Length);
+            //获取网页字符编码描述信息
+            Match charSetMatch = Regex.Match(strWebData, "<meta([^<]*)charset=([^<\"]*)\"", RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            String webCharSet = charSetMatch.Groups[2].Value;
+            if (!String.IsNullOrEmpty(webCharSet))
+            {
+                try
+                {
+                    encoding = Encoding.GetEncoding(webCharSet);
+                }
+                catch (ArgumentException)
+                {
+                    if (!doNotThrowException) throw;
+                }
+                return true;
+            }
+            return false;
+        }
+
         public static String HtmlDecode(String value)
         {
 #if HAVE_WEBUTILITY

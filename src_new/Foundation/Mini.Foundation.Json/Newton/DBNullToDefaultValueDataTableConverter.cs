@@ -1,5 +1,8 @@
 ﻿using System;
+
+#if !(NETSTANDARD1_0 || NETSTANDARD1_3)
 using System.Data;
+#endif
 
 //第三方的命名空间
 using Newtonsoft.Json;
@@ -8,7 +11,10 @@ using Newtonsoft.Json.Converters;
 
 namespace Mini.Foundation.Json.Newton
 {
-    class DBNullToDefaultValueDataTableConverter : DataTableConverter
+
+#if !(NETSTANDARD1_0 || NETSTANDARD1_3)
+
+    public class DBNullToDefaultValueDataTableConverter : DataTableConverter
     {
         public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
         {
@@ -53,4 +59,7 @@ namespace Mini.Foundation.Json.Newton
             return null;
         }
     }
+
+#endif
+
 }

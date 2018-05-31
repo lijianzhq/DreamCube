@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net46</TargetFrameworks>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net45;net40;net35;net20</TargetFrameworks>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
     <LangVersion>latest</LangVersion>

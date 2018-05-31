@@ -41,10 +41,12 @@ namespace Mini.Foundation.Json.Newton
                 Type memberType = property == null ? field.FieldType : property.PropertyType;
                 if (memberType == typeof(String))
                     return "";
+#if !(NETSTANDARD1_0 || NETSTANDARD1_3)
                 else if (typeof(IEnumerable).IsAssignableFrom(memberType))
                     return new object[] { };
                 else if (memberType.IsClass)
                     return new object();
+#endif
             }
             return value;
         }

@@ -43,9 +43,11 @@ namespace Mini.Foundation.Json.Newton
         /// <returns>The <see cref="IValueProvider"/> used by the serializer to get and set values from a member.</returns>
         protected override IValueProvider CreateMemberValueProvider(MemberInfo member)
         {
+#if !(NETSTANDARD1_0 || NETSTANDARD1_3)
             object[] attrs = member.GetCustomAttributes(typeof(NullValueProviderAttribute), true);
             if (attrs != null && attrs.Length > 0)
                 return new NullValueProvider(member);
+#endif
             // warning - this method use to cause errors with Intellitrace. Retest in VS Ultimate after changes
             return base.CreateMemberValueProvider(member);
         }

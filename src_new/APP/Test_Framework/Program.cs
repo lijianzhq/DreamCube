@@ -14,7 +14,8 @@ namespace Test_Framework
 
             //TestTracer.Start();
             //Console.WriteLine(nameof(Test_Framework.Program));
-            TestIOC.Start();
+            //TestIOC.Start();
+            TestExcel.Start();
 
             Console.WriteLine("Test end!!!");
             Console.Read();

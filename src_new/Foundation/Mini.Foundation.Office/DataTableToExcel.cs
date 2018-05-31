@@ -4,7 +4,9 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text;
+#if !NET20
 using System.Linq;
+#endif
 
 using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
@@ -203,7 +205,11 @@ namespace Mini.Foundation.Office
             //    CultureInfo culture = Thread.CurrentThread.CurrentCulture;
             //    _ignoreColumnListComparer = StringComparer.Create(culture, true);
             //}
+#if NET20
+            return _ignoreColumnList.Contains(columnName);
+#else
             return _ignoreColumnList.Contains(columnName, StringComparer.CurrentCultureIgnoreCase);
+#endif
         }
 
         /// <summary>
@@ -236,7 +242,7 @@ namespace Mini.Foundation.Office
             return true;
         }
 
-        #endregion
+#endregion
     }
 
     public partial class DataTableToExcel

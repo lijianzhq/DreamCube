@@ -5,6 +5,7 @@ using System.IO;
 
 using NPOI.SS.UserModel;
 using NPOI.HSSF.UserModel;
+using NPOI.XSSF.UserModel;
 using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Foundation.Office
@@ -57,7 +58,12 @@ namespace Mini.Foundation.Office
         {
             MyArgumentsHelper.ThrowsIfFileNotExist(excelFilePath, nameof(excelFilePath));
             var fs = new FileStream(excelFilePath, FileMode.OpenOrCreate, FileAccess.ReadWrite);
-            _workbook = new HSSFWorkbook(fs);
+            // 2007版本  
+            if (excelFilePath.IndexOf(".xlsx") > 0)
+                _workbook = new XSSFWorkbook(fs);
+            // 2003版本  
+            else if (excelFilePath.IndexOf(".xls") > 0)
+                _workbook = new HSSFWorkbook(fs);
             _hasInitial = true;
             return this;
         }

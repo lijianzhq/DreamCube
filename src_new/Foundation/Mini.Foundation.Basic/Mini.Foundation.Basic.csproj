@@ -435,21 +435,21 @@
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net20'">
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net35'">
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
     <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
     <Reference Include="Microsoft.VisualBasic" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Reference Include="System.Web" />
   </ItemGroup>
 

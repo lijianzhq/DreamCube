@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<DbFactories>
+  <!--providerName值，必须与应用程序app.config(web.config)连接字符串中的providerName匹配-->
+  <!--providerType，是自定义的一种类型，根据不同的类型创建不同的工厂实例-->
+  <DBFactory 
+        providerName="System.Data.SqlClient"
+        providerType="SqlClient"
+        dbFactoryType="DreamCube.Framework.DataAccess.Sqlserver.SqlserverDbFactory,DreamCube.Framework.DataAccess.Sqlserver,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null"/>
+  <DBFactory
+        providerName="System.Data.SqlServerCe"
+        providerType="SqlCe"
+        dbFactoryType="DreamCube.Framework.DataAccess.SqlCe.SqlCeDbFactory,DreamCube.Framework.DataAccess.SqlCe,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null"/>
+  <DBFactory
+        providerName="Oracle.DataAccess.OracleClient"
+        providerType="Oracle"
+        dbFactoryType="DreamCube.Framework.DataAccess.Oracle.OracleDbFactory,DreamCube.Framework.DataAccess.Oracle,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null"/>
+  <DBFactory
+      providerName="Oracle.DataAccess.OracleClient2"
+      providerType="Oracle2"
+      dbFactoryType="DreamCube.Framework.DataAccess.Oracle2.OracleDbFactory,DreamCube.Framework.DataAccess.Oracle2,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null"/>
+  <DBFactory
+        providerName="MySql.Data.MySqlClient"
+        providerType="MySQL"
+        dbFactoryType="DreamCube.Framework.DataAccess.MySQL.MySqlDbFactory,DreamCube.Framework.DataAccess.MySQL,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null"/>
+  <DBFactory
+        providerName="System.Data.OleDb"
+        providerType="OleDb"
+        dbFactoryType="DreamCube.Framework.DataAccess.OleDb.MyOleDBFactory,DreamCube.Framework.DataAccess.OleDb,Version=1.0.0.0,Culture=neutral,PublicKeyToken=null"/>
+</DbFactories>		

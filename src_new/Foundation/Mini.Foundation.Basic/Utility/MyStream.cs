@@ -3,9 +3,11 @@ using System.IO;
 
 namespace Mini.Foundation.Basic.Utility
 {
+    /// <summary>
+    /// 流的相关公共方法
+    /// </summary>
     public static class MyStream
     {
-
         /// <summary>
         /// 把不可查找的流读取成内存流
         /// </summary>

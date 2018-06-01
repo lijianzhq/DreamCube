@@ -1,0 +1,1 @@
+﻿Server=127.0.0.1;Port=3306;Database=testdb;Uid=root;Pwd=lijian;

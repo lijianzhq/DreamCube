@@ -8,6 +8,9 @@ using System.Web;
 
 namespace Mini.Foundation.Basic.Utility
 {
+    /// <summary>
+    /// web开发遇到的一些常见的公共方法
+    /// </summary>
     public static class MyWebUtility
     {
         /// <summary>
@@ -39,6 +42,12 @@ namespace Mini.Foundation.Basic.Utility
             return false;
         }
 
+        /// <summary>
+        /// html解码对于.NET20等旧版的调用HttpUtility.HtmlDecode进行解码；
+        /// .net40后新版的调用WebUtility.HtmlDecode进行解码
+        /// </summary>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static String HtmlDecode(String value)
         {
 #if HAVE_WEBUTILITY
@@ -52,7 +61,7 @@ namespace Mini.Foundation.Basic.Utility
         /// 是否已经进行了urlencode
         /// UrlDecode一下，再UrlDecode一下，前后一致即未Encode过，前后不一致即Encode过。
         /// </summary>
-        /// <param name="text"></param>
+        /// <param name="value"></param>
         /// <returns></returns>
         public static Boolean HasUrlEncode(String value)
         {
@@ -65,6 +74,11 @@ namespace Mini.Foundation.Basic.Utility
 #endif
         }
 
+        /// <summary>
+        /// url解码
+        /// </summary>
+        /// <param name="encodedValue"></param>
+        /// <returns></returns>
         public static String UrlDecode(String encodedValue)
         {
 #if HAVE_WEBUTILITY

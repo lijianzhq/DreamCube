@@ -1,0 +1,85 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{6D42BDD2-0117-4019-A7F2-DD2B246A0691}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Framework.DataAccess.OleDB2</RootNamespace>
+    <AssemblyName>Framework.DataAccess.OleDB2</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.XML" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AdodbEnums.cs" />
+    <Compile Include="AccessConnectParam.cs" />
+    <Compile Include="OracleConnectParam.cs" />
+    <Compile Include="MySqlConnectParam.cs" />
+    <Compile Include="SqlConnectParam.cs" />
+    <Compile Include="ConnectParam.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RdbConnection.cs" />
+    <Compile Include="RdbConnHelper.cs" />
+    <Compile Include="RdbConnMgr.cs" />
+    <Compile Include="RdbField.cs" />
+    <Compile Include="RdbRecord.cs" />
+    <Compile Include="RdbRecordSet.cs" />
+    <Compile Include="SqlHelper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\Foundation\Foundation.Basic\Foundation.Basic.csproj">
+      <Project>{203C8B6E-0D5D-4BD9-983E-4B7BBA048567}</Project>
+      <Name>Foundation.Basic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Foundation\Foundation.Serialization\Foundation.Serialization.csproj">
+      <Project>{D1101962-AF34-48AF-81C8-8166E2477CFC}</Project>
+      <Name>Foundation.Serialization</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\Foundation\Foundation.XmlHelper\Foundation.XmlHelper.csproj">
+      <Project>{1C438875-FB02-4D85-BD66-D60853BBE2F9}</Project>
+      <Name>Foundation.XmlHelper</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Framework.DataAccess.Basic\Framework.DataAccess.Basic.csproj">
+      <Project>{D3613952-49B3-4B61-B0A2-65E050AD24CD}</Project>
+      <Name>Framework.DataAccess.Basic</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Z_OLEDB访问数据，数码框架.txt" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,13 @@
+﻿
+
+.NET 编写 ActiveX 直接继承：BasicActiveX 类，此类实现了安全接口
+
+类必须有以下标志：
+
+#if publish
+    [Guid("BF593D7F-E0BE-4CED-B260-7E99DE9704A5")]
+#else
+    [Guid("68BC0A33-44F8-4B95-81B7-654E0EE939F2")]
+#endif
+    [ComVisible(true)]
+    [ClassInterface(ClassInterfaceType.None)]

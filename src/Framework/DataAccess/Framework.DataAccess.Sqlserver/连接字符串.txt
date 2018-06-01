@@ -1,0 +1,3 @@
+﻿Server=SUPERLJ-PC\SQLEXPRESS;Integrated Security=SSPI;Database=TestDB
+
+Data Source=server;Initial Catalog=db;User ID=test;Password=test;

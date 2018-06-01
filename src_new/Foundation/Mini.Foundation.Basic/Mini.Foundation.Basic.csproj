@@ -450,7 +450,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json" />
+    <Reference Include="System.Web" />
   </ItemGroup>
 
 </Project>

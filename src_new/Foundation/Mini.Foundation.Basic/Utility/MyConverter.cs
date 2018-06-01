@@ -4,8 +4,17 @@ using System.ComponentModel;
 
 namespace Mini.Foundation.Basic.Utility
 {
+    /// <summary>
+    /// 类型转换器
+    /// </summary>
     public static class MyConverter
     {
+        /// <summary>
+        /// 泛型版本
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="value"></param>
+        /// <returns></returns>
         public static T ChangeType<T>(Object value)
         {
             return (T)ChangeType(value, typeof(T));
@@ -47,26 +56,16 @@ namespace Mini.Foundation.Basic.Utility
 
 #if !(NETSTANDARD1_0 || NETSTANDARD1_3)
 
+        /// <summary>
+        /// 向系统注册TypeConverter，当调用convert方法的时候，对应的类型转换器会自动被调用
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <typeparam name="TC"></typeparam>
         public static void RegisterTypeConverter<T, TC>() where TC : TypeConverter
         {
             TypeDescriptor.AddAttributes(typeof(T), new TypeConverterAttribute(typeof(TC)));
         }
 
-        public class VersionConverter : TypeConverter
-        {
-            public override object ConvertFrom(ITypeDescriptorContext context, System.Globalization.CultureInfo culture, object value)
-            {
-                string strvalue = value as string;
-                if (strvalue != null)
-                {
-                    return new Version(strvalue);
-                }
-                else
-                {
-                    return new Version();
-                }
-            }
-        }
 #endif
     }
 }

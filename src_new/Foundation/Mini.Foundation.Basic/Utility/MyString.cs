@@ -7,9 +7,19 @@ using System.IO;
 
 namespace Mini.Foundation.Basic.Utility
 {
+    /// <summary>
+    /// 字符串的相关方法
+    /// </summary>
     public static class MyString
     {
 
+        /// <summary>
+        /// 从给定的字符串，获取两个字符串之间的内容
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="startChar"></param>
+        /// <param name="endChar"></param>
+        /// <returns></returns>
 #if NET20
         public static String GetBetweenStr(String value, String startChar, String endChar)
 #else
@@ -40,7 +50,7 @@ namespace Mini.Foundation.Basic.Utility
         /// </summary>
         /// <param name="target"></param>
         /// <param name="value">标志字符</param>
-        /// <param name="bIgnoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
+        /// <param name="ignoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
         /// <param name="defaultValue">当target为NULL或者空串时，返回的默认值</param>
         /// <returns></returns>
 #if NET20
@@ -60,7 +70,8 @@ namespace Mini.Foundation.Basic.Utility
         /// </summary>
         /// <param name="target"></param>
         /// <param name="value">标志字符</param>
-        /// <param name="bIgnoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
+        /// <param name="ignoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
+        /// <param name="defaultValue">获取不到的时候，返回的默认值</param>
         /// <returns></returns>
 #if NET20
         public static String LeftOfLast(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
@@ -79,7 +90,8 @@ namespace Mini.Foundation.Basic.Utility
         /// </summary>
         /// <param name="target"></param>
         /// <param name="value">标志字符</param>
-        /// <param name="bIgnoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
+        /// <param name="ignoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
+        /// <param name="defaultValue">获取失败的时候，返回的默认值</param>
         /// <returns></returns>
 #if NET20
         public static String Left(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
@@ -132,7 +144,8 @@ namespace Mini.Foundation.Basic.Utility
         /// </summary>
         /// <param name="target"></param>
         /// <param name="value">标志字符</param>
-        /// <param name="bIgnoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
+        /// <param name="ignoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
+        /// <param name="defaultValue">获取失败返回的默认值</param>
         /// <returns></returns>
 #if NET20
         public static String Right(String target, String value, Boolean ignoreCase = false, String defaultValue = "")

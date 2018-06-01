@@ -1,0 +1,3 @@
+﻿
+Oracle的连接字符串说明：
+Provider=OraOLEDB.Oracle.1;Persist Security Info=True;User ID=sinfo_Money;Password=guanliyuan;Data Source='(DESCRIPTION = (SDU = 2048)(ADDRESS = (PROTOCOL = tcp)(HOST = 127.0.0.1)(PORT = 1521))(CONNECT_DATA = (SERVICE_NAME = ORCL)))'

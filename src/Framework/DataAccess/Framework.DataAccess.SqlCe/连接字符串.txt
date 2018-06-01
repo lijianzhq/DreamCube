@@ -1,0 +1,1 @@
+﻿Data Source=E:\DreamCube\Apps\Projects\TBRobot\TaobaoGJ.DAL\DB\basicdb.sdf;Password=zmx911lj329YF!;Persist Security Info=True

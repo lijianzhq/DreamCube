@@ -135,10 +135,10 @@ namespace Mini.Foundation.Office
         /// <summary>
         /// </summary>
         /// <param name="fileFullPath">excel文件路径</param>
-        /// <param name="create">是否创建新的文件</param>
-        public ExcelWrapper(String fileFullPath, Boolean create = false)
+        /// <param name="createIfNotExist">指示如果指定路径文件不存在，是否创建新的文件</param>
+        public ExcelWrapper(String fileFullPath, Boolean createIfNotExist = false)
         {
-            this.Init(fileFullPath, create);
+            this.Init(fileFullPath, createIfNotExist);
         }
 
         #endregion
@@ -402,11 +402,14 @@ namespace Mini.Foundation.Office
 
         #region "protected method"
 
-        protected virtual String CreateEmptyFile()
+        protected virtual String EnsureFileExist()
         {
             //如果不存在 则从嵌入资源内读取 BlockSet.xml 
             Assembly asm = Assembly.GetExecutingAssembly();//读取嵌入式资源
-            _fileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{ Guid.NewGuid().ToString("N")}.xlsx");
+            if (String.IsNullOrEmpty(_fileFullPath))
+                _fileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{ Guid.NewGuid().ToString("N")}.xlsx");
+            else if (File.Exists(_fileFullPath))
+                return _fileFullPath;
             using (Stream sm = asm.GetManifestResourceStream("Mini.Foundation.Office.empty.xlsx"))
             {
                 using (var fs = File.Create(_fileFullPath))
@@ -427,12 +430,11 @@ namespace Mini.Foundation.Office
         /// 根据文件初始化对象（如果指定的路径不存在，则会新增一个excel）
         /// </summary>
         /// <param name="excelFilePath"></param>
-        /// <param name="create"></param>
-        protected virtual void Init(String excelFilePath, Boolean create = false)
+        /// <param name="createIfNotExist"></param>
+        protected virtual void Init(String excelFilePath, Boolean createIfNotExist = false)
         {
             _fileFullPath = excelFilePath;
-            if (String.IsNullOrEmpty(_fileFullPath))
-                _fileFullPath = CreateEmptyFile();
+            if (createIfNotExist) EnsureFileExist();
             MyArgumentsHelper.ThrowsIfFileNotExist(_fileFullPath, nameof(excelFilePath));
             //var file = new FileInfo(_fileFullPath);
             var fs = new FileStream(_fileFullPath, FileMode.Open, FileAccess.ReadWrite);

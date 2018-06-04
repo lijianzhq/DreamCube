@@ -40,5 +40,16 @@ namespace Mini.Foundation.Office.Test
                 Assert.IsTrue(table.Columns[2].ColumnName == "身高");
             }
         }
+
+        [Test]
+        public void TestMethod2()
+        {
+            Assert.Throws(typeof(ArgumentNullException), () =>
+             {
+                 using (var excel = new ExcelWrapper(""))
+                 {
+                 }
+             });
+        }
     }
 }

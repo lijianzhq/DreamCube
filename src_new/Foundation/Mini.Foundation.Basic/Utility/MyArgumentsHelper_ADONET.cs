@@ -16,6 +16,8 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="table"></param>
         /// <param name="parameterName"></param>
         /// <param name="messageTemplate">{0}=parameterName</param>
+        /// <exception cref="ArgumentNullException">table为null</exception>
+        /// <exception cref="ArgumentException">table.rows.count==0</exception>
         public static void ThrowsIfNullOrNoRows(DataTable table, String parameterName, String messageTemplate = "table [{0}] does not contains one row!")
         {
             if (table == null)

@@ -4,28 +4,47 @@ using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Text;
+using System.Reflection;
 #if !NET20
 using System.Linq;
 #endif
 
 using NPOI.HSSF.UserModel;
+using NPOI.XSSF.UserModel;
 using NPOI.SS.UserModel;
 using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Foundation.Office
 {
-    public partial class DataTableToExcel : IDataTableToExcel
+    /// <summary>
+    /// excel的封装类
+    /// </summary>
+    public partial class ExcelWrapper : IDisposable
     {
         #region "fields"
 
-        protected HSSFCellStyle _headerCellStyle = null;
-        protected IWorkbook _workbook = new HSSFWorkbook();
+        protected ICellStyle _defaultHeaderCellStyle = null;
         /// <summary>
         /// 缓存单元格最大的宽度（用于在构造execl的过程中，根据列内容的大小，调整宽度）
         /// key： columnindex
         /// value：max dataLength
         /// </summary>
         protected Dictionary<Int32, Int32> _cellMaxDataLength = new Dictionary<Int32, Int32>();
+
+        /// <summary>  
+        /// 使用NOPI读取Excel数据  
+        /// </summary>  
+        protected IWorkbook _workbook;
+        /// <summary>
+        /// 是否已经初始化了
+        /// </summary>
+        protected Boolean _hasInitial = false;
+        protected List<String> _sheetNames = null;
+
+        /// <summary>
+        /// 文件路径
+        /// </summary>
+        protected String _fileFullPath = String.Empty;
 
         #endregion
 
@@ -34,13 +53,12 @@ namespace Mini.Foundation.Office
         /// <summary>
         /// 创建表头的样式
         /// </summary>
-        /// <param name="_workbook"></param>
         /// <returns></returns>
-        public virtual HSSFCellStyle HeaderCellStyle
+        public virtual ICellStyle DefaultHeaderCellStyle
         {
             get
             {
-                if (_headerCellStyle == null)
+                if (_defaultHeaderCellStyle == null)
                 {
                     //_headerCellStyle = (HSSFCellStyle)_workbook.CreateCellStyle();
                     //_headerCellStyle.Alignment = LY.TEC.Excel.SS.UserModel.HorizontalAlignment.CENTER;
@@ -59,30 +77,48 @@ namespace Mini.Foundation.Office
                     //font.Boldweight = 700;
                     //font.Color = 9;
                     //_headerCellStyle.SetFont(font);
-                    _headerCellStyle = (HSSFCellStyle)_workbook.CreateCellStyle();
-                    _headerCellStyle.Alignment = HorizontalAlignment.Center;
-                    _headerCellStyle.FillForegroundColor = 23;
-                    _headerCellStyle.BorderBottom = BorderStyle.Thin;
-                    _headerCellStyle.BottomBorderColor = 23;
-                    _headerCellStyle.BorderLeft = BorderStyle.Thin;
-                    _headerCellStyle.LeftBorderColor = 55;
-                    _headerCellStyle.BorderRight = BorderStyle.Thin;
-                    _headerCellStyle.RightBorderColor = 55;
-                    _headerCellStyle.BorderTop = BorderStyle.Thin;
-                    _headerCellStyle.TopBorderColor = 22;
-                    _headerCellStyle.FillPattern = FillPattern.SolidForeground;
+                    _defaultHeaderCellStyle = _workbook.CreateCellStyle();
+                    _defaultHeaderCellStyle.Alignment = HorizontalAlignment.Center;
+                    _defaultHeaderCellStyle.FillForegroundColor = 23;
+                    _defaultHeaderCellStyle.BorderBottom = BorderStyle.Thin;
+                    _defaultHeaderCellStyle.BottomBorderColor = 23;
+                    _defaultHeaderCellStyle.BorderLeft = BorderStyle.Thin;
+                    _defaultHeaderCellStyle.LeftBorderColor = 55;
+                    _defaultHeaderCellStyle.BorderRight = BorderStyle.Thin;
+                    _defaultHeaderCellStyle.RightBorderColor = 55;
+                    _defaultHeaderCellStyle.BorderTop = BorderStyle.Thin;
+                    _defaultHeaderCellStyle.TopBorderColor = 22;
+                    _defaultHeaderCellStyle.FillPattern = FillPattern.SolidForeground;
                     IFont font = _workbook.CreateFont();
                     font.FontHeightInPoints = 10;
                     font.Boldweight = 700;
                     font.Color = 9;
-                    _headerCellStyle.SetFont(font);
+                    _defaultHeaderCellStyle.SetFont(font);
 
                 }
-                return _headerCellStyle;
+                return _defaultHeaderCellStyle;
             }
             set
             {
-                _headerCellStyle = value;
+                _defaultHeaderCellStyle = value;
+            }
+        }
+
+        /// <summary>
+        /// 获取excel的所有sheet名称
+        /// </summary>
+        public virtual List<String> SheetNames
+        {
+            get
+            {
+                if (_sheetNames != null) return _sheetNames;
+                if (_workbook == null) return null;
+                var count = _workbook.NumberOfSheets; //获取所有SheetName
+                var sheetNameList = new List<String>();
+                for (var i = 0; i < count; i++)
+                    sheetNameList.Add(_workbook.GetSheetAt(i).SheetName);
+                _sheetNames = sheetNameList;
+                return _sheetNames;
             }
         }
 
@@ -93,21 +129,104 @@ namespace Mini.Foundation.Office
         /// <summary>
         /// datatable数据加载到excel文件中
         /// </summary>
-        /// <param name="_dt"></param>
-        /// <param name="_sheetName">指定生成的工作簿名</param>
-        /// <param name="ignoreColumns">忽略的列名</param>
-        public DataTableToExcel()
+        public ExcelWrapper() : this("", true)
         { }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="fileFullPath">excel文件路径</param>
+        /// <param name="create">是否创建新的文件</param>
+        public ExcelWrapper(String fileFullPath, Boolean create = false)
+        {
+            this.Init(fileFullPath, create);
+        }
 
         #endregion
 
         #region "public method"
 
         /// <summary>
-        /// 保存workbook到磁盘上
+        /// 将excel中的所有的表格数据导入到DataTable中
         /// </summary>
-        /// <param name="filePath"></param>
-        public virtual void SaveToFile(String filePath)
+        /// <param name="sheetNames">如果不传入该参数，则默认读取所有的 sheet 数据到DataSet</param>
+        /// <param name="isFirstRowColumnName">第一行是否是DataTable的列名</param>  
+        /// <returns></returns>
+        public virtual DataSet GetDataTables(String[] sheetNames = null, Boolean isFirstRowColumnName = false)
+        {
+            sheetNames = sheetNames ?? SheetNames.ToArray();
+            var ds = new DataSet();
+            foreach (var sheetName in sheetNames)
+            {
+                ds.Tables.Add(GetDataTable(sheetName, isFirstRowColumnName));
+            }
+            return ds;
+        }
+
+        /// <summary>  
+        /// 将excel中的数据导入到DataTable中  
+        /// </summary>  
+        /// <param name="sheetName">excel工作薄sheet的名称</param>  
+        /// <param name="isFirstRowColumnName">第一行是否是DataTable的列名</param>  
+        /// <returns>返回的DataTable</returns>  
+        public virtual DataTable GetDataTable(String sheetName = "Sheet1", Boolean isFirstRowColumnName = false)
+        {
+            MyArgumentsHelper.ThrowsIfIsInvisibleString(sheetName, nameof(sheetName));
+            ISheet sheet = null;
+            var data = new DataTable();
+            data.TableName = sheetName;
+            int startRow = 0;
+
+            sheet = _workbook.GetSheet(sheetName);
+            if (sheet == null) throw new Exception(String.Format("excel file does not has the sheet named [{0}]!", sheetName));
+
+            var firstRow = sheet.GetRow(0);
+            if (firstRow == null) return data;
+            int cellCount = firstRow.LastCellNum; //一行最后一个cell的编号 即总的列数  
+            startRow = isFirstRowColumnName ? sheet.FirstRowNum + 1 : sheet.FirstRowNum;
+
+            for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
+            {
+                var column = new DataColumn(Convert.ToChar('A' + i).ToString());
+                if (isFirstRowColumnName)
+                {
+                    var columnName = firstRow.GetCell(i).StringCellValue;
+                    column = new DataColumn(columnName);
+                }
+                data.Columns.Add(column);
+            }
+
+            //最后一列的标号  
+            int rowCount = sheet.LastRowNum;
+            for (int i = startRow; i <= rowCount; ++i)
+            {
+                IRow row = sheet.GetRow(i);
+                if (row == null) continue; //没有数据的行默认是null　　　　　　　  
+
+                DataRow dataRow = data.NewRow();
+                for (int j = row.FirstCellNum; j < cellCount; ++j)
+                {
+                    if (row.GetCell(j) != null) //同理，没有数据的单元格都默认是null  
+                        dataRow[j] = row.GetCell(j, MissingCellPolicy.RETURN_NULL_AND_BLANK).ToString();
+                }
+                data.Rows.Add(dataRow);
+            }
+            return data;
+        }
+
+        /// <summary>
+        /// 保存修改
+        /// </summary>
+        /// <returns></returns>
+        public virtual String Save()
+        {
+            return SaveToFile(this._fileFullPath);
+        }
+
+        /// <summary>
+        /// 保存workbook到磁盘上（另存为指定的其他目录）
+        /// </summary>
+        /// <param name="fileFullPath"></param>
+        public virtual String SaveToFile(String fileFullPath)
         {
             //生成文件
             using (MemoryStream ms = new MemoryStream())
@@ -115,7 +234,7 @@ namespace Mini.Foundation.Office
                 _workbook.Write(ms);
                 ms.Flush();
                 ms.Position = 0L;
-                using (FileStream fs = new FileStream(filePath, FileMode.Create))
+                using (FileStream fs = new FileStream(fileFullPath, FileMode.Create))
                 {
                     //Byte[] buffer = new Byte[1024];
                     //Int32 offset = 0;
@@ -131,6 +250,7 @@ namespace Mini.Foundation.Office
                     fs.Flush();
                 }
             }
+            return fileFullPath;
         }
 
         /// <summary>
@@ -138,7 +258,8 @@ namespace Mini.Foundation.Office
         /// </summary>
         /// <param name="table"></param>
         /// <param name="sheetName"></param>
-        public virtual void AddSheet(DataTable table, String sheetName = "Sheet1", String[] ignoreColumns = null)
+        /// <param name="ignoreColumns"></param>
+        public virtual void AddSheet(DataTable table, String sheetName = "Sheet2", String[] ignoreColumns = null)
         {
             MyArgumentsHelper.ThrowsIfNull(table, nameof(table));
             MyArgumentsHelper.ThrowsIfIsInvisibleString(sheetName, nameof(sheetName));
@@ -149,7 +270,7 @@ namespace Mini.Foundation.Office
             //渲染列头
             IRow row = sheet.CreateRow(0);//添加第一行（列头）
             //设置表头样式
-            HSSFCellStyle headCellStyle = HeaderCellStyle;
+            ICellStyle headCellStyle = DefaultHeaderCellStyle;
             Int32 excelColumnIndex = 0;//指示excel的列序号
             for (var i = 0; i < table.Columns.Count; i++)
             {
@@ -164,7 +285,6 @@ namespace Mini.Foundation.Office
                     sheet.SetColumnWidth(excelColumnIndex, GetColumnWidth(datalength));
                 excelColumnIndex++;
             }
-
             excelColumnIndex = 0;
             //渲染数据
             for (var r = 0; r < table.Rows.Count; r++)
@@ -186,67 +306,6 @@ namespace Mini.Foundation.Office
             }
         }
 
-        #endregion
-
-        #region "protected method"
-
-        /// <summary>
-        /// 判断列是否被忽略掉
-        /// </summary>
-        /// <param name="columnName"></param>
-        /// <param name="ignoreColumns"></param>
-        /// <returns></returns>
-        protected virtual Boolean IsColumnIgnore(String columnName, String[] ignoreColumns)
-        {
-            if (ignoreColumns == null) return false;
-            var _ignoreColumnList = new List<string>(ignoreColumns);
-            //if (_ignoreColumnListComparer == null)
-            //{
-            //    CultureInfo culture = Thread.CurrentThread.CurrentCulture;
-            //    _ignoreColumnListComparer = StringComparer.Create(culture, true);
-            //}
-#if NET20
-            return _ignoreColumnList.Contains(columnName);
-#else
-            return _ignoreColumnList.Contains(columnName, StringComparer.CurrentCultureIgnoreCase);
-#endif
-        }
-
-        /// <summary>
-        /// 根据数据的长度，获取单元格的宽度
-        /// </summary>
-        /// <param name="dataLength"></param>
-        /// <returns></returns>
-        protected virtual Int32 GetColumnWidth(Int32 dataLength)
-        {
-            return Math.Min((dataLength + 1) * 256, 30720);
-        }
-
-        /// <summary>
-        /// 获取合适的列宽值
-        /// </summary>
-        /// <param name="columnIndex"></param>
-        /// <param name="cellData"></param>
-        /// <param name="dataLength"></param>
-        /// <returns></returns>
-        protected virtual Boolean UpdateSetMaxColumnWidth(Int32 columnIndex, String cellData, out Int32 dataLength)
-        {
-            dataLength = Encoding.GetEncoding(936).GetBytes(cellData).Length;
-            if (_cellMaxDataLength.ContainsKey(columnIndex))
-            {
-                Int32 currentLength = _cellMaxDataLength[columnIndex];
-                //不用更新最大值
-                if (currentLength >= dataLength) return false;
-            }
-            _cellMaxDataLength[columnIndex] = dataLength;
-            return true;
-        }
-
-#endregion
-    }
-
-    public partial class DataTableToExcel
-    {
         /// <summary>
         /// 图片在单元格等比缩放居中显示
         /// </summary>
@@ -261,13 +320,13 @@ namespace Mini.Foundation.Office
             int Dx1 = 0;//图片左边相对excel格的位置(x偏移) 范围值为:0~1023,超过1023就到右侧相邻的单元格里了
             int Dy1 = 0;//图片上方相对excel格的位置(y偏移) 范围值为:0~256,超过256就到下方的单元格里了
             bool bOriginalSize = false;//是否显示图片原始大小 true表示图片显示原始大小  false表示显示图片缩放后的大小
-            ///计算单元格的长度和宽度
+            //计算单元格的长度和宽度
             double CellWidth = cell.Row.Sheet.GetColumnWidth(cell.ColumnIndex);
             double CellHeight = cell.Sheet.GetRow(cell.RowIndex).Height;
             //单元格长度和宽度与图片的长宽单位互换是根据实例得出
             CellWidth = CellWidth / 35;
             CellHeight = CellHeight / 15;
-            ///计算图片的长度和宽度
+            //计算图片的长度和宽度
             MemoryStream ms = new MemoryStream(image);
             Image Img = Bitmap.FromStream(ms, true);
             double ImageOriginalWidth = Img.Width;//原始图片的长度
@@ -338,5 +397,123 @@ namespace Mini.Foundation.Office
 #endif
 
         }
+
+        #endregion
+
+        #region "protected method"
+
+        protected virtual String CreateEmptyFile()
+        {
+            //如果不存在 则从嵌入资源内读取 BlockSet.xml 
+            Assembly asm = Assembly.GetExecutingAssembly();//读取嵌入式资源
+            _fileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{ Guid.NewGuid().ToString("N")}.xlsx");
+            using (Stream sm = asm.GetManifestResourceStream("Mini.Foundation.Office.empty.xlsx"))
+            {
+                using (var fs = File.Create(_fileFullPath))
+                {
+                    var buffer = new Byte[1024 * 100];
+                    var read = -1;
+                    do
+                    {
+                        read = sm.Read(buffer, 0, buffer.Length);
+                        if (read > 0) fs.Write(buffer, 0, read);
+                    } while (read > 0);
+                }
+            }
+            return _fileFullPath;
+        }
+
+        /// <summary>
+        /// 根据文件初始化对象（如果指定的路径不存在，则会新增一个excel）
+        /// </summary>
+        /// <param name="excelFilePath"></param>
+        /// <param name="create"></param>
+        protected virtual void Init(String excelFilePath, Boolean create = false)
+        {
+            _fileFullPath = excelFilePath;
+            if (String.IsNullOrEmpty(_fileFullPath))
+                _fileFullPath = CreateEmptyFile();
+            MyArgumentsHelper.ThrowsIfFileNotExist(_fileFullPath, nameof(excelFilePath));
+            //var file = new FileInfo(_fileFullPath);
+            var fs = new FileStream(_fileFullPath, FileMode.Open, FileAccess.ReadWrite);
+            // 2007版本  
+            if (_fileFullPath.IndexOf(".xlsx") > 0)
+                _workbook = new XSSFWorkbook(fs);
+            // 2003版本  
+            else if (_fileFullPath.IndexOf(".xls") > 0)
+                _workbook = new HSSFWorkbook(fs);
+        }
+
+        /// <summary>
+        /// 判断列是否被忽略掉
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <param name="ignoreColumns"></param>
+        /// <returns></returns>
+        protected virtual Boolean IsColumnIgnore(String columnName, String[] ignoreColumns)
+        {
+            if (ignoreColumns == null) return false;
+            var _ignoreColumnList = new List<string>(ignoreColumns);
+            //if (_ignoreColumnListComparer == null)
+            //{
+            //    CultureInfo culture = Thread.CurrentThread.CurrentCulture;
+            //    _ignoreColumnListComparer = StringComparer.Create(culture, true);
+            //}
+#if NET20
+            return _ignoreColumnList.Contains(columnName);
+#else
+            return _ignoreColumnList.Contains(columnName, StringComparer.CurrentCultureIgnoreCase);
+#endif
+        }
+
+        /// <summary>
+        /// 根据数据的长度，获取单元格的宽度
+        /// </summary>
+        /// <param name="dataLength"></param>
+        /// <returns></returns>
+        protected virtual Int32 GetColumnWidth(Int32 dataLength)
+        {
+            return Math.Min((dataLength + 1) * 256, 30720);
+        }
+
+        /// <summary>
+        /// 获取合适的列宽值
+        /// </summary>
+        /// <param name="columnIndex"></param>
+        /// <param name="cellData"></param>
+        /// <param name="dataLength"></param>
+        /// <returns></returns>
+        protected virtual Boolean UpdateSetMaxColumnWidth(Int32 columnIndex, String cellData, out Int32 dataLength)
+        {
+            dataLength = Encoding.GetEncoding(936).GetBytes(cellData).Length;
+            if (_cellMaxDataLength.ContainsKey(columnIndex))
+            {
+                Int32 currentLength = _cellMaxDataLength[columnIndex];
+                //不用更新最大值
+                if (currentLength >= dataLength) return false;
+            }
+            _cellMaxDataLength[columnIndex] = dataLength;
+            return true;
+        }
+
+        protected virtual void Dispose(Boolean disposing)
+        {
+            if (disposing)
+            {
+                if (_workbook != null)
+                    _workbook.Close();
+            }
+        }
+
+        #endregion
+
+        #region IDisposable
+
+        public void Dispose()
+        {
+            Dispose(true);
+        }
+
+        #endregion
     }
 }

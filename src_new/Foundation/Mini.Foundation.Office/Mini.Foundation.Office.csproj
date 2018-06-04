@@ -94,6 +94,14 @@
   <ItemGroup>
     <Compile Remove="ExcelHelper.cs" />
   </ItemGroup>
+  
+  <ItemGroup>
+    <None Remove="empty.xlsx" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <EmbeddedResource Include="empty.xlsx" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Mini.Foundation.Basic" Version="1.0.1" />

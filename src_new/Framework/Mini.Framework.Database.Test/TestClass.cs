@@ -24,7 +24,7 @@ namespace Mini.Framework.Database.Test
         }
 
         [Test]
-        public void TestMethod()
+        public void TestMethod1()
         {
             //using (var context = _db.BeginExecuteContext())
             //{
@@ -51,6 +51,31 @@ namespace Mini.Framework.Database.Test
                 var table = context.GetDataTable("select stuname from students  where stuname='lijian'");
                 Assert.IsTrue(table.Rows.Count == 1);
                 Assert.IsTrue(table.Rows[0]["stuname"].ToString() == "lijian");
+            }
+        }
+
+        [Test]
+        public void TestMethod2()
+        {
+            //using (var context = _db.BeginExecuteContext())
+            //{
+            //    Assert.IsTrue(1 == context.ExecuteNonQuery("insert into user(username) values('lijian')"));
+            //}
+
+            using (var context = _db.BeginExecuteContext())
+            {
+                context.ExecuteNonQuery("delete from students");
+            }
+
+            using (var context = _db.BeginExecuteContext())
+            {
+                Assert.IsTrue(1 == context.ExecuteNonQuery("insert into Students(stuname) values('lijian')"));
+                Assert.IsTrue(1 == context.ExecuteNonQuery("insert into Students(stuname) values('zhq')"));
+            }
+
+            using (var context = _db.BeginExecuteContext())
+            {
+                Assert.IsTrue(2 == context.ExecuteScalar<Int32>("select count(*) from students"));
             }
         }
     }

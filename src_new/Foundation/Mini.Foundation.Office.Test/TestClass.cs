@@ -5,6 +5,7 @@ using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.IO;
 
 using Mini.Foundation.Office;
 
@@ -50,6 +51,12 @@ namespace Mini.Foundation.Office.Test
                  {
                  }
              });
+            Assert.Throws(typeof(FileNotFoundException), () =>
+            {
+                using (var excel = new ExcelWrapper(@"d:\a.xlsx"))
+                {
+                }
+            });
         }
     }
 }

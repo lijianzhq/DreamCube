@@ -146,4 +146,14 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="ArgumentsHelper.cs" />
+    <Compile Remove="AutofacContainer.cs" />
+    <Compile Remove="AutofacContainerBuilderHelper.cs" />
+    <Compile Remove="ConfigurationProvider.cs" />
+    <Compile Remove="ContainerFactory.cs" />
+    <Compile Remove="IContainer.cs" />
+    <Compile Remove="ILifetimeScope.cs" />
+  </ItemGroup>
+
 </Project>

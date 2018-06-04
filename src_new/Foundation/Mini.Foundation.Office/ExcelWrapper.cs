@@ -136,6 +136,8 @@ namespace Mini.Foundation.Office
         /// </summary>
         /// <param name="fileFullPath">excel文件路径</param>
         /// <param name="createIfNotExist">指示如果指定路径文件不存在，是否创建新的文件</param>
+        /// <exception cref="ArgumentNullException">excelFilePath参数为null并且createIfNotExist为false</exception>
+        /// <exception cref="FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
         public ExcelWrapper(String fileFullPath, Boolean createIfNotExist = false)
         {
             this.Init(fileFullPath, createIfNotExist);
@@ -431,6 +433,8 @@ namespace Mini.Foundation.Office
         /// </summary>
         /// <param name="excelFilePath"></param>
         /// <param name="createIfNotExist"></param>
+        /// <exception cref="ArgumentNullException">excelFilePath参数为null并且createIfNotExist为false</exception>
+        /// <exception cref="FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
         protected virtual void Init(String excelFilePath, Boolean createIfNotExist = false)
         {
             _fileFullPath = excelFilePath;

@@ -4,6 +4,8 @@ using System.Data.OleDb;
 #endif
 using System.Data.Common;
 
+using Mini.Foundation.Basic.Utility;
+
 namespace Mini.Framework.Database.DefaultProviders
 {
 #if !NETSTANDARD2_0
@@ -12,6 +14,7 @@ namespace Mini.Framework.Database.DefaultProviders
         protected String _filePath = String.Empty;
         public AccessProvider(String filePath)
         {
+            MyArgumentsHelper.ThrowsIfFileNotExist(filePath, nameof(filePath));
             this._filePath = filePath;
         }
 

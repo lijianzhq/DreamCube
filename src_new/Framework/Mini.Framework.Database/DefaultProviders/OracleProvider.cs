@@ -4,6 +4,8 @@ using System.Data.Common;
 using System.Data.OracleClient;
 #endif
 
+using Mini.Foundation.Basic.Utility;
+
 namespace Mini.Framework.Database.DefaultProviders
 {
 #if !NETSTANDARD2_0
@@ -12,6 +14,7 @@ namespace Mini.Framework.Database.DefaultProviders
         protected String _connStr = String.Empty;
         public OracleProvider(String connectionString)
         {
+            MyArgumentsHelper.ThrowsIfNullOrEmpty(connectionString, nameof(connectionString));
             this._connStr = connectionString;
         }
 

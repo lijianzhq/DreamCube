@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net45;net40;net35;net20;netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
   </PropertyGroup>
 
 </Project>

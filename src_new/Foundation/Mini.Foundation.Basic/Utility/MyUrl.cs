@@ -29,7 +29,7 @@ namespace Mini.Foundation.Basic.Utility
                     return String.Format("{0}://{1}{2}{3}", uri.Scheme, uri.Host, uri.IsDefaultPort ? "" : ":" + uri.Port.ToString(), part2);
                 else if (part1.EndsWith(uri.Host))
                     return String.Format("{0}/{1}", part1, part2);
-                return String.Format("{0}/{1}", MyString.LeftOfLast(part1, "/"), part2);
+                return String.Format("{0}/{1}", MyString.LastLeftOf(part1, "/"), part2);
             }
             return part1 + part2;
         }

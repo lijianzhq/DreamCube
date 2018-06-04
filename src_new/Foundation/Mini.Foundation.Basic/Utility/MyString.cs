@@ -12,7 +12,6 @@ namespace Mini.Foundation.Basic.Utility
     /// </summary>
     public static class MyString
     {
-
         /// <summary>
         /// 从给定的字符串，获取两个字符串之间的内容
         /// </summary>
@@ -54,9 +53,9 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="defaultValue">当target为NULL或者空串时，返回的默认值</param>
         /// <returns></returns>
 #if NET20
-        public static String RightOfLast(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String LastRightOf(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
 #else
-        public static String RightOfLast(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String LastRightOf(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
 #endif
         {
             if (String.IsNullOrEmpty(target)) return defaultValue;
@@ -74,9 +73,9 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="defaultValue">获取不到的时候，返回的默认值</param>
         /// <returns></returns>
 #if NET20
-        public static String LeftOfLast(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String LastLeftOf(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
 #else
-        public static String LeftOfLast(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String LastLeftOf(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
 #endif
         {
             if (String.IsNullOrEmpty(target)) return defaultValue;
@@ -94,9 +93,9 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="defaultValue">获取失败的时候，返回的默认值</param>
         /// <returns></returns>
 #if NET20
-        public static String Left(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String LeftOf(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
 #else
-        public static String Left(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String LeftOf(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
 #endif
         {
             if (String.IsNullOrEmpty(target)) return defaultValue;
@@ -112,9 +111,9 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="length"></param>
         /// <returns></returns>
 #if NET20
-        public static String Left(String target, Int32 length)
+        public static String LeftOf(String target, Int32 length)
 #else
-        public static String Left(this String target, Int32 length)
+        public static String LeftOf(this String target, Int32 length)
 #endif
         {
             if (length <= 0) return "";
@@ -129,9 +128,9 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="length"></param>
         /// <returns></returns>
 #if NET20
-        public static String Right(String target, Int32 length)
+        public static String RightOf(String target, Int32 length)
 #else
-        public static String Right(this String target, Int32 length)
+        public static String RightOf(this String target, Int32 length)
 #endif
         {
             if (length <= 0) return "";
@@ -148,9 +147,9 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="defaultValue">获取失败返回的默认值</param>
         /// <returns></returns>
 #if NET20
-        public static String Right(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String RightOf(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
 #else
-        public static String Right(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String RightOf(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
 #endif
         {
             if (String.IsNullOrEmpty(target)) return defaultValue;

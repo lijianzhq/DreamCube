@@ -4,6 +4,9 @@ using System.Text;
 
 namespace Mini.Foundation.Basic.Utility
 {
+    /// <summary>
+    /// 对Enumerable的类的一些扩展方法
+    /// </summary>
     public static class MyEnumerable
     {
         /// <summary>

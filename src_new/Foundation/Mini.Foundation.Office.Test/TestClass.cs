@@ -58,5 +58,23 @@ namespace Mini.Foundation.Office.Test
                 }
             });
         }
+
+        [Test]
+        public void TestMethod3()
+        {
+            var path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "testFile/passwords.xlsx");
+            using (var excel = new ExcelWrapper(path))
+            {
+                var table = excel.GetDataTable("新开通供应商", true);
+                Assert.IsTrue(table.Rows.Count == 2991);
+            }
+
+            path = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "testFile/emails.xlsx");
+            using (var excel = new ExcelWrapper(path))
+            {
+                var table = excel.GetDataTable("Sheet1", true);
+                Assert.IsTrue(table.Rows.Count == 4592);
+            }
+        }
     }
 }

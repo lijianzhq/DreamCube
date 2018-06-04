@@ -1,9 +1,14 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>net45;net40;net35;net20;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks>net45;net40;net20;netstandard2.0</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
+    <Version>1.0.2</Version>
   </PropertyGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)'!='netstandard2.0'">
+    <Reference Include="System.Data.OracleClient" />
+  </ItemGroup>
 
 </Project>

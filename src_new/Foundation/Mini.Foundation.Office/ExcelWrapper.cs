@@ -40,6 +40,7 @@ namespace Mini.Foundation.Office
         /// </summary>
         protected Boolean _hasInitial = false;
         protected List<String> _sheetNames = null;
+        protected List<String> _noHidenSheetNames = null;
 
         /// <summary>
         /// 文件路径
@@ -111,7 +112,7 @@ namespace Mini.Foundation.Office
         {
             get
             {
-                if (_sheetNames != null) return _sheetNames;
+                //if (_sheetNames != null) return _sheetNames;
                 if (_workbook == null) return null;
                 var count = _workbook.NumberOfSheets; //获取所有SheetName
                 var sheetNameList = new List<String>();
@@ -119,6 +120,30 @@ namespace Mini.Foundation.Office
                     sheetNameList.Add(_workbook.GetSheetAt(i).SheetName);
                 _sheetNames = sheetNameList;
                 return _sheetNames;
+            }
+        }
+
+        /// <summary>
+        /// 获取excel的所有sheet名称（不包括隐藏的）
+        /// </summary>
+        public virtual List<String> NoHiddenSheetNames
+        {
+            get
+            {
+                if (_noHidenSheetNames != null) return _noHidenSheetNames;
+                if (_workbook == null) return null;
+                var count = _workbook.NumberOfSheets; //获取所有SheetName
+                var sheetNameList = new List<String>();
+                for (var i = 0; i < count; i++)
+                {
+                    if (!_workbook.IsSheetHidden(i))
+                    {
+                        var sheet = _workbook.GetSheetAt(i);
+                        sheetNameList.Add(sheet.SheetName);
+                    }
+                }
+                _noHidenSheetNames = sheetNameList;
+                return _noHidenSheetNames;
             }
         }
 
@@ -169,8 +194,9 @@ namespace Mini.Foundation.Office
         /// </summary>  
         /// <param name="sheetName">excel工作薄sheet的名称</param>  
         /// <param name="isFirstRowColumnName">第一行是否是DataTable的列名</param>  
+        /// <param name="containHiddenSheet">是否包含隐藏表单</param>  
         /// <returns>返回的DataTable</returns>  
-        public virtual DataTable GetDataTable(String sheetName = "Sheet1", Boolean isFirstRowColumnName = false)
+        public virtual DataTable GetDataTable(String sheetName = "Sheet1", Boolean isFirstRowColumnName = false, Boolean containHiddenSheet = false)
         {
             MyArgumentsHelper.ThrowsIfIsInvisibleString(sheetName, nameof(sheetName));
             ISheet sheet = null;
@@ -179,7 +205,7 @@ namespace Mini.Foundation.Office
             int startRow = 0;
 
             sheet = _workbook.GetSheet(sheetName);
-            if (sheet == null) throw new Exception(String.Format("excel file does not has the sheet named [{0}]!", sheetName));
+            if (sheet == null || !ContainsSheet(sheetName)) throw new Exception(String.Format("excel file does not has the sheet named [{0}]!", sheetName));
 
             var firstRow = sheet.GetRow(0);
             if (firstRow == null) return data;
@@ -403,6 +429,12 @@ namespace Mini.Foundation.Office
         #endregion
 
         #region "protected method"
+
+        protected virtual Boolean ContainsSheet(String sheetName, Boolean containHiddenSheet = false)
+        {
+            var names = containHiddenSheet ? SheetNames : NoHiddenSheetNames;
+            return names.Contains(sheetName);
+        }
 
         protected virtual String EnsureFileExist()
         {

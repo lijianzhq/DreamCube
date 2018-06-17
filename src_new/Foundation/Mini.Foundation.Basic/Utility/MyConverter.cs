@@ -5,10 +5,23 @@ using System.ComponentModel;
 namespace Mini.Foundation.Basic.Utility
 {
     /// <summary>
-    /// 类型转换器
     /// </summary>
-    public static class MyConverter
+    public static class MyConvert
     {
+        /// <summary>
+        /// 把字符串转换为整型，如果转换失败，则返回默认值
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="defaultValue">转换失败返回值</param>
+        /// <returns></returns>
+        public static Int32 ToInt32<T>(T value, Int32 defaultValue = 0)
+        {
+            Int32 result = 0;
+            if (Int32.TryParse(Convert.ToString(value), out result))
+                return result;
+            return defaultValue;
+        }
+
         /// <summary>
         /// 泛型版本
         /// </summary>

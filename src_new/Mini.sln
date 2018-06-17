@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mini.Framework.WebUploader"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test.Win", "APP\Test.Win\Test.Win.csproj", "{786C5536-C235-4355-8D4A-B5BAB479762C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mini.Framework.WebUploader.Test", "Framework\Mini.Framework.WebUploader.Test\Mini.Framework.WebUploader.Test.csproj", "{28798583-EF76-443C-B8C3-E951048D349C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -105,6 +107,10 @@ Global
 		{786C5536-C235-4355-8D4A-B5BAB479762C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{786C5536-C235-4355-8D4A-B5BAB479762C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{786C5536-C235-4355-8D4A-B5BAB479762C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28798583-EF76-443C-B8C3-E951048D349C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28798583-EF76-443C-B8C3-E951048D349C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28798583-EF76-443C-B8C3-E951048D349C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28798583-EF76-443C-B8C3-E951048D349C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -125,6 +131,7 @@ Global
 		{6A7CFBA2-41DD-41C0-B222-B0F496E8C797} = {AE2FE85B-A1EE-4340-91BF-D29FC744F0DF}
 		{F536A7BF-2109-4B48-90E5-06E035CC7D42} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 		{786C5536-C235-4355-8D4A-B5BAB479762C} = {329FA697-5A9D-4E9C-8447-7061913A7B6B}
+		{28798583-EF76-443C-B8C3-E951048D349C} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB25A0FB-6F55-4E56-AF88-7510D3C8D58D}

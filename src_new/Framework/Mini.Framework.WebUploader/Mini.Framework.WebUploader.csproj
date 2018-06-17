@@ -8,7 +8,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.10" />
+    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.12" />
+    <PackageReference Include="Mini.Foundation.Json" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
@@ -25,6 +26,12 @@
     <PackageReference Include="Mini.Foundation.LogService">
       <Version>1.0.1</Version>
     </PackageReference>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Mini.Framework.WebUploader.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

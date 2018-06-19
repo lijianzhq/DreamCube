@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <title></title>
+    <link href="webuploader/css/webuploader.css" rel="stylesheet" />
+    <script src="webuploader0.1.5/jquery-3.3.1.js"></script>
+    <script src="webuploader/lib/purl.js"></script>
+    <script src="webuploader0.1.5/webuploader.js"></script>
+    <script src="webuploader/js/webuploaderbar.js"></script>
+    <script src="webuploader/lib/knockout/knockout-3.4.2.js"></script>
+    <script src="webuploader/lib/layer/layer.js"></script>
+    <script src="webuploader/lib/layer/layer.js"></script>
+</head>
+<body>
+    <div id="wrapper">
+    </div>
+    <script type="text/javascript">
+
+        $(function () {
+            $("#wrapper").makewebuploaderbar();
+
+            // 实例化
+            //uploader = WebUploader.create({
+            //    pick: {
+            //        id: '#wrapper',
+            //        label: '点击选择文件'
+            //    },
+            //    formData: {
+            //        uid: 123
+            //    },
+            //    swf: 'webuploader0.1.5/Uploader.swf',
+            //    chunked: true, //分片处理大文件
+            //    chunkSize: 2 * 1024 * 1024,
+            //    server: 'Handler1.ashx',
+            //    disableGlobalDnd: true,
+            //    threads: 1, //上传并发数
+            //    //由于Http的无状态特征，在往服务器发送数据过程传递一个进入当前页面是生成的GUID作为标示
+            //    formData: { guid: WebUploader.Base.guid() },
+            //    fileNumLimit: 100,  //上传文件的数量限制
+            //    compress: false, //图片在上传前不进行压缩
+            //    fileSizeLimit: 6 * 1024 * 1024 * 1024,    // 所有文件总大小限制 6G
+            //    fileSingleSizeLimit: 5 * 1024 * 1024 * 1024    // 单个文件大小限制 5 G
+            //});
+        });
+    </script>
+</body>
+</html>

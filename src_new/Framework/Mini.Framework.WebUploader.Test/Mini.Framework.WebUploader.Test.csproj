@@ -72,7 +72,37 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Global.asax" />
+    <Content Include="test2.html" />
     <Content Include="test.html" />
+    <Content Include="webuploader\css\webuploader.css" />
+    <Content Include="webuploader\html\bartemplate.html" />
+    <Content Include="webuploader\images\new.png" />
+    <Content Include="webuploader\images\Remove.gif" />
+    <Content Include="webuploader\images\SelectAll.png" />
+    <Content Include="webuploader\js\webuploaderbar.js" />
+    <Content Include="webuploader\lib\knockout\knockout-3.4.2.debug.js" />
+    <Content Include="webuploader\lib\knockout\knockout-3.4.2.js" />
+    <Content Include="webuploader\lib\purl.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\jquery-3.3.1.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\jquery-3.3.1.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\purl.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\Uploader.swf" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.css" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.custom.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.custom.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.fis.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.flashonly.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.flashonly.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.html5only.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.html5only.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.noimage.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.noimage.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.nolog.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.nolog.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.withoutimage.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.withoutimage.min.js" />
     <Content Include="WebUploader_test.js" />
     <Content Include="Web.config" />
     <Content Include="webuploader0.1.5\jquery-3.3.1.js" />
@@ -111,6 +141,7 @@
       <DependentUpon>Web.config</DependentUpon>
     </None>
     <Content Include="webuploader0.1.5\README.md" />
+    <Content Include="webuploader\lib\webuploader0.1.5\README.md" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -2,7 +2,6 @@
     <div>
         <ul class="btnbar">
             <li>
-                <!--<div id="{addfilebtnid}" data-bind="click:addFile,clickBubble: false"></div>-->
                 <a href="#" data-bind="click:addFile,clickBubble: false"> ＋ </a>
             </li>
             <li>
@@ -15,18 +14,10 @@
     </div>
     <div class="clearfloat"></div>
     <div>
-        <ul class="files">
+        <ul class="files" data-bind="foreach: files">
             <li>
                 <input type="checkbox" />
-                <a href="#">webuploader.css</a>
-            </li>
-            <li>
-                <input type="checkbox" />
-                <a href="#">webuploader.noimage.js</a>
-            </li>
-            <li>
-                <input type="checkbox" />
-                <a href="#">webuploader.withoutimage.min.js</a>
+                <a href="#" data-bind="text:fileName"></a>
             </li>
         </ul>
     </div>

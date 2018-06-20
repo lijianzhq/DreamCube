@@ -567,7 +567,9 @@
             if ($(this).hasClass('disabled')) {
                 return false;
             }
-
+            //var stats = uploader.getStats();
+            //alert(JSON.stringify(stats));
+            //return;
             if (state === 'ready') {
                 uploader.upload();
             } else if (state === 'paused') {

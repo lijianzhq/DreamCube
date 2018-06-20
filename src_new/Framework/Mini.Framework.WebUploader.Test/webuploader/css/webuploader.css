@@ -68,50 +68,16 @@ ul {
     vertical-align: middle;
 }
 
-/**************************************start--百度上传控件的样式*********************************************/
-.webuploader-container {
-    position: relative;
+/* 禁用 */
+.layui-btn-disabled, .layui-btn-disabled:hover, .layui-btn-disabled:active {
+    cursor: not-allowed;
+    /*border: 1px solid #e6e6e6;
+    background-color: #FBFBFB;
+    color: #C9C9C9;*/
+    /*opacity: 1;
+    filter: alpha(opacity=65);
+    -webkit-box-shadow: none;
+    box-shadow: none;*/
+    /*opacity: .65;*/
 }
 
-.webuploader-element-invisible {
-    position: absolute !important;
-    clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
-    clip: rect(1px,1px,1px,1px);
-}
-
-.webuploader-pick {
-    -moz-box-shadow: inset 0px 1px 0px 0px #97c4fe;
-    -webkit-box-shadow: inset 0px 1px 0px 0px #97c4fe;
-    box-shadow: inset 0px 1px 0px 0px #97c4fe;
-    background: -webkit-gradient(linear, left top, left bottom, color-stop(0.05, #3d94f6), color-stop(1, #1e62d0));
-    background: -moz-linear-gradient(top, #3d94f6 5%, #1e62d0 100%);
-    background: -webkit-linear-gradient(top, #3d94f6 5%, #1e62d0 100%);
-    background: -o-linear-gradient(top, #3d94f6 5%, #1e62d0 100%);
-    background: -ms-linear-gradient(top, #3d94f6 5%, #1e62d0 100%);
-    background: linear-gradient(to bottom, #3d94f6 5%, #1e62d0 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#3d94f6', endColorstr='#1e62d0',GradientType=0);
-    background-color: #3d94f6;
-    -moz-border-radius: 6px;
-    -webkit-border-radius: 6px;
-    border-radius: 6px;
-    border: 1px solid #337fed;
-    display: inline-block;
-    cursor: pointer;
-    color: #ffffff;
-    font-family: Arial;
-    font-size: 8px;
-    font-weight: bold;
-    padding: 1px 4px;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px #1570cd;
-}
-
-.webuploader-pick-hover {
-    background: #00a2d4;
-}
-
-.webuploader-pick-disable {
-    opacity: 0.6;
-    pointer-events: none;
-}
-/**************************************end--百度上传控件的样式*********************************************/

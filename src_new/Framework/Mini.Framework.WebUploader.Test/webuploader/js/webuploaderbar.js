@@ -8,26 +8,10 @@
         this.configs = function () {
             var config = {
                 index: 0,//当前的barindex（一个页面可以有多个这种bar）
-                chunked: true, //分片处理大文件
-                chunkSize: 2 * 1024 * 1024,
-                server: 'FileSave.ashx', //接收文件数据的页面
-                merge: 'MergeFile.ashx', //合并文件的页面
-                disableGlobalDnd: true,
-                threads: 1, //上传并发数
-                //由于Http的无状态特征，在往服务器发送数据过程传递一个进入当前页面是生成的GUID作为标示
-                //formData: { guid: GUID },
-                fileNumLimit: 100,  //上传文件的数量限制
-                compress: false, //图片在上传前不进行压缩
-                fileSizeLimit: 6 * 1024 * 1024 * 1024,    // 所有文件总大小限制 6G
-                fileSingleSizeLimit: 5 * 1024 * 1024 * 1024,    // 单个文件大小限制 5 G
                 templateid: "webuploaderbar_htmltemplate",
-                swf: me.getFolderUrl() + 'webuploader0.1.5/Uploader.swf',
+                serverurl: me.getFolderUrl() + "html/fileData.json",
             };
             var config2 = {
-                pick: {
-                    id: '#' + config.templateid + "_" + config.index,
-                    label: '＋'
-                },
                 barHtml: "<div data-bind=\"template: '" + config.templateid + "'\"></div>"
             };
             return $.extend(config, config2);
@@ -77,62 +61,122 @@
 
     function viewModel() {
         this.addFile = function () {
-            var me = this;
-            var winIndex = layer.open({
+            var me = this,
+                mediator = new Mediator(),
+                winIndex;//弹出窗口的index值
+
+            mediator.subscribe("uploadFinished", function () {
+                //alert('uploadFinished');
+                //$(".layui-layer-btn0").show();
+                //$(".layui-layer-btn1").hide();
+            });
+            mediator.subscribe("fileQueued", function () {
+                $(".layui-layer-btn0").show();
+            });
+            mediator.subscribe("uploadError", function () {
+                $(".layui-layer-btn0").show();
+                $(".layui-layer-btn0").text("重试");
+            });
+
+            this.winConfig = {
                 type: 2,
                 title: '文件上传',
                 shadeClose: true,
                 shade: 0.2,
-                area: ['50%', '50%'],
-                btn: ['开始上传', '取消'], //可以无限个按钮
+                area: ['65%', '55%'],
+                btn: ['开始上传', '正在上传', '取消'], //可以无限个按钮
                 btn1: function () {
                     //alert(me.iframeWin)
                     //alert(me.iframeWin.uploader)
+                    //alert(me.iframeWin.uploader);
+                    $(".layui-layer-btn0").hide();
+                    //$(".layui-layer-btn1").show();
+                    me.iframeWin.uploader.startUpload();
                 },
                 btn2: function () {
-                    layer.confirm('确定退出？', { icon: 3, title: '询问' }, function (index) {
-                        //alert(index);
-                        layer.close(index);
-                        layer.close(winIndex);
-                    });
+                    return false;
+                },
+                btn3: function (index, layero) {
+                    me.winConfig.cancel();
                     return false;
                 },
                 success: function (layero, index) {
                     var body = layer.getChildFrame('body', index);
                     var iframeWin = window[layero.find('iframe')[0]['name']]; //得到iframe页的窗口对象，执行iframe页的方法：iframeWin.method();    
                     me.iframeWin = iframeWin;
+                    //注册围观者
+                    $(me.iframeWin.document).ready(function () {
+                        me.iframeWin.uploader.registerMediator(mediator);
+                    });
+
+                    //隐藏按钮
+                    $(".layui-layer-btn0").hide();
+                    $(".layui-layer-btn1").addClass("layui-btn-disabled").hide()
+                },
+                cancel: function (index, layero) {
+                    var num = me.iframeWin.uploader.getNeedUploadFilesCount();
+                    //alert(num);
+                    if (num > 0) {
+                        layer.confirm('还有未成功上传的文件，确定退出吗？', { icon: 0, title: '询问' }, function (index) {
+                            layer.close(index);
+                            layer.close(winIndex);
+                        });
+                    }
+                    else {
+                        layer.close(index);
+                        layer.close(winIndex);
+                    }
+                    return false;
                 },
                 maxmin: true, //开启最大化最小化按钮
                 content: [bar.getFolderUrl() + 'html/uploadFileDialog.html' + "?rd=" + Math.random(), 'no']
-            });
+            };
+            winIndex = layer.open(this.winConfig);
+            //隐藏按钮
+            $(".layui-layer-btn0").hide();
+            $(".layui-layer-btn1").addClass("layui-btn-disabled").hide()
             return false;
-        }
+        };
+        this.files = ko.observableArray();
     };
 
     var bar = new webuploaderbar();
-    var barVM = [];
 
     $.fn.extend({
-        "makewebuploaderbar": function (config) {
-            var configs = $.extend(config, bar.configs(), { index: barVM.length });
-            if ($("#" + configs.templateid).length == 0) {
-                var me = $(this);
-                $.get(bar.getHtmlTemplateFileUrl(), { stamp: Math.random() })
-                    .done(function (responseText) {
-                        responseText = responseText.replace(/{templateid}/gi, configs.templateid)
-                            .replace(/{addfilebtnid}/gi, configs.pick.id.substr(1));
-                        me.append(responseText);
-                        me.append(configs.barHtml);
-                        ko.applyBindings(new viewModel());
-
-                        //var uploader = bar.uploader.create(configs);
-                        //barVM.push(ko.observable(new viewModel()));
-                    });
-            }
-            else {
-                $(this).append(barHtml);
-                ko.applyBindings(barVM);
-            }
+        "makewebuploaderbar": function (sTableName, sPrimaryKey, config) {
+            var configs = $.extend(config, bar.configs());
+            var $barContainer = $(this);
+            var df = $.Deferred();
+            var loadTemplate = function (df) {
+                var tasks = function () {
+                    //首先需要加载模板html（模板html只需要加载一次即可）
+                    if ($("#" + configs.templateid).length > 0) df.resolve();
+                    $.get(bar.getHtmlTemplateFileUrl())
+                        .done(function (responseText) {
+                            responseText = responseText.replace(/{templateid}/gi, configs.templateid);
+                            $(document.body).append(responseText);
+                            df.resolve();
+                        });
+                };
+                setTimeout(tasks, 1);
+                return df.promise();
+            };
+            $.when(loadTemplate(df))
+                .done(function () {
+                    //加载模板完毕则生成附件栏
+                    $barContainer.append(configs.barHtml);
+                    var model = new viewModel();
+                    ko.applyBindings(model);
+                    //同时加载附件栏的附件
+                    $.get(configs.serverurl)
+                        .done(function (responseText) {
+                            for (var i = 0; i < responseText.length; i++) {
+                                //alert(JSON.stringify(responseText[i]));
+                                model.files.push(responseText[i]);
+                            }
+                        });
+                })
+                .fail(function () { alert("error") });
         }
     });
 })(jQuery, window, undefined);

@@ -81,6 +81,7 @@
     <Content Include="webuploader\images\new.png" />
     <Content Include="webuploader\images\Remove.gif" />
     <Content Include="webuploader\images\SelectAll.png" />
+    <Content Include="webuploader\js\mediator.js" />
     <Content Include="webuploader\js\uploadFileDialog.js" />
     <Content Include="webuploader\js\webuploaderbar_bak.js" />
     <Content Include="webuploader\js\webuploaderbar.js" />

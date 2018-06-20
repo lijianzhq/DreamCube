@@ -32,7 +32,8 @@ namespace Mini.Framework.WebUploader
             var result = new ResponseParams()
             {
                 Status = true,
-                Message = ""
+                Message = "",
+                FileSavePath = "",
             };
             context.Response.ContentType = "application/json";
             try
@@ -44,6 +45,9 @@ namespace Mini.Framework.WebUploader
                                         Convert.ToInt32(context.Request.Form["chunks"]),
                                         chunk);
                 result.Chunked = chunk > 0;
+                //如果不是分片的话，则直接返回文件存放路径
+                if(!result.Chunked)
+                    result.FileSavePath = fileName;
                 context.Request.Files[0].SaveAs(fileName);
             }
             catch (Exception ex)

@@ -5,6 +5,7 @@ using System.Linq;
 
 using Mini.Foundation.Basic.Utility;
 using Mini.Foundation.LogService;
+using Mini.Foundation.Json;
 
 namespace Mini.Framework.WebUploader
 {
@@ -30,6 +31,10 @@ namespace Mini.Framework.WebUploader
             String id = context.Request["id"];
             String fileName = context.Request["fileName"];
             Log.Root.LogInfo($"start merge file [guid:{guid}],[id:{id}],[fileName:{fileName}]!");
+            var result = new ResponseParams
+            {
+                Status = false,
+            };
             try
             {
                 String filePath = context.Server.MapPath(Helper.AsmConfiger.AppSettings("File_SavePath"));
@@ -48,15 +53,24 @@ namespace Mini.Framework.WebUploader
                         file.Flush();
                     }
                     Directory.Delete(folderName, true);
+                    result.Status = true;
                 }
                 else
                 {
-                    Log.Root.LogInfo($"merge file [guid:{guid}],[id:{id}],[fileName:{fileName}] faild, directory can not find!");
+                    String msg = $"merge file [guid:{guid}],[id:{id}],[fileName:{fileName}] faild, directory can not find!";
+                    Log.Root.LogInfo(msg);
+                    result.Message = msg;
                 }
             }
             catch (Exception ex)
             {
                 Log.Root.LogError("", ex);
+                result.Message = ex.Message;
+            }
+            finally
+            {
+                context.Response.Write(MyJson.Serialize(result));
+                context.Response.End();
             }
         }
 

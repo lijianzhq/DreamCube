@@ -77,6 +77,11 @@
                 $(".layui-layer-btn0").show();
                 $(".layui-layer-btn0").text("重试");
             });
+            mediator.subscribe("uploadComplete", function (file) {
+                me.files.push({
+                    "fileName": file.name
+                });
+            });
 
             this.winConfig = {
                 type: 2,

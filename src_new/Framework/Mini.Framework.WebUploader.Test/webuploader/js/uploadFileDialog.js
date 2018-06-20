@@ -126,9 +126,9 @@
              * 广播事件
              * @param {any} event
              */
-            var publishEvent = function (event) {
+            var publishEvent = function (event, data) {
                 if (me.mediator) {
-                    me.mediator.publish(event);
+                    me.mediator.publish(event, data);
                 }
             };
 
@@ -182,11 +182,13 @@
             });
 
             uploader.on('uploadFinished', function () {
-                publishEvent("uploadFinished");
+                //控件触发的事件不算最终完成，还可能需要考虑合并文件的时间
+                //publishEvent("uploadFinished");
             });
 
             uploader.on('uploadComplete', function (file) {
                 fileCount--;
+                publishEvent("uploadComplete", file);
             });
 
             //all算是一个总监听器
@@ -208,8 +210,17 @@
                         dataType: "json",
                         success: function (msg) {
                             //alert(msg);
+                            //完成合并之后要触发事件
+                            updateFileProgressHtml(file, 1);
+                            if (fileCount == 0) {
+                                publishEvent("uploadFinished");
+                            }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
+                            console.log('merge file error!');
+                            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                            console.log("XMLHttpRequest.textStatus:" + textStatus);
                             //alert("XMLHttpRequest.status:" + XMLHttpRequest.status);
                             //alert("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
                             //alert("XMLHttpRequest.textStatus:" + textStatus);

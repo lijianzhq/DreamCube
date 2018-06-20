@@ -12,5 +12,7 @@ namespace Mini.Framework.WebUploader
         public Boolean Status = false;
 
         public Boolean Chunked = false;
+
+        public String FileSavePath = "";
     }
 }

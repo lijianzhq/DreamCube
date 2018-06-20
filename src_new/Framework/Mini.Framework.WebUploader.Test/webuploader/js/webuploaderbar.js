@@ -1,4 +1,28 @@
 ﻿(function ($, w, udf) {
+    /**
+    * 获取本插件所在的web的目录url
+    * */
+    function getFolderUrl() {
+        var scripts = document.scripts;
+        for (var i = 0; i < scripts.length; i++) {
+            var js = scripts[i];
+            var index = js.src.lastIndexOf('/webuploader/js/webuploaderbar.js');
+            if (index > 0) {
+                return js.src.substr(0, index) + "/webuploader/";
+            }
+        }
+        console.log("folder name[webuploader] or file name [webuploaderbar.js] has been changed!");
+        return "";
+    };
+
+    /**
+     * 获取html模板文件的url
+     * */
+    function getHtmlTemplateFileUrl() {
+        var sFolderUrl = getFolderUrl();
+        return sFolderUrl + "html/bartemplate.html";
+    };
+
     function webuploaderbar() {
         var me = this;
 
@@ -9,7 +33,7 @@
             var config = {
                 index: 0,//当前的barindex（一个页面可以有多个这种bar）
                 templateid: "webuploaderbar_htmltemplate",
-                serverurl: me.getFolderUrl() + "html/fileData.json",
+                serverurl: getFolderUrl() + "html/fileData.json",
             };
             var config2 = {
                 barHtml: "<div data-bind=\"template: '" + config.templateid + "'\"></div>"
@@ -17,46 +41,9 @@
             return $.extend(config, config2);
         };
 
-        /**
-        * 获取本插件所在的web的目录url
-        * */
-        this.getFolderUrl = function () {
-            var scripts = document.scripts;
-            for (var i = 0; i < scripts.length; i++) {
-                var js = scripts[i];
-                var index = js.src.lastIndexOf('/webuploader/js/webuploaderbar.js');
-                if (index > 0) {
-                    return js.src.substr(0, index) + "/webuploader/";
-                }
-            }
-            console.log("folder name[webuploader] or file name [webuploaderbar.js] has been changed!");
-            return "";
+        this.ready = function (callback) {
+            me.callback = callback;
         };
-
-        /**
-         * 获取html模板文件的url
-         * */
-        this.getHtmlTemplateFileUrl = function () {
-            var sFolderUrl = me.getFolderUrl();
-            return sFolderUrl + "html/bartemplate.html";
-        };
-
-        function Uploader() {
-            var parent = me;
-            this.create = function (configs) {
-                // 实例化
-                var uploader = WebUploader.create(configs);
-                uploader.vm = {
-                    files: []
-                };//viewmodel
-                uploader.onFileQueued = function (file) {
-                    var it = uploader;
-                    it.vm.files.push(file);
-                };
-                return uploader;
-            }
-        };
-        this.uploader = new Uploader();
     };
 
     function viewModel() {
@@ -89,7 +76,7 @@
                 shadeClose: true,
                 shade: 0.2,
                 area: ['65%', '55%'],
-                btn: ['开始上传', '正在上传', '取消'], //可以无限个按钮
+                btn: ['开始上传', '正在上传', '关闭'], //可以无限个按钮
                 btn1: function () {
                     //alert(me.iframeWin)
                     //alert(me.iframeWin.uploader)
@@ -134,7 +121,7 @@
                     return false;
                 },
                 maxmin: true, //开启最大化最小化按钮
-                content: [bar.getFolderUrl() + 'html/uploadFileDialog.html' + "?rd=" + Math.random(), 'no']
+                content: [getFolderUrl() + 'html/uploadFileDialog.html', 'no']
             };
             winIndex = layer.open(this.winConfig);
             //隐藏按钮
@@ -146,6 +133,37 @@
     };
 
     var bar = new webuploaderbar();
+    w.webuploaderbar = bar;
+
+    var css = [getFolderUrl() + 'lib/layer/theme/default/layer.css'
+        , getFolderUrl() + 'css/webuploader.css'];
+    var loadCSS = function (urls) {
+        if (!(urls && urls.length)) return;
+        for (var i = 0; i < urls.length; i++) {
+            $("head").append("<link>");
+            var css = $("head").children(":last");
+            css.attr({
+                rel: "stylesheet",
+                type: "text/css",
+                href: urls[i]
+            });
+        }
+    };
+    loadCSS(css);
+
+    var rs = [getFolderUrl() + 'lib/webuploader0.1.5/webuploader.js'
+        , getFolderUrl() + 'lib/knockout/knockout-3.4.2.js'
+        , getFolderUrl() + 'lib/layer/layer.js'
+        , getFolderUrl() + 'js/mediator.js'];
+
+    //加载依赖的资源文件
+    $.when($.getScript(rs[0]), $.getScript(rs[1]), $.getScript(rs[2]), $.getScript(rs[3]))
+        .done(function () {
+            if (bar.callback)
+                bar.callback();
+        });
+
+    $.extend({ uploadbar: bar });
 
     $.fn.extend({
         "makewebuploaderbar": function (sTableName, sPrimaryKey, config) {
@@ -156,7 +174,7 @@
                 var tasks = function () {
                     //首先需要加载模板html（模板html只需要加载一次即可）
                     if ($("#" + configs.templateid).length > 0) df.resolve();
-                    $.get(bar.getHtmlTemplateFileUrl())
+                    $.get(getHtmlTemplateFileUrl())
                         .done(function (responseText) {
                             responseText = responseText.replace(/{templateid}/gi, configs.templateid);
                             $(document.body).append(responseText);

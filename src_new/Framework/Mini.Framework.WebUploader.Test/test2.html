@@ -3,22 +3,17 @@
 <head>
     <meta charset="utf-8" />
     <title></title>
-    <link href="webuploader/css/webuploader.css" rel="stylesheet" />
     <script src="webuploader0.1.5/jquery-3.3.1.js"></script>
-    <script src="webuploader/lib/purl.js"></script>
-    <script src="webuploader0.1.5/webuploader.js"></script>
     <script src="webuploader/js/webuploaderbar.js"></script>
-    <script src="webuploader/lib/knockout/knockout-3.4.2.js"></script>
-    <script src="webuploader/lib/layer/layer.js"></script>
-    <script src="webuploader/js/mediator.js"></script>
 </head>
 <body>
     <div id="wrapper">
     </div>
     <script type="text/javascript">
-
-        $(function () {
-            $("#wrapper").makewebuploaderbar('tablename', 'primarykeyvalue', {});
+        $.uploadbar.ready(function () {
+            $(function () {
+                $("#wrapper").makewebuploaderbar('tablename', 'primarykeyvalue', {});
+            });
         });
     </script>
 </body>

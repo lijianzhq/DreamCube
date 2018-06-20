@@ -77,13 +77,26 @@
 
     function viewModel() {
         this.addFile = function () {
-            layer.open({
+            var winIndex = layer.open({
                 type: 2,
                 title: '文件上传',
                 shadeClose: true,
                 shade: 0.2,
                 area: ['50%', '50%'],
-                content: bar.getFolderUrl() + 'html/uploadFileDialog.html'
+                btn: ['开始上传', '取消'], //可以无限个按钮
+                btn1: function () {
+                    //alert(1);
+                },
+                btn2: function () {
+                    layer.confirm('确定退出？', { icon: 3, title: '询问' }, function (index) {
+                        //alert(index);
+                        layer.close(index);
+                        layer.close(winIndex);
+                    });
+                    return false;
+                },
+                maxmin: true, //开启最大化最小化按钮
+                content: [bar.getFolderUrl() + 'html/uploadFileDialog.html' + "?rd=" + Math.random(), 'no']
             });
             return false;
         }
@@ -97,7 +110,7 @@
             var configs = $.extend(config, bar.configs(), { index: barVM.length });
             if ($("#" + configs.templateid).length == 0) {
                 var me = $(this);
-                $.get(bar.getHtmlTemplateFileUrl())
+                $.get(bar.getHtmlTemplateFileUrl(), { stamp: Math.random() })
                     .done(function (responseText) {
                         responseText = responseText.replace(/{templateid}/gi, configs.templateid)
                             .replace(/{addfilebtnid}/gi, configs.pick.id.substr(1));

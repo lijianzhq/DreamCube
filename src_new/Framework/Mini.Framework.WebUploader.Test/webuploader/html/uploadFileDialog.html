@@ -4,19 +4,68 @@
     <meta charset="utf-8" />
     <title></title>
     <link href="../css/uploadFileDialog.css" rel="stylesheet" />
-    <link href="../lib/jquery-easyui-1.5.5.2-min/themes/default/easyui.css" rel="stylesheet" />
+    <!--<link href="../lib/jquery-easyui-1.5.5.2-min/themes/default/easyui.css" rel="stylesheet" />-->
+    <link href="../lib/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
+    <link href="../lib/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+
+    <!--knockoutjs的绑定模板-->
+    <!--<script type="text/html" id="tb_fileList_template">
+        <table class="table table-hover" data-toggle="table" data-height="400" data-row-style="rowStyle">
+            <thead>
+                <tr>
+                    <th class="col-md-3">序号</th>
+                    <th class="col-md-3">文件名</th>
+                    <th class="col-md-2">文件大小</th>
+                    <th class="col-md-2">状态</th>
+                    <th class="col-md-2">操作</th>
+                </tr>
+            </thead>
+            <tbody data-bind="foreach: files">
+                <tr>
+                    <td class="col-md-3" data-bind="text: $index"></td>
+                    <td class="col-md-3" data-bind="text: f_name"></td>
+                    <td class="col-md-2" data-bind="text: f_size"></td>
+                    <td class="col-md-2" data-bind="text: f_status"></td>
+                    <td class="col-md-2">
+                        <a href="#" role="button" class="btn" data-bind="click:$parent.remove">删除</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </script>-->
 </head>
 <body>
-    <div>
+    <div class="container-fluid main">
         <div id="selectFileBtn"></div>
         <div>
             <table id="tb_fileList"></table>
+            <!--<table id="tb_fileList"
+                   class="table table-hover"
+                   data-click-to-select="true"
+                   data-toggle="table"
+                   data-height="400">
+                <thead>
+                    <tr>
+                        <th data-field="state" data-checkbox="true"></th>
+                        <th class="col-md-1 col-lg-1 col-xs-1" data-formatter="setRowIndex"
+                            data-halign="center" data-align="center">序号</th>
+                        <th class="col-md-8 col-lg-8 col-xs-8" data-field="f_name" data-halign="center" data-align="center">文件名</th>
+                        <th class="col-md-1 col-lg-1 col-xs-1" data-field="f_size2" data-halign="center" data-align="center">文件大小</th>
+                        <th class="col-md-2 col-lg-1 col-xs-1" data-field="f_status" data-halign="center" data-align="center">状态</th>
+                        <th class="col-md-2 col-lg-1 col-xs-1" data-formatter="setOperation" data-halign="center" data-align="center">操作</th>
+                        <th data-field="f_id">ID</th>
+                    </tr>
+                </thead>
+            </table>-->
         </div>
     </div>
 
     <script src="../lib/webuploader0.1.5/jquery-3.3.1.js"></script>
     <script src="../lib/webuploader0.1.5/webuploader.js"></script>
     <script src="../lib/jquery-easyui-1.5.5.2-min/jquery.easyui.min.js"></script>
+    <script src="../lib/knockout/knockout-3.4.2.js"></script>
+    <script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.js"></script>
+    <script src="../lib/bootstrap-table/bootstrap-table.js"></script>
     <script src="../js/uploadFileDialog.js"></script>
 </body>
 </html>

@@ -1,4 +1,7 @@
-﻿.webuploader-container {
+﻿
+/*********************************上传附件按钮的样式*************************************/
+
+.webuploader-container {
     position: relative;
 }
 
@@ -27,4 +30,10 @@
 .webuploader-pick-disable {
     opacity: 0.6;
     pointer-events: none;
+}
+
+/*********************************end  上传附件按钮的样式*************************************/
+
+.main{
+    padding-top:10px;
 }

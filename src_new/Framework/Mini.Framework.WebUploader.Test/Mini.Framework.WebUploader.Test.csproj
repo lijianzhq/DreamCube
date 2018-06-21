@@ -75,7 +75,7 @@
     <Content Include="test2.html" />
     <Content Include="test.html" />
     <Content Include="webuploader\css\uploadFileDialog.css" />
-    <Content Include="webuploader\css\uploadbar.css" />
+    <Content Include="webuploader\css\webuploader.css" />
     <Content Include="webuploader\html\bartemplate.html" />
     <Content Include="webuploader\html\uploadFileDialog.html" />
     <Content Include="webuploader\images\new.png" />
@@ -83,7 +83,8 @@
     <Content Include="webuploader\images\SelectAll.png" />
     <Content Include="webuploader\js\mediator.js" />
     <Content Include="webuploader\js\uploadFileDialog.js" />
-    <Content Include="webuploader\js\uploadbar.js" />
+    <Content Include="webuploader\js\webuploaderbar_bak.js" />
+    <Content Include="webuploader\js\webuploaderbar.js" />
     <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
     <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
     <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap.css" />

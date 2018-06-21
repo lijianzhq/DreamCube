@@ -1789,7 +1789,6 @@
 
             disable: function () {
                 var btn = this.options.button;
-
                 this.getRuntime().getContainer().css({
                     top: '-99999px'
                 });

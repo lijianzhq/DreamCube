@@ -1,0 +1,679 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props" Condition="Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" />
+  <Import Project="..\..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props" Condition="Exists('..\..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" />
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{28798583-EF76-443C-B8C3-E951048D349C}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Mini.Framework.WebUploader.Test</RootNamespace>
+    <AssemblyName>Mini.Framework.WebUploader.Test</AssemblyName>
+    <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort />
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform">
+      <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Config\LogConfig.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Global.asax" />
+    <Content Include="test2.html" />
+    <Content Include="test.html" />
+    <Content Include="webuploader\css\uploadFileDialog.css" />
+    <Content Include="webuploader\css\uploadbar.css" />
+    <Content Include="webuploader\html\bartemplate.html" />
+    <Content Include="webuploader\html\uploadFileDialog.html" />
+    <Content Include="webuploader\images\new.png" />
+    <Content Include="webuploader\images\Remove.gif" />
+    <Content Include="webuploader\images\SelectAll.png" />
+    <Content Include="webuploader\js\mediator.js" />
+    <Content Include="webuploader\js\uploadFileDialog.js" />
+    <Content Include="webuploader\js\uploadbar.js" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap-theme.css" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap.css" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap.min.css" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\js\bootstrap.js" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\js\bootstrap.min.js" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\js\npm.js" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\easyloader.js" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\jquery.easyui.min.js" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\jquery.easyui.mobile.js" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\jquery.min.js" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\angular.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\accordion.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\calendar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\checkbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\combo.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\combobox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\datagrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\datalist.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\datebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\dialog.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\easyui.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\filebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\accordion_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\blank.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\calendar_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\combo_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\datagrid_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\datebox_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\layout_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\linkbutton_bg.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\loading.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\menu_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\messager_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\pagination_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\panel_tools.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\passwordbox_close.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\passwordbox_open.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\searchbox_button.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\slider_handle.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\spinner_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\tabs_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\tagbox_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\tree_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\images\validatebox_warning.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\layout.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\linkbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\menu.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\menubutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\messager.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\numberbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\pagination.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\panel.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\passwordbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\progressbar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\propertygrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\radiobutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\searchbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\slider.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\spinner.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\splitbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\switchbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\tabs.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\tagbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\textbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\tooltip.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\tree.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\validatebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\black\window.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\accordion.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\calendar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\checkbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\combo.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\combobox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\datagrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\datalist.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\datebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\dialog.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\easyui.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\filebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\accordion_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\blank.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\calendar_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\combo_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\datagrid_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\datebox_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\layout_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\linkbutton_bg.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\loading.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\menu_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\messager_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\pagination_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\panel_tools.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\passwordbox_close.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\passwordbox_open.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\searchbox_button.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\slider_handle.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\spinner_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\tabs_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\tagbox_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\tree_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\images\validatebox_warning.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\layout.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\linkbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\menu.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\menubutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\messager.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\numberbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\pagination.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\panel.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\passwordbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\progressbar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\propertygrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\radiobutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\searchbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\slider.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\spinner.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\splitbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\switchbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\tabs.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\tagbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\textbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\tooltip.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\tree.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\validatebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\bootstrap\window.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\color.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\accordion.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\calendar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\checkbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\combo.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\combobox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\datagrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\datalist.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\datebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\dialog.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\easyui.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\filebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\accordion_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\blank.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\calendar_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\combo_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\datagrid_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\datebox_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\layout_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\linkbutton_bg.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\loading.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\menu_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\messager_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\pagination_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\panel_tools.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\passwordbox_close.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\passwordbox_open.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\searchbox_button.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\slider_handle.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\spinner_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\tabs_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\tagbox_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\tree_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\images\validatebox_warning.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\layout.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\linkbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\menu.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\menubutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\messager.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\numberbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\pagination.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\panel.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\passwordbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\progressbar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\propertygrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\radiobutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\searchbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\slider.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\spinner.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\splitbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\switchbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\tabs.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\tagbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\textbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\tooltip.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\tree.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\validatebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\default\window.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\accordion.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\calendar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\checkbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\combo.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\combobox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\datagrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\datalist.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\datebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\dialog.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\easyui.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\filebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\accordion_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\blank.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\calendar_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\combo_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\datagrid_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\datebox_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\layout_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\linkbutton_bg.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\loading.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\menu_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\messager_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\pagination_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\panel_tools.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\passwordbox_close.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\passwordbox_open.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\searchbox_button.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\slider_handle.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\spinner_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\tabs_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\tagbox_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\tree_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\images\validatebox_warning.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\layout.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\linkbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\menu.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\menubutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\messager.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\numberbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\pagination.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\panel.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\passwordbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\progressbar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\propertygrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\radiobutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\searchbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\slider.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\spinner.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\splitbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\switchbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\tabs.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\tagbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\textbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\tooltip.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\tree.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\validatebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\gray\window.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icon.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\back.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\blank.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\cancel.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\clear.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\cut.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\edit_add.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\edit_remove.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\filesave.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\filter.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\help.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\large_chart.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\large_clipart.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\large_picture.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\large_shapes.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\large_smartart.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\lock.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\man.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\mini_add.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\mini_edit.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\mini_refresh.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\more.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\no.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\ok.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\pencil.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\print.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\redo.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\reload.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\search.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\sum.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\tip.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\icons\undo.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\accordion.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\calendar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\checkbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\combo.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\combobox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\datagrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\datalist.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\datebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\dialog.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\easyui.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\filebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\accordion_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\blank.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\calendar_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\combo_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\datagrid_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\datebox_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\layout_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\linkbutton_bg.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\loading.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\menu_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\messager_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\pagination_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\panel_tools.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\passwordbox_close.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\passwordbox_open.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\searchbox_button.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\slider_handle.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\spinner_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\tabs_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\tagbox_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\tree_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\validatebox_warning.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\layout.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\linkbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\menu.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\menubutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\messager.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\numberbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\pagination.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\panel.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\passwordbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\progressbar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\propertygrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\radiobutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\searchbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\slider.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\spinner.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\splitbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\switchbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\tabs.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\tagbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\textbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\tooltip.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\tree.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\validatebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\window.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\accordion.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\calendar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\checkbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\combo.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\combobox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\datagrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\datalist.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\datebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\dialog.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\easyui.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\filebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\accordion_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\blank.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\calendar_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\combo_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\datagrid_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\datebox_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\layout_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\linkbutton_bg.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\loading.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\menu_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\messager_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\pagination_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\panel_tools.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\passwordbox_close.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\passwordbox_open.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\searchbox_button.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\slider_handle.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\spinner_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\tabs_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\tagbox_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\tree_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\validatebox_warning.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\layout.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\linkbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\menu.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\menubutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\messager.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\numberbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\pagination.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\panel.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\passwordbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\progressbar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\propertygrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\radiobutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\searchbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\slider.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\spinner.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\splitbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\switchbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\tabs.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\tagbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\textbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\tooltip.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\tree.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\validatebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\window.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\accordion.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\calendar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\checkbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\combo.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\combobox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\datagrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\datalist.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\datebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\dialog.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\easyui.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\filebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\accordion_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\blank.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\calendar_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\combo_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\datagrid_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\datebox_arrow.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\layout_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\linkbutton_bg.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\loading.gif" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\menu_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\messager_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\pagination_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\panel_tools.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\passwordbox_close.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\passwordbox_open.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\searchbox_button.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\slider_handle.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\spinner_arrows.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\tabs_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\tagbox_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\tree_icons.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\images\validatebox_warning.png" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\layout.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\linkbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\menu.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\menubutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\messager.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\numberbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\pagination.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\panel.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\passwordbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\progressbar.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\propertygrid.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\radiobutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\searchbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\slider.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\spinner.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\splitbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\switchbutton.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\tabs.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\tagbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\textbox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\tooltip.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\tree.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\validatebox.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\metro\window.css" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\mobile.css" />
+    <Content Include="webuploader\lib\knockout\knockout-3.4.2.debug.js" />
+    <Content Include="webuploader\lib\knockout\knockout-3.4.2.js" />
+    <Content Include="webuploader\lib\layer\layer-min.js" />
+    <Content Include="webuploader\lib\layer\layer.js" />
+    <Content Include="webuploader\lib\layer\mobile\layer.js" />
+    <Content Include="webuploader\lib\layer\mobile\need\layer.css" />
+    <Content Include="webuploader\lib\layer\theme\default\icon-ext.png" />
+    <Content Include="webuploader\lib\layer\theme\default\icon.png" />
+    <Content Include="webuploader\lib\layer\theme\default\layer.css" />
+    <Content Include="webuploader\lib\layer\theme\default\loading-0.gif" />
+    <Content Include="webuploader\lib\layer\theme\default\loading-1.gif" />
+    <Content Include="webuploader\lib\layer\theme\default\loading-2.gif" />
+    <Content Include="webuploader\lib\purl.js" />
+    <Content Include="webuploader\lib\bootstrap-table\bootstrap-table.css" />
+    <Content Include="webuploader\lib\bootstrap-table\bootstrap-table.js" />
+    <Content Include="webuploader\lib\jquery\jquery-3.3.1.js" />
+    <Content Include="webuploader\lib\jquery\jquery-3.3.1.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\Uploader.swf" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.css" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.custom.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.custom.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.fis.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.flashonly.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.flashonly.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.html5only.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.html5only.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.noimage.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.noimage.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.nolog.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.nolog.min.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.withoutimage.js" />
+    <Content Include="webuploader\lib\webuploader0.1.5\webuploader.withoutimage.min.js" />
+    <Content Include="WebUploader_test.js" />
+    <Content Include="Web.config" />
+    <Content Include="webuploader0.1.5\jquery-3.3.1.js" />
+    <Content Include="webuploader0.1.5\jquery-3.3.1.min.js" />
+    <Content Include="webuploader0.1.5\purl.js" />
+    <Content Include="webuploader0.1.5\Uploader.swf" />
+    <Content Include="webuploader0.1.5\webuploader.css" />
+    <Content Include="webuploader0.1.5\webuploader.custom.js" />
+    <Content Include="webuploader0.1.5\webuploader.custom.min.js" />
+    <Content Include="webuploader0.1.5\webuploader.fis.js" />
+    <Content Include="webuploader0.1.5\webuploader.flashonly.js" />
+    <Content Include="webuploader0.1.5\webuploader.flashonly.min.js" />
+    <Content Include="webuploader0.1.5\webuploader.html5only.js" />
+    <Content Include="webuploader0.1.5\webuploader.html5only.min.js" />
+    <Content Include="webuploader0.1.5\webuploader.js" />
+    <Content Include="webuploader0.1.5\webuploader.min.js" />
+    <Content Include="webuploader0.1.5\webuploader.noimage.js" />
+    <Content Include="webuploader0.1.5\webuploader.noimage.min.js" />
+    <Content Include="webuploader0.1.5\webuploader.nolog.js" />
+    <Content Include="webuploader0.1.5\webuploader.nolog.min.js" />
+    <Content Include="webuploader0.1.5\webuploader.withoutimage.js" />
+    <Content Include="webuploader0.1.5\webuploader.withoutimage.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Global.asax.cs">
+      <DependentUpon>Global.asax</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <Content Include="webuploader0.1.5\README.md" />
+    <Content Include="webuploader\lib\webuploader0.1.5\README.md" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material-teal\images\Thumbs.db" />
+    <Content Include="webuploader\lib\jquery-easyui-1.5.5.2-min\themes\material\images\Thumbs.db" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap-theme.css.map" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap-theme.min.css.map" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap.css.map" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\css\bootstrap.min.css.map" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="webuploader\lib\bootstrap-3.3.7-dist\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="webuploader\html\fileData.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="App_Data\" />
+    <Folder Include="Models\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj">
+      <Project>{7ec16d10-1369-4e2e-8dc9-35cfe4a125d8}</Project>
+      <Name>Mini.Foundation.Basic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj">
+      <Project>{c65582cb-a03c-4be0-83ab-273fa89a855a}</Project>
+      <Name>Mini.Foundation.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj">
+      <Project>{f5cc2c1a-c49e-44d4-856a-eb8646d4fd85}</Project>
+      <Name>Mini.Foundation.LogService</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mini.Framework.WebUploader\Mini.Framework.WebUploader.csproj">
+      <Project>{f536a7bf-2109-4b48-90e5-06e035cc7d42}</Project>
+      <Name>Mini.Framework.WebUploader</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>2293</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>http://localhost:2293/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>这台计算机上缺少此项目引用的 NuGet 程序包。使用“NuGet 程序包还原”可下载这些程序包。有关更多信息，请参见 http://go.microsoft.com/fwlink/?LinkID=322105。缺少的文件是 {0}。</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.Net.Compilers.2.6.1\build\Microsoft.Net.Compilers.props'))" />
+    <Error Condition="!Exists('..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.8\build\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

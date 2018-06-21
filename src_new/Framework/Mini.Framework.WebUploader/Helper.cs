@@ -22,7 +22,7 @@ namespace Mini.Framework.WebUploader
         public static String GetFileName(String guid, String fileID, String fileName, Int32 chunks = 0, Int32 chunk = -1)
         {
             Boolean isChunkFolder = !(chunks <= 0);
-            String filePath = HttpContext.Current.Server.MapPath(AsmConfiger.AppSettings("File_SavePath"));
+            String filePath = GetConfigPath();
             Directory.CreateDirectory(filePath);
             //以客户端传过来的guid和fileid作为文件名
             String fileFullName = Path.Combine(filePath, $"{guid}_{fileID}{Path.GetExtension(fileName)}");
@@ -34,22 +34,33 @@ namespace Mini.Framework.WebUploader
             return fileFullName;
         }
 
-        //public static String GetFileName(HttpContext context)
-        //{
-        //    String filePath = context.Server.MapPath(AsmConfiger.AppSettings("File_SavePath"));
-        //    //以客户端传过来的guid和fileid作为文件名
-        //    filePath = Path.Combine(filePath, $"{context.Request["guid"]}_{context.Request["id"]}.{Path.GetExtension(context.Request.Files[0].FileName)}");
-        //    String fileFullPath = String.Empty;
-        //    if (context.Request.Form.AllKeys.Any(m => m == "chunk"))
-        //    {
-        //        //当前分片在上传分片中的顺序（从0开始）
-        //        Int32 chunk = Convert.ToInt32(context.Request.Form["chunk"]);
-        //        //总分片数
-        //        Int32 chunks = Convert.ToInt32(context.Request.Form["chunks"]);
-        //        fileFullPath = Path.Combine(filePath + "_chunk", $"{ chunk}");
-        //    }
-        //    Directory.CreateDirectory(fileFullPath);
-        //    return fileFullPath;
-        //}
+        /// <summary>
+        /// 获取 配置的路径
+        /// </summary>
+        /// <returns></returns>
+        static String GetConfigPath()
+        {
+            var path = HttpContext.Current.Server.MapPath(AsmConfiger.AppSettings("File_SavePath"));
+            var pathParts = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
+            String newPaths = String.Empty;
+            for (var i = 0; i < pathParts.Length; i++)
+            {
+                if (i > 0)
+                    newPaths += "/";
+                newPaths += FormatDateString(pathParts[i]);
+            }
+            return newPaths;
+        }
+
+        static String FormatDateString(String value)
+        {
+            if (String.IsNullOrWhiteSpace(value)) return value;
+            if (value.StartsWith("{") && value.EndsWith("}"))
+            {
+                value = value.Substring(1, value.Length - 2);
+                value = DateTime.Now.ToString(value);
+            }
+            return value;
+        }
     }
 }

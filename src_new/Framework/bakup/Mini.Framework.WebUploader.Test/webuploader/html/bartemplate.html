@@ -1,0 +1,24 @@
+﻿<script type="text/html" id="{templateid}">
+    <div>
+        <ul class="btnbar">
+            <li>
+                <a href="#" data-bind="click:addFile,clickBubble: false"> ＋ </a>
+            </li>
+            <li>
+                <a href="#"> ✘ </a>
+            </li>
+            <li>
+                <a href="#"> ✔ </a>
+            </li>
+        </ul>
+    </div>
+    <div class="clearfloat"></div>
+    <div>
+        <ul class="files" data-bind="foreach: files">
+            <li>
+                <input type="checkbox" />
+                <a href="#" data-bind="text:fileName"></a>
+            </li>
+        </ul>
+    </div>
+</script>

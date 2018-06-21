@@ -6,12 +6,12 @@
         var scripts = document.scripts;
         for (var i = 0; i < scripts.length; i++) {
             var js = scripts[i];
-            var index = js.src.lastIndexOf('/webuploader/js/uploadbar.js');
+            var index = js.src.lastIndexOf('/webuploader/js/webuploaderbar.js');
             if (index > 0) {
                 return js.src.substr(0, index) + "/webuploader/";
             }
         }
-        console.log("folder name[webuploader] or file name [uploadbar.js] has been changed!");
+        console.log("folder name[webuploader] or file name [webuploaderbar.js] has been changed!");
         return "";
     };
 
@@ -23,7 +23,7 @@
         return sFolderUrl + "html/bartemplate.html";
     };
 
-    function uploadbar() {
+    function webuploaderbar() {
         var me = this;
 
         /**
@@ -32,7 +32,7 @@
         this.configs = function () {
             var config = {
                 index: 0,//当前的barindex（一个页面可以有多个这种bar）
-                templateid: "uploadbar_htmltemplate",
+                templateid: "webuploaderbar_htmltemplate",
                 serverurl: getFolderUrl() + "html/fileData.json",
             };
             var config2 = {
@@ -132,10 +132,11 @@
         this.files = ko.observableArray();
     };
 
-    var bar = new uploadbar();
+    var bar = new webuploaderbar();
+    w.webuploaderbar = bar;
 
     var css = [getFolderUrl() + 'lib/layer/theme/default/layer.css'
-        , getFolderUrl() + 'css/uploadbar.css'];
+        , getFolderUrl() + 'css/webuploader.css'];
     var loadCSS = function (urls) {
         if (!(urls && urls.length)) return;
         for (var i = 0; i < urls.length; i++) {
@@ -165,7 +166,7 @@
     $.extend({ uploadbar: bar });
 
     $.fn.extend({
-        "makeuploadbar": function (sTableName, sPrimaryKey, config) {
+        "makewebuploaderbar": function (sTableName, sPrimaryKey, config) {
             var configs = $.extend(config, bar.configs());
             var $barContainer = $(this);
             var df = $.Deferred();

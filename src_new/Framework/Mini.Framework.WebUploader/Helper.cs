@@ -40,16 +40,15 @@ namespace Mini.Framework.WebUploader
         /// <returns></returns>
         static String GetConfigPath()
         {
-            var path = HttpContext.Current.Server.MapPath(AsmConfiger.AppSettings("File_SavePath"));
+            var path = AsmConfiger.AppSettings("File_SavePath");
             var pathParts = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             String newPaths = String.Empty;
             for (var i = 0; i < pathParts.Length; i++)
             {
-                if (i > 0)
-                    newPaths += "/";
+                if (i > 0) newPaths += "/";
                 newPaths += FormatDateString(pathParts[i]);
             }
-            return newPaths;
+            return HttpContext.Current.Server.MapPath(newPaths);
         }
 
         static String FormatDateString(String value)

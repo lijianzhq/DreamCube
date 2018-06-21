@@ -91,8 +91,8 @@
                 area: ['65%', '60%'],
                 btn: ['开始上传', '正在上传', '关闭'], //可以无限个按钮
                 btn1: function () {
-                    alert(me.iframeWin)
-                    alert(me.iframeWin.uploader)
+                    //alert(me.iframeWin)
+                    //alert(me.iframeWin.uploader)
                     $(".layui-layer-btn0").hide();
                     //$(".layui-layer-btn1").show();
                     me.iframeWin.uploader.startUpload();

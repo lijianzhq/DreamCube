@@ -8,7 +8,7 @@
             var scripts = document.scripts;
             for (var i = 0; i < scripts.length; i++) {
                 var js = scripts[i];
-                var index = js.src.lastIndexOf('/webuploader/js/uploadFileDialog.js');
+                var index = js.src.lastIndexOf('webuploader/js/uploadFileDialog.js');
                 if (index > 0) {
                     return js.src.substr(0, index) + "/webuploader/";
                 }
@@ -63,26 +63,26 @@
                     title: '序号',
                     align: 'center',
                     halign: 'center',
-                    class: 'col-md-1 col-lg-1 col-xs-1',
+                    "class": 'col-md-1 col-lg-1 col-xs-1',
                     formatter: function (value, row, index) { return index + 1; },
                 }, {
                     field: 'f_name',
                     title: '文件名',
                     align: 'center',
                     halign: 'center',
-                    class: 'col-md-7 col-lg-7 col-xs-7',
+                    "class": 'col-md-7 col-lg-7 col-xs-7',
                 }, {
                     field: 'f_size2',
                     title: '文件大小',
                     align: 'center',
                     halign: 'center',
-                    class: 'col-md-1 col-lg-1 col-xs-1',
+                    "class": 'col-md-1 col-lg-1 col-xs-1',
                 }, {
                     field: 'f_status',
                     title: '状态',
                     align: 'center',
                     halign: 'center',
-                    class: 'col-md-2 col-lg-2 col-xs-2',
+                    "class": 'col-md-2 col-lg-2 col-xs-2',
                     formatter: function (value, row, index) {
                         var res = row.f_status;
                         if (res >= 100) {
@@ -97,7 +97,7 @@
                     title: '操作',
                     align: 'center',
                     halign: 'center',
-                    class: 'col-md-1 col-lg-1 col-xs-1',
+                    "class": 'col-md-1 col-lg-1 col-xs-1',
                     formatter: function (value, row, index) {
                         if (value < 100) {
                             return "<a href='#' role='button' onclick='uploader.removeFile(\"" + row.f_id + "\")'>移除</a>";
@@ -179,11 +179,13 @@
                 //file.trigger('statuschange', null, WebUploader.File.Status.QUEUED);
                 fileCount--;
                 removeFileHtml(file);
+                publishEvent("fileDequeued");
             });
 
             uploader.on('uploadFinished', function () {
                 //控件触发的事件不算最终完成，还可能需要考虑合并文件的时间
                 //publishEvent("uploadFinished");
+                uploader.enable();
             });
 
             uploader.on('uploadComplete', function (file) {
@@ -233,7 +235,8 @@
             });
 
             uploader.onError = function (code) {
-                alert('Eroor: ' + code);
+                //alert('Eroor: ' + code);
+                console.log('Eroor: ' + code);
             };
 
             //***************************************内部方法***************************************
@@ -296,6 +299,7 @@
              * @param {any} sFileID
              */
             this.startUpload = function () {
+                uploader.disable();
                 uploader.upload();
             };
 

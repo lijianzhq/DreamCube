@@ -1,10 +1,12 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
-    <meta charset="utf-8" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title></title>
-    <link href="../lib/bootstrap-3.3.7-dist/css/bootstrap.css" rel="stylesheet" />
-    <link href="../lib/bootstrap-table/bootstrap-table.css" rel="stylesheet" />
+    <link href="../lib/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="../lib/bootstrap-table/bootstrap-table.min.css" rel="stylesheet" />
     <link href="../css/uploadFileDialog.css" rel="stylesheet" />
 </head>
 <body>
@@ -14,12 +16,18 @@
             <table id="tb_fileList"></table>
         </div>
     </div>
-    <script src="../lib/jquery/jquery-3.3.1.min.js"></script>
+    <!--[if IE]>
+        <script src="../lib/compatibility/indexOf.js"></script>
+        <script src="../lib/compatibility/console.js"></script>
+    <![endif]-->
+    <!--<script src="../lib/jquery/jquery-3.3.1.min.js"></script>-->
+    <script src="../lib/jquery/jquery-1.11.3/jquery.min.js"></script>
     <script src="../lib/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="../lib/bootstrap-table/bootstrap-table.js"></script>
-    <!--<script src="../lib/webuploader0.1.5/webuploader.min.js"></script>-->
-    <script src="../lib/webuploader0.1.5/webuploader.js"></script>
+    <script src="../lib/bootstrap-table/bootstrap-table.min.js"></script>
+    <script src="../lib/bootstrap-table/locale/bootstrap-table-zh-CN.min.js"></script>
+    <script src="../lib/webuploader0.1.5/webuploader.min.js"></script>
     <script src="../js/mediator.js"></script>
     <script src="../js/uploadFileDialog.js"></script>
+
 </body>
 </html>

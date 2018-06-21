@@ -1,18 +1,27 @@
 ﻿(function ($, w, udf) {
+    //获得当前js文件的url
+    var currentPath = document.currentScript ? document.currentScript.src : function () {
+        var js = document.scripts
+            , last = js.length - 1
+            , src;
+        for (var i = last; i > 0; i--) {
+            if (js[i].readyState === 'interactive') {
+                src = js[i].src;
+                break;
+            }
+        }
+        return src || js[last].src;
+    }();
     /**
     * 获取本插件所在的web的目录url
     * */
     function getFolderUrl() {
-        var scripts = document.scripts;
-        for (var i = 0; i < scripts.length; i++) {
-            var js = scripts[i];
-            var index = js.src.lastIndexOf('webuploader/js/uploadbar.js');
-            if (index >= 0) {
-                return js.src.substr(0, index) + "/webuploader/";
-            }
-        }
-        console.log("folder name[webuploader] or file name [uploadbar.js] has been changed!");
-        return "";
+        //获得js文件的path目录路径，再往上递归一层，就是插件路径了
+        var jsPath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+        if (jsPath.lastIndexOf("/") === jsPath.length - 1)
+            jsPath = jsPath.substring(0, jsPath.length - 1);
+        //console.log(jsPath.substring(0, jsPath.lastIndexOf('/') + 1));
+        return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
     };
 
     /**
@@ -79,12 +88,11 @@
                 title: '文件上传',
                 shadeClose: true,
                 shade: 0.2,
-                area: ['65%', '55%'],
+                area: ['65%', '60%'],
                 btn: ['开始上传', '正在上传', '关闭'], //可以无限个按钮
                 btn1: function () {
-                    //alert(me.iframeWin)
-                    //alert(me.iframeWin.uploader)
-                    //alert(me.iframeWin.uploader);
+                    alert(me.iframeWin)
+                    alert(me.iframeWin.uploader)
                     $(".layui-layer-btn0").hide();
                     //$(".layui-layer-btn1").show();
                     me.iframeWin.uploader.startUpload();
@@ -154,10 +162,10 @@
     };
     loadCSS(css);
 
-    var rs = [getFolderUrl() + 'lib/webuploader0.1.5/webuploader.js'
-        , getFolderUrl() + 'lib/knockout/knockout-3.4.2.js'
-        , getFolderUrl() + 'lib/layer/layer.js'
-        , getFolderUrl() + 'js/mediator.js'];
+    var rs = [getFolderUrl() + 'lib/compatibility/console.js'
+        , getFolderUrl() + 'lib/knockout/knockout-3.4.2-min.js'
+        , getFolderUrl() + 'lib/layer/layer-min.js'
+        , getFolderUrl() + 'lib/mediator.js'];
 
     //加载依赖的资源文件
     $.when($.getScript(rs[0]), $.getScript(rs[1]), $.getScript(rs[2]), $.getScript(rs[3]))

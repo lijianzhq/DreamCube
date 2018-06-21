@@ -1,20 +1,30 @@
 ﻿(function ($) {
     // 当domReady的时候开始初始化
     $(function () {
-        /**
-       * 获取本插件所在的web的目录url
-       * */
-        function getFolderUrl() {
-            var scripts = document.scripts;
-            for (var i = 0; i < scripts.length; i++) {
-                var js = scripts[i];
-                var index = js.src.lastIndexOf('webuploader/js/uploadFileDialog.js');
-                if (index > 0) {
-                    return js.src.substr(0, index) + "/webuploader/";
+        //获得当前js文件的url
+        var currentPath = document.currentScript ? document.currentScript.src : function () {
+            var js = document.scripts
+                , last = js.length - 1
+                , src;
+            for (var i = last; i > 0; i--) {
+                if (js[i].readyState === 'interactive') {
+                    src = js[i].src;
+                    break;
                 }
             }
-            console.log("folder name[webuploader] or file name [uploadFileDialog.js] has been changed!");
-            return "";
+            return src || js[last].src;
+        }();
+        /**
+        * 获取本插件所在的web的目录url
+        * */
+        function getFolderUrl() {
+            //获得js文件的path目录路径，再往上递归一层，就是插件路径了
+            var jsPath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
+            if (jsPath.lastIndexOf("/") === jsPath.length - 1)
+                jsPath = jsPath.substring(0, jsPath.length - 1);
+            console.log(jsPath);
+            console.log(jsPath.substring(0, jsPath.lastIndexOf('/') + 1));
+            return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
         };
 
         /**
@@ -33,7 +43,6 @@
                 GUID = WebUploader.Base.guid(), //当前页面是生成的GUID作为标示
                 $table = $("#tb_fileList"),
                 $uploadBtn = $('#selectFileBtn');
-
             var configs = {
                 pick: {
                     id: $uploadBtn,
@@ -117,12 +126,18 @@
 
             //重新计算宽度和高度
             var resetHeight = function () {
-                var tableHeight = $(window).height() - 45 - 10;//45为按钮区域的高度，10为padding的高度
+                var tableHeight = $(window).height() - 45 - 30;//45为按钮区域的高度，10为padding的高度
                 $table.bootstrapTable('resetView', { height: tableHeight });
             };
             resetHeight();
+
+            //妈蛋，解决window.resize在ie7会死循环的问题
+            var n = 0;
             $(window).resize(function () {
-                resetHeight();
+                if (n % 2 == 0) {
+                    resetHeight();
+                }
+                n++;
             });
 
             /**

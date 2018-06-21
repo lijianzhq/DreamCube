@@ -17,6 +17,8 @@
     cursor: pointer;
     background: #00b7ee;
     padding: 10px 15px;
+    .width:150px\9; /*IE6、7、8识别*/
+    .margin-bottom: 5px\9; /*IE6、7、8识别*/
     color: #fff;
     text-align: center;
     border-radius: 3px;

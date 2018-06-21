@@ -8,11 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="Mini.Foundation.Basic" Version="1.0.12" />
     <PackageReference Include="Mini.Foundation.Json" Version="1.0.1" />
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Web" />
   </ItemGroup>
 

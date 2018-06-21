@@ -5,6 +5,7 @@ using System.Linq;
 
 using Mini.Foundation.LogService;
 using Mini.Foundation.Json;
+using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Framework.WebUploader
 {
@@ -38,6 +39,7 @@ namespace Mini.Framework.WebUploader
             context.Response.ContentType = "application/json";
             try
             {
+                String userid = context.Request.Params["uid"];
                 Int32 chunk = Convert.ToInt32(context.Request.Form["chunk"]);
                 String fileName = Helper.GetFileName(context.Request["guid"],
                                         context.Request["id"],
@@ -46,9 +48,22 @@ namespace Mini.Framework.WebUploader
                                         chunk);
                 result.Chunked = chunk > 0;
                 //如果不是分片的话，则直接返回文件存放路径
-                if(!result.Chunked)
+                if (!result.Chunked)
                     result.FileSavePath = fileName;
                 context.Request.Files[0].SaveAs(fileName);
+
+                //保存数据库记录
+                if (!result.Chunked)
+                {
+                    DBService.DB.SaveUploadFileRecord(new DBService.UploadFile()
+                    {
+                        SavePath = MyString.RightOf(fileName, context.Server.MapPath("~")),
+                        CODE = DBService.DB.GetGuid(),
+                        FileName = MyString.LastLeftOf(fileName.Replace("\\", "/"), "/"),
+                        CreateBy = userid,
+                        LastUpdateBy = userid
+                    });
+                }
             }
             catch (Exception ex)
             {

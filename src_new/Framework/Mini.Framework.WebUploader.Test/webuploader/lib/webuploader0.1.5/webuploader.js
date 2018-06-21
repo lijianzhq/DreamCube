@@ -2728,6 +2728,10 @@
                         stats.numOfProgress--;
                         break;
 
+                    case STATUS.COMPLETE:
+                        stats.numOfSuccess--;
+                        break;
+
                     case STATUS.QUEUED:
                         stats.numOfQueue--;
                         break;

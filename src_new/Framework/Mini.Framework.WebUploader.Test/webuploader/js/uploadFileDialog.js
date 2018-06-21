@@ -51,8 +51,8 @@
                 swf: getFolderUrl() + 'lib/webuploader0.1.5/Uploader.swf',
                 chunked: true, //分片处理大文件
                 chunkSize: 2 * 1024 * 1024,
-                server: 'FileSave.ashx',
-                merge: 'MergeFile.ashx',
+                server: 'DataTransfer.ashx',
+                merge: 'DataTransfer.ashx',
                 disableGlobalDnd: true,
                 threads: 1, //上传并发数
                 //由于Http的无状态特征，在往服务器发送数据过程传递一个进入当前页面是生成的GUID作为标示
@@ -87,13 +87,14 @@
                     halign: 'center',
                     "class": 'col-md-1 col-lg-1 col-xs-1'
                 }, {
-                    field: 'f_status',
-                    title: '状态',
+                    field: 'f_progress',
+                    title: '进度',
                     align: 'center',
                     halign: 'center',
                     "class": 'col-md-2 col-lg-2 col-xs-2',
                     formatter: function (value, row, index) {
-                        var res = row.f_status;
+                        var res = row.f_progress;
+                        console.log("res:" + res);
                         if (res >= 100) {
                             return ["<div class='progress'><div class='progress-bar' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100' style='width:" + res.toFixed(2) + "%;'>" + res.toFixed(2) + "%</div></div>"];
                         }
@@ -103,7 +104,7 @@
                     }
                 }, {
                     field: 'f_status',
-                    title: '操作',
+                    title: '状态',
                     align: 'center',
                     halign: 'center',
                     "class": 'col-md-1 col-lg-1 col-xs-1',
@@ -111,7 +112,10 @@
                         if (value == 0) {
                             return "<a href='#' role='button' onclick='uploader.removeFile(\"" + row.f_id + "\")'>移除</a>";
                         }
-                        else if (value < 100) {
+                        else if (value == -1) {
+                            return "<a href='#' role='button' onclick='uploader.removeFile(\"" + row.f_id + "\")'>移除</a><br><span style='font-size:7px;color:red'>出错，请重试</span>";
+                        }
+                        else if (value > 0 && value < 100) {
                             return '上传中...';
                         }
                         else {
@@ -169,10 +173,13 @@
                 //alert(JSON.stringify(object));
                 //alert(JSON.stringify(data));
                 //记录文件的分片数
+                data.optype = 'save';
                 object.file.chunks = object.chunks;
             });
 
             uploader.on('uploadProgress', function (file, percentage) {
+                console.log("fileStatus:" + file.getStatus());
+                //if (file.statusText) return;//状态说明，常在error时使用，用http, abort,server等来标记是由于什么原因导致文件错误。
                 //对于分片的文件，最后还有一步合并的
                 if (file.chunks > 1 && percentage > 0.95) {
                 }
@@ -207,7 +214,6 @@
             });
 
             uploader.on('uploadComplete', function (file) {
-                fileCount--;
                 publishEvent("uploadComplete", file);
             });
 
@@ -216,17 +222,25 @@
                 console.log("all监听：", type, arg1, arg2);
             });
 
-            uploader.on('uploadError', function (file, reason) {
-                publishEvent("uploadError");
-            });
-
             // 文件上传成功,合并文件。
             uploader.on('uploadSuccess', function (file, response) {
+                //不需要这样判断，直接服务器端通过响应吗告诉控件失败
+                //if (!response.Status) {
+                //    console.log(uploader.getStats());
+                //    //服务器返回失败
+                //    uploader.addFiles(file);
+                //    file.trigger('statuschange', WebUploader.File.Status.ERROR, WebUploader.File.Status.COMPLETE);
+                //    uploader.trigger('uploadError', file, 'server');
+                //    console.log(uploader.getStats());
+                //    console.log(response);
+                //    return;
+                //}
+                fileCount--;
                 if (response.Chunked) {
                     jQuery.ajax({
                         url: configs.merge,
                         type: "post",
-                        data: { guid: GUID, id: file.id, fileName: file.name },
+                        data: { guid: GUID, id: file.id, fileName: file.name, optype: 'merge' },
                         dataType: "json",
                         success: function (msg) {
                             //alert(msg);
@@ -250,11 +264,26 @@
                         }
                     });
                 }
+                else {
+                    if (fileCount == 0) {
+                        publishEvent("uploadFinished");
+                    }
+                    publishEvent("uploadSuccess", file);
+                }
+            });
+
+            uploader.on('uploadError', function (file, reason) {
+                console.log('uploadError:' + reason);
+                var row = $table.bootstrapTable('getRowByUniqueId', file.id);
+                row.f_status = -1;
+                row.f_progress = 0;
+                $table.bootstrapTable('updateRow', row);
+                publishEvent("uploadError");
             });
 
             uploader.onError = function (code) {
                 //alert('Eroor: ' + code);
-                console.log('Eroor: ' + code);
+                console.log('Error: ' + code);
             };
 
             //***************************************内部方法***************************************
@@ -269,6 +298,7 @@
                     "f_name": file.name,
                     "f_size": file.size,
                     "f_size2": WebUploader.formatSize(file.size),
+                    "f_progress": 0,
                     "f_status": 0,
                     "f_op": null
                 };
@@ -291,7 +321,7 @@
             var updateFileProgressHtml = function (file, percentage) {
                 var row = $table.bootstrapTable('getRowByUniqueId', file.id);
                 //alert(JSON.stringify(row));
-                row.f_status = percentage * 100;
+                row.f_progress = percentage * 100;
                 $table.bootstrapTable('updateRow', row);
             };
 
@@ -318,6 +348,8 @@
              */
             this.startUpload = function () {
                 uploader.disable();
+                console.log(uploader.getStats());
+                uploader.retry();
                 uploader.upload();
             };
 

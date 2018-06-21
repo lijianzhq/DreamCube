@@ -7,7 +7,7 @@ using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Framework.WebUploader
 {
-    class Helper
+    static class Helper
     {
         private static AssemblyConfiger _asmConfiger = null;
         public static AssemblyConfiger AsmConfiger

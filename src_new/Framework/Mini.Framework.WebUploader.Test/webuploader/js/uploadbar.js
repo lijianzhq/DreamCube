@@ -75,12 +75,15 @@
             });
             mediator.subscribe("uploadError", function () {
                 $(".layui-layer-btn0").show();
-                $(".layui-layer-btn0").text("重试");
             });
-            mediator.subscribe("uploadComplete", function (file) {
+            mediator.subscribe("uploadSuccess", function (file) {
                 me.files.push({
                     "fileName": file.name
                 });
+            });
+
+            mediator.subscribe("uploadComplete", function (file) {
+                
             });
 
             this.winConfig = {

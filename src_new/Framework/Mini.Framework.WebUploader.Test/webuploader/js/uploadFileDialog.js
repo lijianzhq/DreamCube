@@ -99,8 +99,11 @@
                     halign: 'center',
                     "class": 'col-md-1 col-lg-1 col-xs-1',
                     formatter: function (value, row, index) {
-                        if (value < 100) {
+                        if (value == 0) {
                             return "<a href='#' role='button' onclick='uploader.removeFile(\"" + row.f_id + "\")'>移除</a>";
+                        }
+                        else if (value < 100) {
+                            return '上传中...';
                         }
                         else {
                             return '已上传';

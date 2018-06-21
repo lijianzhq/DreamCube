@@ -6,8 +6,8 @@
         var scripts = document.scripts;
         for (var i = 0; i < scripts.length; i++) {
             var js = scripts[i];
-            var index = js.src.lastIndexOf('webuploader/js/uploadbar.js');
-            if (index >= 0) {
+            var index = js.src.lastIndexOf('/webuploader/js/uploadbar.js');
+            if (index > 0) {
                 return js.src.substr(0, index) + "/webuploader/";
             }
         }
@@ -33,7 +33,7 @@
             var config = {
                 index: 0,//当前的barindex（一个页面可以有多个这种bar）
                 templateid: "uploadbar_htmltemplate",
-                serverurl: getFolderUrl() + "html/fileData.json"
+                serverurl: getFolderUrl() + "html/fileData.json",
             };
             var config2 = {
                 barHtml: "<div data-bind=\"template: '" + config.templateid + "'\"></div>"
@@ -59,10 +59,6 @@
             });
             mediator.subscribe("fileQueued", function () {
                 $(".layui-layer-btn0").show();
-            });
-            mediator.subscribe("fileDequeued", function () {
-                var num = me.iframeWin.uploader.getNeedUploadFilesCount();
-                if (num <= 0) $(".layui-layer-btn0").hide();
             });
             mediator.subscribe("uploadError", function () {
                 $(".layui-layer-btn0").show();

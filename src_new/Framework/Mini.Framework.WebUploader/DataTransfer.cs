@@ -92,7 +92,7 @@ namespace Mini.Framework.WebUploader
                     {
                         SavePath = MyString.RightOf(fileFullName.Replace("/", "\\"), context.Server.MapPath("~").Replace("/", "\\")),
                         CODE = DBService.DB.GetGuid(),
-                        FileName = MyString.LastLeftOf(fileFullName.Replace("\\", "/"), "/"),
+                        FileName = MyString.LastRightOf(fileFullName.Replace("\\", "/"), "/"),
                         CreateBy = userid,
                         LastUpdateBy = userid
                     });

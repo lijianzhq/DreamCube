@@ -177,6 +177,10 @@
                 object.file.chunks = object.chunks;
             });
 
+            uploader.on('uploadAccept', function (object, ret) {
+                object.file.fileSavePath = ret.FileSavePath;
+            });
+
             uploader.on('uploadProgress', function (file, percentage) {
                 console.log("fileStatus:" + file.getStatus());
                 //if (file.statusText) return;//状态说明，常在error时使用，用http, abort,server等来标记是由于什么原因导致文件错误。
@@ -240,15 +244,12 @@
                     jQuery.ajax({
                         url: configs.merge,
                         type: "post",
-                        data: { guid: GUID, id: file.id, fileName: file.name, optype: 'merge' },
+                        data: { guid: GUID, id: file.id, fileName: file.name, optype: 'merge', fileSavePath: file.fileSavePath },
                         dataType: "json",
                         success: function (msg) {
                             //alert(msg);
                             //完成合并之后要触发事件
-                            updateFileProgressHtml(file, 1);
-                            if (fileCount == 0) {
-                                publishEvent("uploadFinished");
-                            }
+                            updateFileSuccess(file);
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             console.log('merge file error!');
@@ -265,10 +266,7 @@
                     });
                 }
                 else {
-                    if (fileCount == 0) {
-                        publishEvent("uploadFinished");
-                    }
-                    publishEvent("uploadSuccess", file);
+                    updateFileSuccess(file);
                 }
             });
 
@@ -314,14 +312,31 @@
             };
 
             /**
-             * 从数组中移除文件
-             * @param {object} file webuploader的file对象
-             * @param {number} percentage 上传的百分比
-             */
+              * 从数组中移除文件
+              * 上传文件成功调用的处理方法
+              * @param {object} file webuploader的file对象
+              * @param {number} percentage 上传的百分比
+              */
             var updateFileProgressHtml = function (file, percentage) {
-                var row = $table.bootstrapTable('getRowByUniqueId', file.id);
                 //alert(JSON.stringify(row));
+                var row = $table.bootstrapTable('getRowByUniqueId', file.id);
                 row.f_progress = percentage * 100;
+                $table.bootstrapTable('updateRow', row);
+            };
+
+            /**
+             * 上传文件成功调用的处理方法
+             * @param {object} file webuploader的file对象
+             */
+            var updateFileSuccess = function (file) {
+                if (fileCount == 0) {
+                    publishEvent("uploadFinished");
+                }
+                publishEvent("uploadSuccess", file);
+
+                var row = $table.bootstrapTable('getRowByUniqueId', file.id);
+                row.f_status = 100;
+                row.f_progress = 100;
                 $table.bootstrapTable('updateRow', row);
             };
 

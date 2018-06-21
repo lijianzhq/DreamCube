@@ -6,8 +6,25 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Mini.Framework.WebUploader.DBService
 {
+    public class Initializer : CreateDatabaseIfNotExists<DB>
+    { }
+
     public class DB : DbContext
     {
+        static DB()
+        {
+            Database.SetInitializer(new Initializer());
+        }
+
+        public static void Init(IDatabaseInitializer<DB> strategy)
+        {
+            Database.SetInitializer(strategy);
+            using (var db = new DB())
+            {
+                db.Database.Initialize(false);
+            }
+        }
+
         public DB(String nameOrConnectionString = "UploadFileDB")
             : base(nameOrConnectionString)
         { }

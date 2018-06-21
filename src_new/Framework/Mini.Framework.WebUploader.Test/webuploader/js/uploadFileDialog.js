@@ -64,19 +64,19 @@
                     align: 'center',
                     halign: 'center',
                     "class": 'col-md-1 col-lg-1 col-xs-1',
-                    formatter: function (value, row, index) { return index + 1; }
+                    formatter: function (value, row, index) { return index + 1; },
                 }, {
                     field: 'f_name',
                     title: '文件名',
                     align: 'center',
                     halign: 'center',
-                    "class": 'col-md-7 col-lg-7 col-xs-7'
+                    "class": 'col-md-7 col-lg-7 col-xs-7',
                 }, {
                     field: 'f_size2',
                     title: '文件大小',
                     align: 'center',
                     halign: 'center',
-                    "class": 'col-md-1 col-lg-1 col-xs-1'
+                    "class": 'col-md-1 col-lg-1 col-xs-1',
                 }, {
                     field: 'f_status',
                     title: '状态',
@@ -91,7 +91,7 @@
                         else {
                             return ["<div class='progress progress-striped active'><div class='progress-bar' role='progressbar' aria-valuenow='50' aria-valuemin='0' aria-valuemax='100' style='width:" + res.toFixed(2) + "%;'>" + res.toFixed(2) + "%</div></div>"];
                         }
-                    }
+                    },
                 }, {
                     field: 'f_status',
                     title: '操作',
@@ -105,10 +105,10 @@
                         else {
                             return '已上传';
                         }
-                    }
+                    },
                 }, {
                     field: 'f_id',
-                    title: 'id'
+                    title: 'id',
                 }]
             }).bootstrapTable('hideColumn', 'f_id');
 
@@ -252,7 +252,7 @@
                     "f_size": file.size,
                     "f_size2": WebUploader.formatSize(file.size),
                     "f_status": 0,
-                    "f_op": null
+                    "f_op": null,
                 };
                 $table.bootstrapTable('append', fileRow);
             };

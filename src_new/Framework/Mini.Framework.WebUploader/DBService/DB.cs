@@ -6,15 +6,22 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Mini.Framework.WebUploader.DBService
 {
-    public class Initializer : DropCreateDatabaseIfModelChanges<DB>
-    //public class Initializer : CreateDatabaseIfNotExists<DB>
-    { }
+    public class EmptyInitializer : IDatabaseInitializer<DB>
+    {
+        public void InitializeDatabase(DB context)
+        {
+            return;
+        }
+    }
+    public class Initializer : CreateDatabaseIfNotExists<DB>
+    {
+    }
 
     public class DB : DbContext
     {
         static DB()
         {
-            Database.SetInitializer(new Initializer());
+            Database.SetInitializer(new EmptyInitializer());
         }
 
         public static void Init(IDatabaseInitializer<DB> strategy)
@@ -47,6 +54,7 @@ namespace Mini.Framework.WebUploader.DBService
         {
             //解决EF动态建库数据库表名变为复数问题  
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
+            modelBuilder.HasDefaultSchema("TEST");
             base.OnModelCreating(modelBuilder);
         }
 

@@ -20,6 +20,19 @@ namespace Mini.Framework.WebUploader.Test
                 CreateBy = "1",
                 LastUpdateBy = "1"
             });
+
+            //using (var db = new DBService.DB())
+            //{
+            //    db.UPLOADFILE.Add(new DBService.UPLOADFILE()
+            //    {
+            //        SAVEPATH = "xxxx",
+            //        CODE = DBService.DB.GetGuid(),
+            //        FileName = "aaaaaa",
+            //        CREATEBY = "1",
+            //        LASTUPDATEBY = "1"
+            //    });
+            //    db.SaveChanges();
+            //}
         }
     }
 }

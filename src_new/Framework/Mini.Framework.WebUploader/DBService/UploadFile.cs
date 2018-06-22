@@ -52,6 +52,11 @@ namespace Mini.Framework.WebUploader.DBService
         public virtual List<UploadFileOpHistory> OpHistory { get; set; }
 
         /// <summary>
+        /// 记录状态
+        /// </summary>
+        public FileStatus Status { get; set; }
+
+        /// <summary>
         /// 附加属性
         /// </summary>
         [StringLength(2000)]

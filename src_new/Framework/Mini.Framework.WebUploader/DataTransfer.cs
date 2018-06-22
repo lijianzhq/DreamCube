@@ -2,6 +2,7 @@
 using System.Web;
 using System.IO;
 using System.Linq;
+using System.Collections.Generic;
 
 using Mini.Foundation.LogService;
 using Mini.Foundation.Json;
@@ -44,6 +45,10 @@ namespace Mini.Framework.WebUploader
                 {
                     result = LoadFiles(context);
                 }
+                else if (optype == "deleteFile") //删除文件
+                {
+                    result = DeleteFiles(context);
+                }
             }
             catch (Exception ex)
             {
@@ -59,6 +64,40 @@ namespace Mini.Framework.WebUploader
             }
         }
 
+        RespParams DeleteFiles(HttpContext context)
+        {
+            var rqParam = new RequestParams(context);
+            var result = new DataTransferRespParams()
+            {
+                Status = true,
+                Message = "",
+            };
+            String[] codes = MyJson.Deserialize<String[]>(rqParam.RmFCodes);
+            using (var db = new DBService.DB())
+            {
+                foreach (var code in codes)
+                {
+                    //不能做级联删除操作（操作历史表不能删除）
+                    //var f = db.UploadFiles.Include(nameof(DBService.UploadFile.OpHistory))
+                    //                      .Where(it => it.CODE == code).SingleOrDefault();
+                    //if (f != null) db.UploadFiles.Remove(f);
+                    var f = db.UploadFiles.Include(nameof(DBService.UploadFile.OpHistory))
+                                          .Where(it => it.CODE == code).SingleOrDefault();
+                    if (f != null)
+                    {
+                        f.Status = DBService.FileStatus.Delete;
+                        f.OpHistory = f.OpHistory == null ? new List<DBService.UploadFileOpHistory>() : f.OpHistory;
+                        f.OpHistory.Add(new DBService.UploadFileOpHistory()
+                        {
+                            OpType = DBService.FileOpType.Delete
+                        });
+                    }
+                }
+                db.SaveChanges();
+            }
+            return result;
+        }
+
         RespParams LoadFiles(HttpContext context)
         {
             var rqParam = new RequestParams(context);
@@ -69,7 +108,7 @@ namespace Mini.Framework.WebUploader
             };
             using (var db = new DBService.DB())
             {
-                var emptyQ = db.UploadFiles.AsQueryable<DBService.UploadFile>();
+                var emptyQ = db.UploadFiles.Where(it => it.Status == DBService.FileStatus.Normal);
                 var whereQ = emptyQ;
                 if (!String.IsNullOrWhiteSpace(rqParam.RefTableName))
                     whereQ = whereQ.Where(it => it.RefTableName == rqParam.RefTableName);

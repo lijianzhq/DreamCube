@@ -34,11 +34,10 @@
 
     function uploadbar() {
         var me = this;
-
         /**
          * 获取配置的方法
          * */
-        this.configs = function () {
+        this.defaultConfigs = function () {
             var config = {
                 index: 0,//当前的barindex（一个页面可以有多个这种bar）
                 templateid: "uploadbar_htmltemplate",
@@ -55,7 +54,13 @@
         };
     };
 
-    function viewModel(refTableName, refTableCode, barCode) {
+    function viewModel(refTableName, refTableCode, barCode, configs) {
+        this.configs = configs;
+        this.refTableName = refTableName;
+        this.refTableCode = refTableCode;
+        this.barCode = barCode;
+        this.checkedAll = false;
+        //以下是方法
         this.addFile = function () {
             var me = this,
                 mediator = new Mediator(),
@@ -77,8 +82,12 @@
                 $(".layui-layer-btn0").show();
             });
             mediator.subscribe("uploadSuccess", function (file) {
-                me.files.push({
-                    "FileName": file.name
+                //me.files.push({
+                //    "FileName": file.name
+                //});
+                me.appendNewFile({
+                    FileName: file.name,
+                    CODE: file.FileCode
                 });
             });
 
@@ -144,11 +153,44 @@
             $(".layui-layer-btn1").addClass("layui-btn-disabled").hide()
             return false;
         };
+        this.removeFile = function () {
+            var checkFileCode = [];
+            var me = this;
+            for (var i = 0; i < me.files().length; i++) {
+                var item = me.files()[i]();
+                if (item.selected() === true) {
+                    checkFileCode.push(item.CODE);
+                }
+            }
+            if (checkFileCode.length > 0) {
+                layer.confirm('此操作不可恢复，确定要删除选定附件吗？', { icon: 0, title: '询问' }, function (index) {
+                    $.post(me.configs.serverurl, { optype: 'deleteFile', RmFCodes: JSON.stringify(checkFileCode) })
+                        .done(function (response) {
+                            if (response.Status === true) {
+                                me.files.remove(function (item) {
+                                    return item().selected;
+                                });
+                            }
+                            layer.close(index);
+                        });
+                });
+            }
+        };
+        this.selectFile = function () {
+            var me = this;
+            for (var i = 0; i < me.files().length; i++) {
+                me.files()[i]().selected(!me.checkedAll);
+            }
+            me.checkedAll = !me.checkedAll;
+        };
         //这里的file数字，对象要对应数据库对象字段，以数据库对象字段为准绑定页面
         this.files = ko.observableArray();
-        this.refTableName = refTableName;
-        this.refTableCode = refTableCode;
-        this.barCode = barCode;
+        this.appendNewFile = function (file) {
+            var me = this;
+            if (file.selected === undefined)
+                file.selected = ko.observable(false);
+            me.files.push(ko.observable(file));
+        };
     };
 
     var bar = new uploadbar();
@@ -185,7 +227,7 @@
 
     $.fn.extend({
         "makeuploadbar": function (sTableName, sPrimaryKey, sBarCode, config) {
-            var configs = $.extend(config, bar.configs());
+            var configs = $.extend(config, bar.defaultConfigs());
             var $barContainer = $(this);
             var df = $.Deferred();
             var loadTemplate = function (df) {
@@ -206,7 +248,7 @@
                 .done(function () {
                     //加载模板完毕则生成附件栏
                     $barContainer.append(configs.barHtml);
-                    var model = new viewModel(sTableName, sPrimaryKey, sBarCode);
+                    var model = new viewModel(sTableName, sPrimaryKey, sBarCode, configs);
                     ko.applyBindings(model, $barContainer[0]);
                     //同时加载附件栏的附件
                     $.get(configs.serverurl, { optype: 'loadFile', RefTableName: sTableName, RefTableCode: sPrimaryKey, BarCode: sBarCode })
@@ -214,7 +256,8 @@
                             var files = response.Result;
                             for (var i = 0; i < files.length; i++) {
                                 //alert(JSON.stringify(responseText[i]));
-                                model.files.push(files[i]);
+                                //model.files.push(files[i]);
+                                model.appendNewFile(files[i]);
                             }
                         });
                 })

@@ -264,7 +264,10 @@
                         success: function (msg) {
                             //alert(msg);
                             //完成合并之后要触发事件
-                            updateFileSuccess(file);
+                            if (msg.Status === true) {
+                                file.FileCode = msg.FileCode;
+                                updateFileSuccess(file);
+                            }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             console.error('merge file error!');
@@ -281,6 +284,7 @@
                     });
                 }
                 else {
+                    file.FileCode = response.FileCode;
                     updateFileSuccess(file);
                 }
             });

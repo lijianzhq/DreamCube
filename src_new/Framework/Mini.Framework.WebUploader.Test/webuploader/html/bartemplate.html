@@ -5,10 +5,10 @@
                 <a href="#" data-bind="click:addFile,clickBubble: false"> ＋ </a>
             </li>
             <li>
-                <a href="#"> ✘ </a>
+                <a href="#" data-bind="click:removeFile,clickBubble: false"> ✘ </a>
             </li>
             <li>
-                <a href="#"> ✔ </a>
+                <a href="#" data-bind="click:selectFile,clickBubble: false"> ✔ </a>
             </li>
         </ul>
     </div>
@@ -16,7 +16,7 @@
     <div>
         <ul class="files" data-bind="foreach: files">
             <li>
-                <input type="checkbox" />
+                <input type="checkbox" data-bind="checked:selected" />
                 <a href="#" data-bind="text:FileName"></a>
             </li>
         </ul>

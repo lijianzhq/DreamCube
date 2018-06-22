@@ -33,6 +33,7 @@ namespace Mini.Framework.WebUploader
                 Status = false,
                 Message = "",
                 FileSavePath = "",
+                FileCode = ""
             };
             //设置响应内容格式
             context.Response.ContentType = "application/json";
@@ -52,7 +53,7 @@ namespace Mini.Framework.WebUploader
 
                 //保存数据库记录
                 if (result.Status && (!result.Chunked || optype == "merge"))
-                    SaveDBRecord(context, result.FileSavePath);
+                    result.FileCode = SaveDBRecord(context, result.FileSavePath);
             }
             catch (Exception ex)
             {
@@ -68,10 +69,10 @@ namespace Mini.Framework.WebUploader
             }
         }
 
-        void SaveDBRecord(HttpContext context, String fileFullName)
+        String SaveDBRecord(HttpContext context, String fileFullName)
         {
             var rqParam = new RequestParams(context);
-            DBService.DB.SaveUploadFileRecord(new DBService.UploadFile()
+            var file = new DBService.UploadFile()
             {
                 RefTableCode = rqParam.RefTableCode,
                 RefTableName = rqParam.RefTableName,
@@ -81,7 +82,9 @@ namespace Mini.Framework.WebUploader
                 FileName = rqParam.fileName,
                 CreateBy = rqParam.userid,
                 LastUpdateBy = rqParam.userid
-            });
+            };
+            DBService.DB.SaveUploadFileRecord(file);
+            return file.CODE;
         }
 
         /// <summary>

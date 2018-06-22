@@ -1,5 +1,5 @@
 ﻿<script type="text/html" id="{templateid}">
-    <div>
+    <div data-bind="attr:{'data-RefTableName':refTableName,'data-RefTableCode':refTableCode,'data-BarCode':barCode}">
         <ul class="btnbar">
             <li>
                 <a href="#" data-bind="click:addFile,clickBubble: false"> ＋ </a>
@@ -17,7 +17,7 @@
         <ul class="files" data-bind="foreach: files">
             <li>
                 <input type="checkbox" />
-                <a href="#" data-bind="text:fileName"></a>
+                <a href="#" data-bind="text:FileName"></a>
             </li>
         </ul>
     </div>

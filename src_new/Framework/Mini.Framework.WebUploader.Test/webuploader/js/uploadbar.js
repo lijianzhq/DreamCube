@@ -42,7 +42,7 @@
             var config = {
                 index: 0,//当前的barindex（一个页面可以有多个这种bar）
                 templateid: "uploadbar_htmltemplate",
-                serverurl: getFolderUrl() + "html/fileData.json"
+                serverurl: getFolderUrl() + "DataTransfer.ashx"
             };
             var config2 = {
                 barHtml: "<div data-bind=\"template: '" + config.templateid + "'\"></div>"
@@ -55,7 +55,7 @@
         };
     };
 
-    function viewModel() {
+    function viewModel(refTableName, refTableCode, barCode) {
         this.addFile = function () {
             var me = this,
                 mediator = new Mediator(),
@@ -78,12 +78,12 @@
             });
             mediator.subscribe("uploadSuccess", function (file) {
                 me.files.push({
-                    "fileName": file.name
+                    "FileName": file.name
                 });
             });
 
             mediator.subscribe("uploadComplete", function (file) {
-                
+
             });
 
             this.winConfig = {
@@ -113,7 +113,7 @@
                     me.iframeWin = iframeWin;
                     //注册围观者
                     $(me.iframeWin.document).ready(function () {
-                        me.iframeWin.uploader.registerMediator(mediator);
+                        me.iframeWin.uploader.registerConfig({ "Mediator": mediator, "RefTableName": refTableName, "RefTableCode": refTableCode, "BarCode": barCode });
                     });
 
                     //隐藏按钮
@@ -144,7 +144,11 @@
             $(".layui-layer-btn1").addClass("layui-btn-disabled").hide()
             return false;
         };
+        //这里的file数字，对象要对应数据库对象字段，以数据库对象字段为准绑定页面
         this.files = ko.observableArray();
+        this.refTableName = refTableName;
+        this.refTableCode = refTableCode;
+        this.barCode = barCode;
     };
 
     var bar = new uploadbar();
@@ -180,7 +184,7 @@
     $.extend({ uploadbar: bar });
 
     $.fn.extend({
-        "makeuploadbar": function (sTableName, sPrimaryKey, config) {
+        "makeuploadbar": function (sTableName, sPrimaryKey, sBarCode, config) {
             var configs = $.extend(config, bar.configs());
             var $barContainer = $(this);
             var df = $.Deferred();
@@ -202,14 +206,15 @@
                 .done(function () {
                     //加载模板完毕则生成附件栏
                     $barContainer.append(configs.barHtml);
-                    var model = new viewModel();
-                    ko.applyBindings(model);
+                    var model = new viewModel(sTableName, sPrimaryKey, sBarCode);
+                    ko.applyBindings(model, $barContainer[0]);
                     //同时加载附件栏的附件
-                    $.get(configs.serverurl)
-                        .done(function (responseText) {
-                            for (var i = 0; i < responseText.length; i++) {
+                    $.get(configs.serverurl, { optype: 'loadFile', RefTableName: sTableName, RefTableCode: sPrimaryKey, BarCode: sBarCode })
+                        .done(function (response) {
+                            var files = response.Result;
+                            for (var i = 0; i < files.length; i++) {
                                 //alert(JSON.stringify(responseText[i]));
-                                model.files.push(responseText[i]);
+                                model.files.push(files[i]);
                             }
                         });
                 })

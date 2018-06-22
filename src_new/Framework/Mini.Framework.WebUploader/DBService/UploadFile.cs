@@ -23,6 +23,24 @@ namespace Mini.Framework.WebUploader.DBService
         public String FileName { get; set; } = String.Empty;
 
         /// <summary>
+        /// 关联表名
+        /// </summary>
+        [StringLength(50)]
+        public String RefTableName { get; set; } = String.Empty;
+
+        /// <summary>
+        /// 关联表的CODE值
+        /// </summary>
+        [StringLength(50)]
+        public String RefTableCode { get; set; } = String.Empty;
+
+        /// <summary>
+        /// 对应的bar标示符
+        /// </summary>
+        [StringLength(50)]
+        public String BarCode { get; set; } = String.Empty;
+
+        /// <summary>
         /// 存放路径
         /// </summary>
         [StringLength(500)]

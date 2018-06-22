@@ -7,12 +7,16 @@
     <script src="webuploader/js/uploadbar.js"></script>
 </head>
 <body>
-    <div id="wrapper">
+    <div id="bar1">
+    </div>
+
+    <div id="bar2">
     </div>
     <script type="text/javascript">
         $.uploadbar.ready(function () {
             $(function () {
-                $("#wrapper").makeuploadbar('tablename', 'primarykeyvalue', {});
+                $("#bar1").makeuploadbar('tablename', 'primarykeyvalue', "bar1", {});
+                //$("#bar2").makeuploadbar('tablename', 'primarykeyvalue', "bar2", {});
             });
         });
     </script>

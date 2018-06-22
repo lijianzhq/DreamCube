@@ -9,9 +9,6 @@ using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Framework.WebUploader
 {
-    /// <summary>
-    /// 保存文件
-    /// </summary>
     public class FileSave : IHttpHandler
     {
         /// <summary>
@@ -30,40 +27,32 @@ namespace Mini.Framework.WebUploader
 
         public void ProcessRequest(HttpContext context)
         {
-            var result = new ResponseParams()
+            //在此处写入您的处理程序实现。
+            var result = new FileSaveRespParams()
             {
-                Status = true,
+                Status = false,
                 Message = "",
                 FileSavePath = "",
             };
+            //设置响应内容格式
             context.Response.ContentType = "application/json";
+
+            //获得参数
+            String optype = context.Request["optype"];//操作类型
             try
             {
-                String userid = context.Request.Params["uid"];
-                Int32 chunk = Convert.ToInt32(context.Request.Form["chunk"]);
-                String fileName = Helper.GetFileName(context.Request["guid"],
-                                        context.Request["id"],
-                                        context.Request.Files[0].FileName,
-                                        Convert.ToInt32(context.Request.Form["chunks"]),
-                                        chunk);
-                result.Chunked = chunk > 0;
-                //如果不是分片的话，则直接返回文件存放路径
-                if (!result.Chunked)
-                    result.FileSavePath = fileName;
-                context.Request.Files[0].SaveAs(fileName);
+                if (optype == "save") //保存文件数据
+                {
+                    result = SaveFile(context);
+                }
+                else if (optype == "merge") //合并文件
+                {
+                    result = MergeFile(context);
+                }
 
                 //保存数据库记录
-                if (!result.Chunked)
-                {
-                    DBService.DB.SaveUploadFileRecord(new DBService.UploadFile()
-                    {
-                        SavePath = MyString.RightOf(fileName, context.Server.MapPath("~")),
-                        CODE = DBService.DB.GetGuid(),
-                        FileName = MyString.LastLeftOf(fileName.Replace("\\", "/"), "/"),
-                        CreateBy = userid,
-                        LastUpdateBy = userid
-                    });
-                }
+                if (result.Status && (!result.Chunked || optype == "merge"))
+                    SaveDBRecord(context, result.FileSavePath);
             }
             catch (Exception ex)
             {
@@ -73,32 +62,93 @@ namespace Mini.Framework.WebUploader
             }
             finally
             {
+                if (!result.Status) context.Response.StatusCode = 500;
                 context.Response.Write(MyJson.Serialize(result));
                 context.Response.End();
             }
         }
 
-        ///// <summary>
-        ///// 保存分片的文件 
-        ///// （这里不能根据分片序号来作为最后合并文件的依据，客户端可以采用多进程来上传，这样不确保最后一个分片是最后上传的）
-        ///// </summary>
-        ///// <param name="context"></param>
-        //protected virtual void SaveChunkFile(HttpContext context)
-        //{
-        //    String fileFullPath = Helper.GetFileName(context);
-        //    using (var fs = new FileStream(fileFullPath, FileMode.Append, FileAccess.Write))
-        //    {
-        //        using (BinaryWriter bw = new BinaryWriter(fs))
-        //        {
-        //            //获得上传的分片数据流
-        //            HttpPostedFile file = context.Request.Files[0];
-        //            Stream stream = file.InputStream;
-        //            BinaryReader br = new BinaryReader(stream);
-        //            //将上传的分片追加到临时文件末尾
-        //            bw.Write(br.ReadBytes((Int32)stream.Length));
-        //        }
-        //    }
-        //}
+        void SaveDBRecord(HttpContext context, String fileFullName)
+        {
+            var rqParam = new RequestParams(context);
+            DBService.DB.SaveUploadFileRecord(new DBService.UploadFile()
+            {
+                RefTableCode = rqParam.RefTableCode,
+                RefTableName = rqParam.RefTableName,
+                BarCode = rqParam.BarCode,
+                SavePath = MyString.RightOf(fileFullName.Replace("/", "\\"), context.Server.MapPath("~").Replace("/", "\\")),
+                CODE = DBService.DB.GetGuid(),
+                FileName = rqParam.fileName,
+                CreateBy = rqParam.userid,
+                LastUpdateBy = rqParam.userid
+            });
+        }
+
+        /// <summary>
+        /// 合并文件
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        FileSaveRespParams MergeFile(HttpContext context)
+        {
+            //获得参数
+            var rqParam = new RequestParams(context);
+            var result = new FileSaveRespParams()
+            {
+                Status = false,
+                Message = "",
+                FileSavePath = "",
+            };
+            String folderName = MyString.LastLeftOf(rqParam.fileSavePath.Replace("\\", "/"), "/");
+            if (!String.IsNullOrEmpty(folderName) && Directory.Exists(folderName))
+            {
+                String fileFullName = $"{folderName}{Path.GetExtension(rqParam.fileName)}";
+                using (var file = File.Create(fileFullName))
+                {
+                    var files = Directory.GetFiles(folderName).OrderBy(it => Convert.ToInt32(Path.GetFileNameWithoutExtension(it)));
+                    foreach (String tempFile in files)
+                    {
+                        var bytes = File.ReadAllBytes(tempFile);
+                        file.Write(bytes, 0, bytes.Length);
+                    }
+                    file.Flush();
+                }
+                result.FileSavePath = fileFullName;
+                Directory.Delete(folderName, true);
+                result.Status = true;
+            }
+            else
+            {
+                String msg = $"merge file params:[{MyJson.Serialize(rqParam)}] faild, directory can not find!";
+                Log.Root.LogInfo(msg);
+                result.Message = msg;
+            }
+            return result;
+        }
+
+        /// <summary>
+        /// 保存文件
+        /// </summary>
+        /// <param name="context"></param>
+        /// <returns></returns>
+        FileSaveRespParams SaveFile(HttpContext context)
+        {
+            var result = new FileSaveRespParams()
+            {
+                Status = false,
+                Message = "",
+                FileSavePath = "",
+            };
+            //获得参数
+            var rqParam = new RequestParams(context);
+            String fileFullName = Helper.GetFileName(rqParam.guid, rqParam.fileid, context.Request.Files[0].FileName, rqParam.chunks, rqParam.chunk);
+            result.Chunked = rqParam.chunks > 0;
+            //返回文件存放路径
+            result.FileSavePath = fileFullName;
+            context.Request.Files[0].SaveAs(fileFullName);
+            result.Status = true;
+            return result;
+        }
 
         #endregion
     }

@@ -37,6 +37,7 @@
 
         var uploaderWrapper = function () {
             var me = this,
+                refTableName, refTableCode, barCode,
                 uploader,
                 fileCount = 0,//等待上传的文件
                 mediator,//围观者
@@ -51,8 +52,8 @@
                 swf: getFolderUrl() + 'lib/webuploader0.1.5/Uploader.swf',
                 chunked: true, //分片处理大文件
                 chunkSize: 2 * 1024 * 1024,
-                server: 'DataTransfer.ashx',
-                merge: 'DataTransfer.ashx',
+                server: 'FileSave.ashx',
+                merge: 'FileSave.ashx',
                 disableGlobalDnd: true,
                 threads: 1, //上传并发数
                 //由于Http的无状态特征，在往服务器发送数据过程传递一个进入当前页面是生成的GUID作为标示
@@ -174,6 +175,9 @@
                 //alert(JSON.stringify(data));
                 //记录文件的分片数
                 data.optype = 'save';
+                data.RefTableName = me.refTableName;
+                data.RefTableCode = me.refTableCode;
+                data.BarCode = me.barCode;
                 object.file.chunks = object.chunks;
             });
 
@@ -188,6 +192,7 @@
                 if (file.chunks > 1 && percentage > 0.95) {
                 }
                 else {
+                    file.percentage = percentage;
                     updateFileProgressHtml(file, percentage);
                 }
             });
@@ -241,10 +246,20 @@
                 //}
                 fileCount--;
                 if (response.Chunked) {
+                    //定时去刷新那个滚动条
+                    var updateProgress = function () {
+                        var step = 0.1;
+                        if (file.percentage < 1 - step) {
+                            file.percentage += step;
+                            updateFileProgressHtml(file, percentage);
+                            setTimeout(updateProgress, 500);
+                        }
+                    };
+                    updateProgress();
                     jQuery.ajax({
                         url: configs.merge,
                         type: "post",
-                        data: { guid: GUID, id: file.id, fileName: file.name, optype: 'merge', fileSavePath: file.fileSavePath },
+                        data: { guid: GUID, id: file.id, name: file.name, optype: 'merge', fileSavePath: file.fileSavePath },
                         dataType: "json",
                         success: function (msg) {
                             //alert(msg);
@@ -252,10 +267,10 @@
                             updateFileSuccess(file);
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
-                            console.log('merge file error!');
-                            console.log("XMLHttpRequest.status:" + XMLHttpRequest.status);
-                            console.log("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
-                            console.log("XMLHttpRequest.textStatus:" + textStatus);
+                            console.error('merge file error!');
+                            console.error("XMLHttpRequest.status:" + XMLHttpRequest.status);
+                            console.error("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
+                            console.error("XMLHttpRequest.textStatus:" + textStatus);
                             //alert("XMLHttpRequest.status:" + XMLHttpRequest.status);
                             //alert("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
                             //alert("XMLHttpRequest.textStatus:" + textStatus);
@@ -271,7 +286,7 @@
             });
 
             uploader.on('uploadError', function (file, reason) {
-                console.log('uploadError:' + reason);
+                console.error('uploadError:' + reason);
                 var row = $table.bootstrapTable('getRowByUniqueId', file.id);
                 row.f_status = -1;
                 row.f_progress = 0;
@@ -281,7 +296,7 @@
 
             uploader.onError = function (code) {
                 //alert('Eroor: ' + code);
-                console.log('Error: ' + code);
+                console.error('Error: ' + code);
             };
 
             //***************************************内部方法***************************************
@@ -333,7 +348,6 @@
                     publishEvent("uploadFinished");
                 }
                 publishEvent("uploadSuccess", file);
-
                 var row = $table.bootstrapTable('getRowByUniqueId', file.id);
                 row.f_status = 100;
                 row.f_progress = 100;
@@ -382,8 +396,11 @@
              * 注册围观者（用于接收页面传出去的事件）
              * @param {any} mediator
              */
-            this.registerMediator = function (mediator) {
-                me.mediator = mediator;
+            this.registerConfig = function (config) {
+                me.mediator = config.Mediator;
+                me.refTableCode = config.RefTableCode;
+                me.refTableName = config.RefTableName;
+                me.barCode = config.BarCode;
             };
         };
 

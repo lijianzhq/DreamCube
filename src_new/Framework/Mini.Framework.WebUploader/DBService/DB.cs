@@ -6,7 +6,8 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 namespace Mini.Framework.WebUploader.DBService
 {
-    public class Initializer : CreateDatabaseIfNotExists<DB>
+    public class Initializer : DropCreateDatabaseIfModelChanges<DB>
+    //public class Initializer : CreateDatabaseIfNotExists<DB>
     { }
 
     public class DB : DbContext

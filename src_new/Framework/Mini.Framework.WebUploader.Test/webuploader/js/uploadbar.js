@@ -70,6 +70,7 @@
                 //alert('uploadFinished');
                 //$(".layui-layer-btn0").show();
                 //$(".layui-layer-btn1").hide();
+                layer.close(winIndex);
             });
             mediator.subscribe("fileQueued", function () {
                 $(".layui-layer-btn0").show();
@@ -168,7 +169,7 @@
                         .done(function (response) {
                             if (response.Status === true) {
                                 me.files.remove(function (item) {
-                                    return item().selected;
+                                    return item().selected();
                                 });
                             }
                             layer.close(index);

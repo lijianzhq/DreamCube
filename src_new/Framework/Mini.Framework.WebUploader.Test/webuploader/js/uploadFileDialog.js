@@ -251,7 +251,7 @@
                         var step = 0.1;
                         if (file.percentage < 1 - step) {
                             file.percentage += step;
-                            updateFileProgressHtml(file, percentage);
+                            updateFileProgressHtml(file, file.percentage);
                             setTimeout(updateProgress, 500);
                         }
                     };
@@ -259,7 +259,17 @@
                     jQuery.ajax({
                         url: configs.merge,
                         type: "post",
-                        data: { guid: GUID, id: file.id, name: file.name, optype: 'merge', fileSavePath: file.fileSavePath },
+                        data: {
+                            guid: GUID,
+                            id: file.id,
+                            name: file.name,
+                            optype: 'merge',
+                            fileSavePath: file.fileSavePath,
+                            chunks: file.chunks,
+                            RefTableName: me.refTableName,
+                            RefTableCode: me.refTableCode,
+                            BarCode: me.barCode,
+                        },
                         dataType: "json",
                         success: function (msg) {
                             //alert(msg);
@@ -351,6 +361,7 @@
                 if (fileCount == 0) {
                     publishEvent("uploadFinished");
                 }
+                file.percentage = 1;
                 publishEvent("uploadSuccess", file);
                 var row = $table.bootstrapTable('getRowByUniqueId', file.id);
                 row.f_status = 100;

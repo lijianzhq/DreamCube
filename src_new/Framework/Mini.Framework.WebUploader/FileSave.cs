@@ -109,6 +109,8 @@ namespace Mini.Framework.WebUploader
                 using (var file = File.Create(fileFullName))
                 {
                     var files = Directory.GetFiles(folderName).OrderBy(it => Convert.ToInt32(Path.GetFileNameWithoutExtension(it)));
+                    //校验分片数是否一致
+                    if (files.Count() != rqParam.chunks) return result;
                     foreach (String tempFile in files)
                     {
                         var bytes = File.ReadAllBytes(tempFile);

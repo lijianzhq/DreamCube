@@ -255,6 +255,10 @@
                             setTimeout(updateProgress, 500);
                         }
                     };
+                    var resetFile = function (file, reason) {
+                        uploader.trigger('uploadError', file, reason);
+                        //这里要处理的问题很多，暂时不解决了
+                    };
                     updateProgress();
                     jQuery.ajax({
                         url: configs.merge,
@@ -278,6 +282,9 @@
                                 file.FileCode = msg.FileCode;
                                 updateFileSuccess(file);
                             }
+                            else {
+                                resetFile(file, 'server');
+                            }
                         },
                         error: function (XMLHttpRequest, textStatus, errorThrown) {
                             console.error('merge file error!');
@@ -287,6 +294,7 @@
                             //alert("XMLHttpRequest.status:" + XMLHttpRequest.status);
                             //alert("XMLHttpRequest.readyState:" + XMLHttpRequest.readyState);
                             //alert("XMLHttpRequest.textStatus:" + textStatus);
+                            resetFile(file, 'server');
                         },
                         complete: function (XMLHttpRequest, textStatus) {
                             this; // 调用本次AJAX请求时传递的options参数

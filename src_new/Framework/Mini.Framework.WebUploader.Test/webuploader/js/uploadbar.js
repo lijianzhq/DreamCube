@@ -214,11 +214,12 @@
 
     var rs = [getFolderUrl() + 'lib/compatibility/console.js'
         , getFolderUrl() + 'lib/knockout/knockout-3.4.2-min.js'
+        , getFolderUrl() + 'lib/json2.js'
         , getFolderUrl() + 'lib/layer/layer-min.js'
         , getFolderUrl() + 'lib/mediator.js'];
 
     //加载依赖的资源文件
-    $.when($.getScript(rs[0]), $.getScript(rs[1]), $.getScript(rs[2]), $.getScript(rs[3]))
+    $.when($.getScript(rs[0]), $.getScript(rs[1]), $.getScript(rs[2]), $.getScript(rs[3]), $.getScript(rs[4]))
         .done(function () {
             if (bar.callback)
                 bar.callback();

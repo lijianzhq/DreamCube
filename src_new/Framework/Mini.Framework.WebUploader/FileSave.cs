@@ -42,18 +42,26 @@ namespace Mini.Framework.WebUploader
             String optype = context.Request["optype"];//操作类型
             try
             {
-                if (optype == "save") //保存文件数据
+                if (optype == "test")
                 {
-                    result = SaveFile(context);
+                    result.Status = true;
+                    result.Message = "It is a message for test!";
                 }
-                else if (optype == "merge") //合并文件
+                else
                 {
-                    result = MergeFile(context);
-                }
+                    if (optype == "save") //保存文件数据
+                    {
+                        result = SaveFile(context);
+                    }
+                    else if (optype == "merge") //合并文件
+                    {
+                        result = MergeFile(context);
+                    }
 
-                //保存数据库记录
-                if (result.Status && (!result.Chunked || optype == "merge"))
-                    result.FileCode = SaveDBRecord(context, result.FileSavePath);
+                    //保存数据库记录
+                    if (result.Status && (!result.Chunked || optype == "merge"))
+                        result.FileCode = SaveDBRecord(context, result.FileSavePath);
+                }
             }
             catch (Exception ex)
             {

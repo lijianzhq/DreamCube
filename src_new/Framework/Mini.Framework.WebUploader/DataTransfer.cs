@@ -41,6 +41,11 @@ namespace Mini.Framework.WebUploader
             String optype = context.Request["optype"];//操作类型
             try
             {
+                if (optype == "test")
+                {
+                    result.Status = true;
+                    result.Message = "It is a message for test!";
+                }
                 if (optype == "loadFile") //加载文件列表
                 {
                     result = LoadFiles(context);

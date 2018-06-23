@@ -41,6 +41,29 @@ namespace Mini.Framework.WebUploader
         static String GetConfigPath()
         {
             var path = AsmConfiger.AppSettings("File_SavePath");
+            //对于~开始的就是相对网站目录路径的
+            if (path.StartsWith("~"))
+                return FormatWebsitePath(path);
+            else if (path.StartsWith("\\"))//共享目录
+                return FormatShareFolder(path);
+            return String.Empty;
+        }
+
+        static String FormatShareFolder(String path)
+        {
+            path = path.Substring(2);
+            var pathParts = path.Split(new char[] { '\\' }, StringSplitOptions.RemoveEmptyEntries);
+            String newPaths = "\\\\";
+            for (var i = 0; i < pathParts.Length; i++)
+            {
+                if (i > 0) newPaths += "\\";
+                newPaths += FormatDateString(pathParts[i]);
+            }
+            return newPaths;
+        }
+
+        static String FormatWebsitePath(String path)
+        {
             var pathParts = path.Split(new char[] { '/' }, StringSplitOptions.RemoveEmptyEntries);
             String newPaths = String.Empty;
             for (var i = 0; i < pathParts.Length; i++)

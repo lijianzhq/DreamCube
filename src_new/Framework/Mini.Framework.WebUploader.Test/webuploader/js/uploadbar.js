@@ -101,7 +101,7 @@
             this.winConfig = {
                 type: 2,
                 title: '文件上传',
-                shadeClose: true,
+                shadeClose: false,
                 shade: 0.2,
                 area: ['65%', '60%'],
                 btn: ['开始上传', '正在上传', '关闭'], //可以无限个按钮

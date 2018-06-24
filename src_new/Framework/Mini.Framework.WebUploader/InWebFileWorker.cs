@@ -9,9 +9,9 @@ using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Framework.WebUploader
 {
-    class InWebFileSaveWorker : IFileSaveWorker
+    class InWebFileWorker : IFileWorker
     {
-        public virtual RespParams SaveFile(String savePath, HttpContext context)
+        public virtual RespParams ProcessRequest(String savePath, HttpContext context)
         {
             //在此处写入您的处理程序实现。
             FileSaveRespParams result = null;
@@ -24,10 +24,59 @@ namespace Mini.Framework.WebUploader
             {
                 result = MergeFile(savePath, context) as FileSaveRespParams;
             }
+            else if (optype == "download")
+            {
+                WriteFileDataToClient(context);
+            }
             //保存数据库记录
             if (result != null && result.Status && (!result.Chunked || optype == "merge"))
                 result.FileCode = SaveDBRecord(context, result.FileSavePath);
             return result;
+        }
+
+        protected virtual void WriteFileDataToClient(HttpContext context)
+        {
+            var rqParams = new RequestParams(context);
+            if (String.IsNullOrWhiteSpace(rqParams.FileCode)) return;
+
+            String fileSaveFullPath = String.Empty;
+            DBService.UploadFile fileObj = null;
+            using (var db = new DBService.DB())
+            {
+                fileObj = db.UploadFiles.Where(it => it.CODE == rqParams.FileCode).SingleOrDefault();
+                if (fileObj != null) fileSaveFullPath = fileObj.SavePath;
+            }
+            var worker = Helper.GetFileWorker(fileSaveFullPath) as InWebFileWorker;
+            worker.DoWriteFileDataToClient(context, fileObj);
+        }
+
+        protected virtual void DoWriteFileDataToClient(HttpContext context, DBService.UploadFile fileObj)
+        {
+            using (var fs = GetFileStreamBySavePath(context, fileObj.SavePath))
+            {
+                const long ChunkSize = 1024 * 1024;//100K 每次读取文件，只读取100Ｋ，这样可以缓解服务器的压力
+                byte[] buffer = new byte[ChunkSize];
+
+                context.Response.Clear();
+                context.Response.ContentType = "application/octet-stream";
+                context.Response.AddHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileObj.FileName));
+                Int32 read = 0;
+                do
+                {
+                    read = fs.Read(buffer, 0, Convert.ToInt32(ChunkSize));//读取的大小
+                    if (read > 0 && context.Response.IsClientConnected)
+                    {
+                        context.Response.OutputStream.Write(buffer, 0, read);
+                        context.Response.Flush();
+                    }
+                } while (read > 0 && context.Response.IsClientConnected);
+                context.Response.End();
+            }
+        }
+
+        protected virtual Stream GetFileStreamBySavePath(HttpContext context, String fileSavePath)
+        {
+            return File.OpenRead(context.Server.MapPath(fileSavePath));
         }
 
         /// <summary>
@@ -177,6 +226,17 @@ namespace Mini.Framework.WebUploader
         }
 
         /// <summary>
+        /// 不同类型的存放方式，数据库存放的路径也不相同（派生类可以重写）
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="fileFullName"></param>
+        /// <returns></returns>
+        protected virtual String FormatDBSaveFileFullPath(HttpContext context, String fileFullName)
+        {
+            return "~\\" + MyString.RightOf(fileFullName.Replace("/", "\\"), context.Server.MapPath("~").Replace("/", "\\"));
+        }
+
+        /// <summary>
         /// 保存数据库记录
         /// </summary>
         /// <param name="context"></param>
@@ -190,7 +250,7 @@ namespace Mini.Framework.WebUploader
                 RefTableCode = rqParam.RefTableCode,
                 RefTableName = rqParam.RefTableName,
                 BarCode = rqParam.BarCode,
-                SavePath = MyString.RightOf(fileFullName.Replace("/", "\\"), context.Server.MapPath("~").Replace("/", "\\")),
+                SavePath = FormatDBSaveFileFullPath(context, fileFullName),
                 CODE = DBService.DB.GetGuid(),
                 FileName = rqParam.fileName,
                 CreateBy = rqParam.userid,

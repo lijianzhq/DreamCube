@@ -36,7 +36,7 @@ namespace Mini.Framework.WebUploader
             };
             //设置响应内容格式
             context.Response.ContentType = "application/json";
-
+            //System.Threading.Thread.Sleep(10000);
             //获得参数
             String optype = context.Request["optype"];//操作类型
             try

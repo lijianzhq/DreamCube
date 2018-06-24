@@ -9,7 +9,7 @@ using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Framework.WebUploader
 {
-    class ShareFolderFileSaveWorker : InWebFileSaveWorker
+    class ShareFolderFileWorker : InWebFileWorker
     {
         /// <summary>
         /// 获取 配置的路径
@@ -29,6 +29,16 @@ namespace Mini.Framework.WebUploader
             }
             Directory.CreateDirectory(newPaths);
             return newPaths;
+        }
+
+        protected override Stream GetFileStreamBySavePath(HttpContext context, string fileSavePath)
+        {
+            return File.OpenRead(fileSavePath);
+        }
+
+        protected override String FormatDBSaveFileFullPath(HttpContext context, String fileFullName)
+        {
+            return fileFullName;
         }
     }
 }

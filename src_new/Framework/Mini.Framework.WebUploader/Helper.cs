@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 
 using Mini.Foundation.Basic.Utility;
+using Mini.Foundation.LogService;
 
 namespace Mini.Framework.WebUploader
 {
@@ -15,16 +16,25 @@ namespace Mini.Framework.WebUploader
         {
             get
             {
-                if (_asmConfiger == null) _asmConfiger = new AssemblyConfiger();
+                if (_asmConfiger == null)
+                {
+                    Mini.Foundation.Basic.DllExceptionEvent.ExceptionEvent += DllExceptionEvent_ExceptionEvent; ;
+                    _asmConfiger = new AssemblyConfiger();
+                }
                 return _asmConfiger;
             }
         }
 
-        private static Dictionary<String, IFileSaveWorker> _workers =
-            new Dictionary<String, IFileSaveWorker>() {
-                { "~",new InWebFileSaveWorker()},
-                { "\\\\",new ShareFolderFileSaveWorker()},
-                { "ftp",new FtpFileSaveWorker()},
+        private static void DllExceptionEvent_ExceptionEvent(Type arg1, Exception arg2)
+        {
+            Log.Root.LogError($"type[{arg1.FullName}]ex:", arg2);
+        }
+
+        private static Dictionary<String, IFileWorker> _workers =
+            new Dictionary<String, IFileWorker>() {
+                { "~",new InWebFileWorker()},
+                { "\\\\",new ShareFolderFileWorker()},
+                { "ftp",new FtpFileWorker()},
             };
 
         /// <summary>
@@ -32,7 +42,7 @@ namespace Mini.Framework.WebUploader
         /// </summary>
         /// <param name="savePath">存放目录</param>
         /// <returns></returns>
-        public static IFileSaveWorker GetFileSaveWorker(String savePath)
+        public static IFileWorker GetFileWorker(String savePath)
         {
             String protocol = String.Empty;//协议
             if (savePath.StartsWith("ftp", StringComparison.InvariantCultureIgnoreCase))

@@ -150,6 +150,9 @@
              * @param {any} event
              */
             var publishEvent = function (event, data) {
+                if (event == "uploadFinished") {
+                    uploader.enable();
+                }
                 if (me.mediator) {
                     me.mediator.publish(event, data);
                 }
@@ -222,7 +225,7 @@
             uploader.on('uploadFinished', function () {
                 //控件触发的事件不算最终完成，还可能需要考虑合并文件的时间
                 //publishEvent("uploadFinished");
-                uploader.enable();
+                //uploader.enable();
             });
 
             uploader.on('uploadComplete', function (file) {

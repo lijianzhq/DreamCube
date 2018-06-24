@@ -14,13 +14,21 @@ namespace Mini.Framework.WebUploader
         public String Host;
         public String FileUrl;
 
-        public virtual String GetFtpFillFullPathWindownCredential()
+        public virtual String GetFtpFillFullPathWinthoutCredential()
         {
             return String.Format("ftp://{0}{1}", Host, FileUrl);
         }
+
+        public virtual String GetFtpFillFullPath()
+        {
+            return String.Format("ftp://{0}{1}{2}",
+                String.IsNullOrEmpty(UserName) ? "" : (UserName + (String.IsNullOrEmpty(Password) ? "" : ":" + Password) + "@"),
+                Host,
+                FileUrl);
+        }
     }
 
-    class FtpFileSaveWorker : InWebFileSaveWorker
+    class FtpFileWorker : InWebFileWorker
     {
         protected override RespParams DoSaveFile(string savePath, HttpContext context)
         {
@@ -36,7 +44,7 @@ namespace Mini.Framework.WebUploader
             if (result.Chunked) //如果是分片，则先在缓存目录缓存下来
             {
                 var cacheSavePath = Helper.AsmConfiger.AppSettings("CachePath");
-                return Helper.GetFileSaveWorker(cacheSavePath).SaveFile(cacheSavePath, context);
+                return Helper.GetFileWorker(cacheSavePath).ProcessRequest(cacheSavePath, context);
             }
             else
             {
@@ -46,6 +54,27 @@ namespace Mini.Framework.WebUploader
             }
             result.Status = true;
             return result;
+        }
+
+        protected override Stream GetFileStreamBySavePath(HttpContext context, String fileSavePath)
+        {
+            var ftpParam = GetFtpParam(fileSavePath);
+            FtpClient conn = null;
+            Stream ostream = null;
+            try
+            {
+                conn = new FtpClient(ftpParam.Host);
+                conn.Credentials = new NetworkCredential(ftpParam.UserName, ftpParam.Password);
+                conn.CreateDirectory(MyString.LastLeftOf(ftpParam.FileUrl, "/"));
+                ostream = conn.OpenRead(ftpParam.FileUrl);
+                return new FtpFileStream(conn, ostream);
+            }
+            catch (Exception)
+            {
+                if (ostream != null) ostream.Dispose();
+                if (conn != null) conn.Dispose();
+                throw;
+            }
         }
 
         /// <summary>
@@ -61,7 +90,7 @@ namespace Mini.Framework.WebUploader
             String fileName = Path.GetFileName(tempFileFullName);
             String fileFullPath = FormatPath(savePath + "/" + fileName, rqParam);
             var ftpParam = GetFtpParam(fileFullPath);
-            fileFullName = ftpParam.GetFtpFillFullPathWindownCredential();
+            fileFullName = ftpParam.GetFtpFillFullPathWinthoutCredential();
             FtpClient conn = null;
             Stream ostream = null;
             try
@@ -91,7 +120,7 @@ namespace Mini.Framework.WebUploader
                     conn.CreateDirectory(folder);
                 using (Stream ostream = conn.OpenWrite(ftpParam.FileUrl))
                 {
-                    var buffer = new Byte[1024 * 10];
+                    var buffer = new Byte[1024 * 1024];
                     Int32 read = 0;
                     do
                     {
@@ -101,7 +130,7 @@ namespace Mini.Framework.WebUploader
                     } while (read > 0);
                 }
             }
-            return ftpParam.FileUrl;
+            return ftpParam.GetFtpFillFullPath();
         }
 
         /// <summary>
@@ -153,6 +182,11 @@ namespace Mini.Framework.WebUploader
                 newPaths += FormatPathPartString(pathParts[i], rqParam);
             }
             return "ftp://" + newPaths;
+        }
+
+        protected override String FormatDBSaveFileFullPath(HttpContext context, String fileFullName)
+        {
+            return fileFullName;
         }
     }
 }

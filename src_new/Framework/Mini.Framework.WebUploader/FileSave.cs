@@ -51,8 +51,8 @@ namespace Mini.Framework.WebUploader
                 else
                 {
                     savepath = String.IsNullOrWhiteSpace(savepath) ? Helper.AsmConfiger.AppSettings("File_SavePath") : savepath;
-                    var worker = Helper.GetFileSaveWorker(savepath);
-                    result = worker.SaveFile(savepath, context);
+                    var worker = Helper.GetFileWorker(savepath);
+                    result = worker.ProcessRequest(savepath, context);
                 }
             }
             catch (Exception ex)
@@ -66,7 +66,8 @@ namespace Mini.Framework.WebUploader
             finally
             {
                 if (!result.Status) context.Response.StatusCode = 500;
-                context.Response.Write(MyJson.Serialize(result));
+                if (context.Response.IsClientConnected && context.Response.OutputStream.CanWrite)
+                    context.Response.Write(MyJson.Serialize(result));
                 context.Response.End();
             }
         }

@@ -17,6 +17,7 @@ namespace Mini.Framework.WebUploader
         public String optype { get; set; }
         public Int32 chunks { get; set; }
         public Int32 chunk { get; set; }
+        public String FileCode { get; set; } //对应文件数据库中的code值（用于下载的）
         public String RefTableName { get; set; }
         public String RefTableCode { get; set; }
         public String BarCode { get; set; }
@@ -37,6 +38,7 @@ namespace Mini.Framework.WebUploader
             RefTableCode = context.Request["RefTableCode"];
             BarCode = context.Request["BarCode"];
             RmFCodes = context.Request["RmFCodes"];
+            FileCode = context.Request["FileCode"];
             chunks = MyConvert.ToInt32(context.Request.Form["chunks"]);
             chunk = MyConvert.ToInt32(context.Request.Form["chunk"]);
             String savePathParamStr = context.Request["savePathParam"];

@@ -46,12 +46,20 @@ namespace Mini.Foundation.Basic.Utility
 
         protected virtual void WatchConfigFile()
         {
-            _watcher = new FileSystemWatcher();
-            _watcher.Path = MyString.LastLeftOf(_filePath.Replace("\\", "/"), "/");
-            _watcher.Changed += ConfigFile_Changed;
-            _watcher.IncludeSubdirectories = true;
-            _watcher.EnableRaisingEvents = true;
-            _watcher.Filter = MyString.LastRightOf(_filePath.Replace("\\", "/"), "/");
+            try
+            {
+                _watcher = new FileSystemWatcher();
+                _watcher.Path = MyString.LastLeftOf(_filePath.Replace("\\", "/"), "/");
+                _watcher.Changed += ConfigFile_Changed;
+                _watcher.IncludeSubdirectories = true;
+                _watcher.EnableRaisingEvents = true;
+                _watcher.Filter = MyString.LastRightOf(_filePath.Replace("\\", "/"), "/");
+            }
+            catch (Exception ex)
+            {
+                if (!DllExceptionEvent.TryFireExceptionEvent(typeof(AssemblyConfiger), ex))
+                    throw ex;
+            }
         }
 
         protected virtual void ConfigFile_Changed(object sender, FileSystemEventArgs e) => this.LoadConfig();
@@ -59,7 +67,18 @@ namespace Mini.Foundation.Basic.Utility
         /// <summary>
         /// 初始化
         /// </summary>
-        protected virtual void LoadConfig() => _configer = MyDll.GetDllConfiguration(_filePath);
+        protected virtual void LoadConfig()
+        {
+            try
+            {
+                _configer = MyDll.GetDllConfiguration(_filePath);
+            }
+            catch (Exception ex)
+            {
+                if (!DllExceptionEvent.TryFireExceptionEvent(typeof(AssemblyConfiger), ex))
+                    throw ex;
+            }
+        }
 
         #endregion
     }

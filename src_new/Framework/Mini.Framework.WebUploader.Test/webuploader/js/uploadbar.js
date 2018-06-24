@@ -41,7 +41,8 @@
             var config = {
                 index: 0,//当前的barindex（一个页面可以有多个这种bar）
                 templateid: "uploadbar_htmltemplate",
-                serverurl: getFolderUrl() + "DataTransfer.ashx"
+                serverurl: getFolderUrl() + "DataTransfer.ashx",
+                downloadurl: getFolderUrl() + "FileSave.ashx?optype=download"
             };
             var config2 = {
                 barHtml: "<div data-bind=\"template: '" + config.templateid + "'\"></div>"
@@ -60,6 +61,7 @@
         this.refTableCode = refTableCode;
         this.barCode = barCode;
         this.checkedAll = false;
+        this.loadingImage = ko.observable(getFolderUrl() + "/images/loading.gif");
         //以下是方法
         this.addFile = function () {
             var me = this,
@@ -153,6 +155,15 @@
             $(".layui-layer-btn0").hide();
             $(".layui-layer-btn1").addClass("layui-btn-disabled").hide()
             return false;
+        };
+        this.downloadFile = function (file) {
+            var me = this;
+            if (file.CODE) {
+                var url = me.configs.downloadurl + "&FileCode=" + file.CODE;
+                //console.log(url);
+                window.location.href = url;
+                //window.open(url);
+            }
         };
         this.removeFile = function () {
             var checkFileCode = [];
@@ -255,6 +266,7 @@
                     //同时加载附件栏的附件
                     $.get(configs.serverurl, { optype: 'loadFile', RefTableName: sTableName, RefTableCode: sPrimaryKey, BarCode: sBarCode })
                         .done(function (response) {
+                            model.loadingImage('');
                             var files = response.Result;
                             for (var i = 0; i < files.length; i++) {
                                 //alert(JSON.stringify(responseText[i]));

@@ -91,15 +91,19 @@ namespace Mini.Foundation.Basic.Utility
         /// <param name="value">标志字符</param>
         /// <param name="ignoreCase">是否忽略大小写，默认为false，也就是默认是大小写敏感的</param>
         /// <param name="defaultValue">获取失败的时候，返回的默认值</param>
+        /// <param name="startCountIndex">
+        /// 起始计算位置（是计算位置，与最终获取的字符串没关系的）
+        /// 例如：ftp://ftpuser@127.0.0.1/a/b，要获取ftp://ftpuser@127.0.0.1/这个字符串，就可以通过这个参数去获取
+        /// </param>
         /// <returns></returns>
 #if NET20
-        public static String LeftOf(String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String LeftOf(String target, String value, Boolean ignoreCase = false, String defaultValue = "", Int32 startCountIndex = 0)
 #else
-        public static String LeftOf(this String target, String value, Boolean ignoreCase = false, String defaultValue = "")
+        public static String LeftOf(this String target, String value, Boolean ignoreCase = false, String defaultValue = "", Int32 startCountIndex = 0)
 #endif
         {
             if (String.IsNullOrEmpty(target)) return defaultValue;
-            Int32 index = target.IndexOf(value,
+            Int32 index = target.IndexOf(value, startCountIndex,
                 ignoreCase ? StringComparison.CurrentCultureIgnoreCase : StringComparison.CurrentCulture);
             return index >= 0 ? target.Substring(0, index) : defaultValue;
         }

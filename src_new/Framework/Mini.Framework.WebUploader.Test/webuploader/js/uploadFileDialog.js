@@ -189,6 +189,9 @@
                 console.log("fileStatus:" + file.getStatus());
                 //if (file.statusText) return;//状态说明，常在error时使用，用http, abort,server等来标记是由于什么原因导致文件错误。
                 //对于分片的文件，最后还有一步合并的
+                //根据文件大小，动态计算需要保留合并文件的时间进度部分
+                //var times = file.size / 1024 / 1024 * 0.01;//1m预留0.01的进度部分
+                //if (file.chunks > 1 && percentage > (1 - times)) {
                 if (file.chunks > 1 && percentage > 0.95) {
                 }
                 else {
@@ -248,18 +251,19 @@
                 if (response.Chunked) {
                     //定时去刷新那个滚动条
                     var updateProgress = function () {
-                        var step = 0.1;
+                        var step = 0.01;
+                        console.log(file.percentage, "updateProgress");
                         if (file.percentage < 1 - step) {
                             file.percentage += step;
                             updateFileProgressHtml(file, file.percentage);
-                            setTimeout(updateProgress, 500);
+                            setTimeout(updateProgress, 100);
                         }
                     };
+                    updateProgress();
                     var resetFile = function (file, reason) {
                         uploader.trigger('uploadError', file, reason);
                         //这里要处理的问题很多，暂时不解决了
                     };
-                    updateProgress();
                     jQuery.ajax({
                         url: configs.merge,
                         type: "post",

@@ -60,6 +60,8 @@ namespace Mini.Framework.WebUploader
                 Log.Root.LogError("", ex);
                 result.Status = false;
                 result.Message = ex.Message;
+                if (ex.InnerException != null)
+                    result.Message += ex.InnerException.Message;
             }
             finally
             {
@@ -127,6 +129,7 @@ namespace Mini.Framework.WebUploader
                 {
                     //需要排除导航属性
                     result.Result = whereQ.ToList()
+                        .OrderBy(it => it.CreateOn)
                         .Select(it => MyDynamicObj.GetDynamicObj(it, null, p => p.Name == nameof(it.OpHistory)))
                         .ToList();
                 }

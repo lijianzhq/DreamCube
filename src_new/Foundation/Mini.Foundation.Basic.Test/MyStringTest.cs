@@ -34,6 +34,9 @@ namespace Mini.Foundation.Basic.Test
 
             str = MyString.LeftOf("◎IMDB评分 <span style=\"COLOR: red\"><strong>8.5/10 (255,815 votes) Top 250: #46</strong></span>", 4);
             Assert.IsTrue(String.Equals(str, "◎IMD"));
+
+            str = MyString.LeftOf("ftp://ftpuser@127.0.0.1/{yyyy-MM-dd}", "/", false, "", "ftp://".Length);
+            Assert.IsTrue(String.Equals(str, "ftp://ftpuser@127.0.0.1"));
         }
 
         [Test]

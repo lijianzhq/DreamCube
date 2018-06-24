@@ -1,6 +1,9 @@
-﻿using Mini.Foundation.Basic.Utility;
-using System;
+﻿using System;
 using System.Web;
+using System.Collections.Generic;
+
+using Mini.Foundation.Basic.Utility;
+using Mini.Foundation.Json;
 
 namespace Mini.Framework.WebUploader
 {
@@ -19,6 +22,8 @@ namespace Mini.Framework.WebUploader
         public String BarCode { get; set; }
         public String RmFCodes { get; set; }//移除的文件code值
 
+        public Dictionary<String, String> SavePathParams { get; set; } //存放路径的参数模板
+
         public RequestParams(HttpContext context)
         {
             //获得参数
@@ -34,6 +39,9 @@ namespace Mini.Framework.WebUploader
             RmFCodes = context.Request["RmFCodes"];
             chunks = MyConvert.ToInt32(context.Request.Form["chunks"]);
             chunk = MyConvert.ToInt32(context.Request.Form["chunk"]);
+            String savePathParamStr = context.Request["savePathParam"];
+            if (!String.IsNullOrWhiteSpace(savePathParamStr))
+                SavePathParams = MyJson.Deserialize<Dictionary<String, String>>(savePathParamStr);
         }
     }
 }

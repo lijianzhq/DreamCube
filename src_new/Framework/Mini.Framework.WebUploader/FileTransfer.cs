@@ -9,7 +9,7 @@ using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Framework.WebUploader
 {
-    public class FileSave : IHttpHandler
+    public class FileTransfer : IHttpHandler
     {
         /// <summary>
         /// 您将需要在网站的 Web.config 文件中配置此处理程序 

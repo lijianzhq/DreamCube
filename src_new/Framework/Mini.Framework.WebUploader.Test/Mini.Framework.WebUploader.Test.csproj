@@ -50,10 +50,26 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="log4net, Version=2.0.8.0, Culture=neutral, PublicKeyToken=669e0ddf0bb1aa2a, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=2.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="Mini.Foundation.Basic, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mini.Foundation.Basic.1.0.17\lib\net45\Mini.Foundation.Basic.dll</HintPath>
+    </Reference>
+    <Reference Include="Mini.Foundation.LogService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mini.Foundation.LogService.1.0.1\lib\net40\Mini.Foundation.LogService.dll</HintPath>
+    </Reference>
+    <Reference Include="Mini.Foundation.TraceService, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mini.Foundation.TraceService.1.0.1\lib\net40\Mini.Foundation.TraceService.dll</HintPath>
+    </Reference>
+    <Reference Include="Mini.Framework.EFCommon, Version=1.0.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\Mini.Framework.EFCommon.1.0.2\lib\net45\Mini.Framework.EFCommon.dll</HintPath>
+    </Reference>
     <Reference Include="Oracle.ManagedDataAccess, Version=4.122.1.0, Culture=neutral, PublicKeyToken=89b483f429c47342, processorArchitecture=MSIL">
       <HintPath>..\..\packages\Oracle.ManagedDataAccess.12.2.1100\lib\net40\Oracle.ManagedDataAccess.dll</HintPath>
     </Reference>
@@ -201,17 +217,9 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj">
-      <Project>{7ec16d10-1369-4e2e-8dc9-35cfe4a125d8}</Project>
-      <Name>Mini.Foundation.Basic</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj">
       <Project>{c65582cb-a03c-4be0-83ab-273fa89a855a}</Project>
       <Name>Mini.Foundation.Json</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj">
-      <Project>{f5cc2c1a-c49e-44d4-856a-eb8646d4fd85}</Project>
-      <Name>Mini.Foundation.LogService</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mini.Framework.WebUploader\Mini.Framework.WebUploader.csproj">
       <Project>{f536a7bf-2109-4b48-90e5-06e035cc7d42}</Project>

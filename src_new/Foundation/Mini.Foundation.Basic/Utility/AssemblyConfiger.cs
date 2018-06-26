@@ -14,13 +14,14 @@ namespace Mini.Foundation.Basic.Utility
     {
         private String _filePath = String.Empty;
         private static FileSystemWatcher _watcher = null;
+        private Assembly callingAssembly;
 
         public AssemblyConfiger()
         {
             //计算程序集的配置文件路径
-            Assembly assembly = Assembly.GetCallingAssembly();
-            Uri uri = new Uri(Path.GetDirectoryName(assembly.CodeBase));
-            _filePath = Path.Combine(uri.LocalPath, assembly.GetName().Name + ".config");
+            callingAssembly = Assembly.GetCallingAssembly();
+            Uri uri = new Uri(Path.GetDirectoryName(callingAssembly.CodeBase));
+            _filePath = Path.Combine(uri.LocalPath, callingAssembly.GetName().Name + ".config");
             //监听配置文件 
             WatchConfigFile();
             //执行一次初始化动作 
@@ -57,7 +58,7 @@ namespace Mini.Foundation.Basic.Utility
             }
             catch (Exception ex)
             {
-                if (!DllExceptionEvent.TryFireExceptionEvent(typeof(AssemblyConfiger), ex))
+                if (!DllExceptionEvent.TryFireExceptionEvent(callingAssembly, typeof(AssemblyConfiger), ex))
                     throw ex;
             }
         }
@@ -75,7 +76,7 @@ namespace Mini.Foundation.Basic.Utility
             }
             catch (Exception ex)
             {
-                if (!DllExceptionEvent.TryFireExceptionEvent(typeof(AssemblyConfiger), ex))
+                if (!DllExceptionEvent.TryFireExceptionEvent(callingAssembly, typeof(AssemblyConfiger), ex))
                     throw ex;
             }
         }

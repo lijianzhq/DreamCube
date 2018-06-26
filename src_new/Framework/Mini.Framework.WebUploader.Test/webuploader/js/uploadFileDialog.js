@@ -52,8 +52,8 @@
                 swf: getFolderUrl() + 'lib/webuploader0.1.5/Uploader.swf',
                 chunked: true, //分片处理大文件
                 chunkSize: 2 * 1024 * 1024,
-                server: 'FileSave.ashx',
-                merge: 'FileSave.ashx',
+                server: 'FileTransfer.ashx',
+                merge: 'FileTransfer.ashx',
                 disableGlobalDnd: true,
                 threads: 1, //上传并发数
                 //由于Http的无状态特征，在往服务器发送数据过程传递一个进入当前页面是生成的GUID作为标示

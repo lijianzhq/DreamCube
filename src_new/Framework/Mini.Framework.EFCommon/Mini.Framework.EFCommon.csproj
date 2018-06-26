@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net45;net40</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
+    <Version>1.0.2</Version>
+    <Authors>Jianl</Authors>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="EntityFramework" Version="6.2.0" />
+    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.17" />
+    <PackageReference Include="Mini.Foundation.LogService" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Mini.Framework.EFCommon.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

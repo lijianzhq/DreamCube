@@ -14,8 +14,9 @@
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.2.0" />
     <PackageReference Include="FluentFTP" Version="19.2.2" />
-    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.15" />
+    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.17" />
     <PackageReference Include="Mini.Foundation.Json" Version="1.0.1" />
+    <PackageReference Include="Mini.Framework.EFCommon" Version="1.0.2" />
   </ItemGroup>
 
   <ItemGroup>

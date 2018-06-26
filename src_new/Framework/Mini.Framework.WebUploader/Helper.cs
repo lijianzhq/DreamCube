@@ -3,6 +3,7 @@ using System.Web;
 using System.IO;
 using System.Linq;
 using System.Collections.Generic;
+using System.Reflection;
 
 using Mini.Foundation.Basic.Utility;
 using Mini.Foundation.LogService;
@@ -25,9 +26,14 @@ namespace Mini.Framework.WebUploader
             }
         }
 
-        private static void DllExceptionEvent_ExceptionEvent(Type arg1, Exception arg2)
+        private static Boolean DllExceptionEvent_ExceptionEvent(Assembly callingAsembly, Type arg1, Exception arg2)
         {
-            Log.Root.LogError($"type[{arg1.FullName}]ex:", arg2);
+            if (callingAsembly == typeof(Helper).Assembly)
+            {
+                Log.Root.LogError($"callingAsembly:{callingAsembly.ToString()},ex type[{arg1.FullName}]ex:", arg2);
+                return true;
+            }
+            return false;
         }
 
         private static Dictionary<String, IFileWorker> _workers =

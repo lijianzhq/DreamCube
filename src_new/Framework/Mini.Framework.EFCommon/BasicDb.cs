@@ -1,14 +1,19 @@
 ﻿using System;
-using System.Data.Common;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data.Common;
 using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
-using Mini.Foundation.LogService;
 using System.Data.Entity.Infrastructure;
 using System.Data.Entity.Core.Objects;
 
+using Mini.Foundation.LogService;
+
 namespace Mini.Framework.EFCommon
 {
+    /// <summary>
+    /// do nothing
+    /// </summary>
     public class Initializer0 : IDatabaseInitializer<BasicDb>
     {
         public void InitializeDatabase(BasicDb context)
@@ -17,14 +22,23 @@ namespace Mini.Framework.EFCommon
         }
     }
 
+    /// <summary>
+    /// CreateDatabaseIfNotExists
+    /// </summary>
     public class Initializer1 : CreateDatabaseIfNotExists<BasicDb>
     {
     }
 
+    /// <summary>
+    /// DropCreateDatabaseIfModelChanges
+    /// </summary>
     public class Initializer2 : DropCreateDatabaseIfModelChanges<BasicDb>
     {
     }
 
+    /// <summary>
+    /// DropCreateDatabaseAlways
+    /// </summary>
     public class Initializer3 : DropCreateDatabaseAlways<BasicDb>
     {
     }
@@ -33,7 +47,10 @@ namespace Mini.Framework.EFCommon
     {
         static BasicDb()
         {
-            String type = Helper.AsmConfiger.AppSettings("DBInitializer");
+            String type = ConfigurationManager.AppSettings["DBInitializer"];
+            if (String.IsNullOrEmpty(type))
+                type = Helper.AsmConfiger.AppSettings("DBInitializer");
+            if (String.IsNullOrEmpty(type)) type = "0";
             switch (type)
             {
                 case "0":
@@ -107,7 +124,9 @@ namespace Mini.Framework.EFCommon
             for (var i = 0; i < connParts.Length; i++)
             {
                 var configParams = connParts[i].Split(new char[] { '=' }, StringSplitOptions.RemoveEmptyEntries);
-                if (configParams.Length == 2 && configParams[0] == "User ID")
+                if (configParams.Length == 2
+                    && configParams[0].StartsWith("user", StringComparison.CurrentCultureIgnoreCase)
+                    && configParams[0].EndsWith("ID", StringComparison.CurrentCultureIgnoreCase))
                     return configParams[1].ToUpper();
             }
             return String.Empty;

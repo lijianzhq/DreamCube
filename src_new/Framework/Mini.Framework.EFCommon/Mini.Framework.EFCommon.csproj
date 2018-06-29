@@ -4,8 +4,9 @@
     <TargetFrameworks>net45;net40</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
-    <Version>1.0.2</Version>
+    <Version>1.0.3</Version>
     <Authors>Jianl</Authors>
+    <AssemblyVersion>1.0.3.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>

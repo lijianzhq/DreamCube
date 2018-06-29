@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 using Mini.Foundation.Basic.Utility;
+using Oracle.ManagedDataAccess;
 
 namespace Mini.Framework.WebUploader.Test
 {

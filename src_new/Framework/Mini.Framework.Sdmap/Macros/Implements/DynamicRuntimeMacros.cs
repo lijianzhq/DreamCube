@@ -58,7 +58,7 @@ namespace sdmap.Macros.Implements
 
             var prop = GetProp(self, arguments[0]);
             if (prop == null) return RequirePropNotNull(arguments[0]);
-            
+
             if (prop.PropertyType != typeof(bool) && prop.PropertyType != typeof(bool?))
                 return RequirePropType(prop, "bool");
 
@@ -84,7 +84,7 @@ namespace sdmap.Macros.Implements
 
         [Macro("hasNoProp")]
         [MacroArguments(SdmapTypes.Syntax, SdmapTypes.StringOrSql)]
-        public static Result<string> HasNoProp(OneCallContext context, 
+        public static Result<string> HasNoProp(OneCallContext context,
             string ns, object self, object[] arguments)
         {
             if (self == null) return RequireNotNull();
@@ -162,6 +162,22 @@ namespace sdmap.Macros.Implements
             return Empty;
         }
 
+        [Macro("isNotNullOrEmpty")]
+        [MacroArguments(SdmapTypes.Syntax, SdmapTypes.StringOrSql)]
+        public static Result<string> IsNotNullOrEmpty(OneCallContext context,
+            string ns, object self, object[] arguments)
+        {
+            if (self == null) return Empty;
+
+            var prop = GetProp(self, arguments[0]);
+            if (prop == null) return Empty;
+
+            var propVal = GetPropValue(self, arguments[0]);
+            if (propVal != null && !String.IsNullOrEmpty(propVal.ToString()))
+                return MacroUtil.EvalToString(arguments[1], context, self);
+
+            return Empty;
+        }
 
         [Macro("isEqual")]
         [MacroArguments(SdmapTypes.Syntax, SdmapTypes.Any, SdmapTypes.StringOrSql)]
@@ -177,7 +193,7 @@ namespace sdmap.Macros.Implements
             var compare = arguments[1];
             if (IsEqual(val, compare))
                 return MacroUtil.EvalToString(arguments[2], context, self);
-            
+
             return Empty;
         }
 

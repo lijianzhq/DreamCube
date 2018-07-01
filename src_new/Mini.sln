@@ -49,6 +49,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mini.Framework.Sdmap", "Fra
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mini.Framework.Sdmap.Test", "Framework\Mini.Framework.Sdmap.Test\Mini.Framework.Sdmap.Test.csproj", "{E1818DA8-6345-495B-ABF3-357BFBC4BFE3}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mini.Framework.Sdmap.Test2", "Framework\Mini.Framework.Sdmap.Test2\Mini.Framework.Sdmap.Test2.csproj", "{53A0DF15-6236-4D9A-A8EE-0513A8298BD0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -135,6 +137,10 @@ Global
 		{E1818DA8-6345-495B-ABF3-357BFBC4BFE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E1818DA8-6345-495B-ABF3-357BFBC4BFE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E1818DA8-6345-495B-ABF3-357BFBC4BFE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{53A0DF15-6236-4D9A-A8EE-0513A8298BD0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{53A0DF15-6236-4D9A-A8EE-0513A8298BD0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{53A0DF15-6236-4D9A-A8EE-0513A8298BD0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{53A0DF15-6236-4D9A-A8EE-0513A8298BD0}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -160,6 +166,7 @@ Global
 		{D79243CA-1165-48DB-B09E-CA8B17BAE5BE} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 		{1D79F8D9-2A6C-4421-9D8E-90C9321A7F9E} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 		{E1818DA8-6345-495B-ABF3-357BFBC4BFE3} = {193F806B-CED3-4FF2-88C1-F043665A2454}
+		{53A0DF15-6236-4D9A-A8EE-0513A8298BD0} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB25A0FB-6F55-4E56-AF88-7510D3C8D58D}

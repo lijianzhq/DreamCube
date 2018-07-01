@@ -48,13 +48,25 @@ namespace sdmap.test
             Assert.Equal("select * from tablename ", result);
 
 
-            code = @"sql v1{select * from tablename 
+            code = @"sql v1{select * from tablename
 where 1=1
-#isNotEmpty<Param1,sql{ and aa=@Param1}>";
+#isNotNullOrEmpty<Param1,sql{ and aa=@Param1}>";
             dic = new Dictionary<String, String>();
             result = Run(code, "v1", dic);
             Assert.Equal(@"select * from tablename
-where 1=1", result);
+where 1=1
+", result);
+
+
+            code = @"sql v1{select * from tablename
+where 1=1 
+#isNotNullOrEmpty<Param1,sql{and aa=@Param1}>";
+            var dic2 = new Dictionary<String, Object>();
+            dic2.Add("Param1", 3);
+            result = Run(code, "v1", dic2);
+            Assert.Equal(@"select * from tablename
+where 1=1
+and aa=@Param1", result);
         }
 
         [Fact]
@@ -65,9 +77,9 @@ where 1=1", result);
         }
 
         [Fact]
-        public void NotEmptyTest()
+        public void IsNotNullOrEmptyTest()
         {
-            var emited = Run("sql v1{#IsNotNullOrEmpty<A, 'test'>}", "v1", new { });
+            var emited = Run("sql v1{#isNotNullOrEmpty<A, 'test'>}", "v1", new { });
             Assert.Equal("", emited);
         }
 
@@ -78,17 +90,17 @@ where 1=1", result);
             {
                 return Result.Ok("Hello World");
             });
-            c.AddMacro("IsNotNullOrEmpty", (ctx, ns, self, args) =>
-            {
-                if (self == null) return Result.Fail<string>($"Query requires not null in macro 'shit'.");
+            //c.AddMacro("IsNotNullOrEmpty", (ctx, ns, self, args) =>
+            //{
+            //    if (self == null) return Result.Fail<string>($"Query requires not null in macro 'shit'.");
 
-                var prop = GetProp(self, args[0]);
-                if (prop == null) return Result.Ok("");
+            //    var prop = GetProp(self, args[0]);
+            //    if (prop == null) return Result.Ok("");
 
-                if (!RuntimeMacros.IsEmpty(RuntimeMacros.GetPropValue(self, (string)args[0])))
-                    return EvalToString(args[1], ctx, self);
-                return Result.Ok("");
-            });
+            //    if (!RuntimeMacros.IsEmpty(RuntimeMacros.GetPropValue(self, (string)args[0])))
+            //        return EvalToString(args[1], ctx, self);
+            //    return Result.Ok("");
+            //});
             c.AddSourceCode(code);
             return c.Emit(sqlId, obj);
         }

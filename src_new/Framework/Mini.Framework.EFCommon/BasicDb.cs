@@ -14,9 +14,9 @@ namespace Mini.Framework.EFCommon
     /// <summary>
     /// do nothing
     /// </summary>
-    public class Initializer0 : IDatabaseInitializer<BasicDb>
+    public class Initializer0<T> : IDatabaseInitializer<T> where T : DbContext
     {
-        public void InitializeDatabase(BasicDb context)
+        public void InitializeDatabase(T context)
         {
             return;
         }
@@ -25,27 +25,27 @@ namespace Mini.Framework.EFCommon
     /// <summary>
     /// CreateDatabaseIfNotExists
     /// </summary>
-    public class Initializer1 : CreateDatabaseIfNotExists<BasicDb>
+    public class Initializer1<T> : CreateDatabaseIfNotExists<T> where T : DbContext
     {
     }
 
     /// <summary>
     /// DropCreateDatabaseIfModelChanges
     /// </summary>
-    public class Initializer2 : DropCreateDatabaseIfModelChanges<BasicDb>
+    public class Initializer2<T> : DropCreateDatabaseIfModelChanges<T> where T : DbContext
     {
     }
 
     /// <summary>
     /// DropCreateDatabaseAlways
     /// </summary>
-    public class Initializer3 : DropCreateDatabaseAlways<BasicDb>
+    public class Initializer3<T> : DropCreateDatabaseAlways<T> where T : DbContext
     {
     }
 
-    public class BasicDb : DbContext
+    public class BasicDb<T> : DbContext where T : DbContext
     {
-        static BasicDb()
+        protected void Init()
         {
             String type = ConfigurationManager.AppSettings["DBInitializer"];
             if (String.IsNullOrEmpty(type))
@@ -54,16 +54,16 @@ namespace Mini.Framework.EFCommon
             switch (type)
             {
                 case "0":
-                    Database.SetInitializer(new Initializer0());
+                    Database.SetInitializer<T>(null);
                     break;
                 case "1":
-                    Database.SetInitializer(new Initializer1());
+                    Database.SetInitializer(new Initializer1<T>());
                     break;
                 case "2":
-                    Database.SetInitializer(new Initializer2());
+                    Database.SetInitializer(new Initializer2<T>());
                     break;
                 case "3":
-                    Database.SetInitializer(new Initializer3());
+                    Database.SetInitializer(new Initializer3<T>());
                     break;
                 default:
                     break;
@@ -71,39 +71,47 @@ namespace Mini.Framework.EFCommon
         }
 
         public BasicDb()
-        { }
+        {
+            Init();
+        }
 
         public BasicDb(String nameOrConnectionString)
             : base(nameOrConnectionString)
-        { }
+        {
+            Init();
+        }
 
         public BasicDb(DbConnection existingConnection, DbCompiledModel model, bool contextOwnsConnection)
             : base(existingConnection, model, contextOwnsConnection)
-        { }
+        {
+            Init();
+        }
 
         public BasicDb(string nameOrConnectionString, DbCompiledModel model)
             : base(nameOrConnectionString, model)
-        { }
+        {
+            Init();
+        }
 
         public BasicDb(DbConnection existingConnection, bool contextOwnsConnection)
             : base(existingConnection, contextOwnsConnection)
-        { }
+        {
+            Init();
+        }
+
         public BasicDb(ObjectContext objectContext, bool dbContextOwnsObjectContext)
             : base(objectContext, dbContextOwnsObjectContext)
-        { }
+        {
+            Init();
+        }
 
         /// <summary>
         /// 外部还可以传入策略
         /// </summary>
         /// <param name="strategy"></param>
-        public static void Init(IDatabaseInitializer<BasicDb> strategy)
+        public static void Init(IDatabaseInitializer<T> strategy)
         {
-            Database.SetInitializer(strategy);
-            using (var db = new BasicDb())
-            {
-                Log.Root.LogInfo($"database ServerVersion:{db.Database.Connection.ServerVersion}");
-                db.Database.Initialize(false);
-            }
+            Database.SetInitializer<T>(strategy);
         }
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)

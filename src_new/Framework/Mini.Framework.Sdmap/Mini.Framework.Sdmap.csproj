@@ -3,8 +3,8 @@
   <PropertyGroup>
     <Description>A template engine for writing dynamic sql.</Description>
     <TargetFrameworks>netcoreapp2.0;net451</TargetFrameworks>
-    <AssemblyName>sdmap</AssemblyName>
-    <PackageId>sdmap</PackageId>
+    <AssemblyName>Mini.Framework.Sdmap</AssemblyName>
+    <PackageId>Mini.Framework.Sdmap</PackageId>
     <PackageTags>dynamic sql;ibatis</PackageTags>
     <RepositoryType>git</RepositoryType>
     <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
@@ -17,6 +17,7 @@
     <Copyright>MIT</Copyright>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <RootNamespace>Mini.Framework.Sdmap</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

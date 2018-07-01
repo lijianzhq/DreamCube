@@ -2,6 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>netcoreapp2.0;net451</TargetFrameworks>
+    <AssemblyName>Mini.Framework.Sdmap.Test</AssemblyName>
   </PropertyGroup>
 
   <ItemGroup>
@@ -12,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\sdmap\sdmap.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap.csproj" />
   </ItemGroup>
 
   <ItemGroup>

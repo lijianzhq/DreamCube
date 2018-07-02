@@ -139,10 +139,5 @@ namespace Mini.Framework.EFCommon
             }
             return String.Empty;
         }
-
-        public static String GetGuid()
-        {
-            return Guid.NewGuid().ToString("N");
-        }
     }
 }

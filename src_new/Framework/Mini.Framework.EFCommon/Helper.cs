@@ -52,6 +52,11 @@ namespace Mini.Framework.EFCommon
             return sb.ToString();
         }
 
+        public static String GetGuidForDBCODE()
+        {
+            return Guid.NewGuid().ToString("N");
+        }
+
         private static Boolean DllExceptionEvent_ExceptionEvent(Assembly callingAsembly, Type arg1, Exception arg2)
         {
             if (callingAsembly == typeof(Helper).Assembly)

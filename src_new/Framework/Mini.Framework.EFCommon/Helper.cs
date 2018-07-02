@@ -12,10 +12,10 @@ using System.Data.Entity.Validation;
 
 namespace Mini.Framework.EFCommon
 {
-    static class Helper
+    public static class Helper
     {
         private static AssemblyConfiger _asmConfiger = null;
-        public static AssemblyConfiger AsmConfiger
+        internal static AssemblyConfiger AsmConfiger
         {
             get
             {

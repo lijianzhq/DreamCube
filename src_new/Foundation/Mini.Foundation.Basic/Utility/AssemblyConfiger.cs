@@ -12,76 +12,18 @@ namespace Mini.Foundation.Basic.Utility
     /// </summary>
     public class AssemblyConfiger
     {
-        private String _filePath = String.Empty;
-        private static FileSystemWatcher _watcher = null;
-        private Assembly callingAssembly;
+        private ConfigFileReader _reader = null;
+
+        public ConfigFileReader ConfigFileReader => _reader;
 
         public AssemblyConfiger()
         {
             //计算程序集的配置文件路径
-            callingAssembly = Assembly.GetCallingAssembly();
+            var callingAssembly = Assembly.GetCallingAssembly();
             Uri uri = new Uri(Path.GetDirectoryName(callingAssembly.CodeBase));
-            _filePath = Path.Combine(uri.LocalPath, callingAssembly.GetName().Name + ".config");
-            //监听配置文件 
-            WatchConfigFile();
-            //执行一次初始化动作 
-            LoadConfig();
+            var filePath = Path.Combine(uri.LocalPath, callingAssembly.GetName().Name + ".config");
+            _reader = new ConfigFileReader(filePath, callingAssembly);
         }
-
-        private Configuration _configer = null;
-        public virtual Configuration Config => _configer;
-
-        /// <summary>
-        /// 读取appsettings节点
-        /// </summary>
-        /// <param name="key"></param>
-        /// <returns></returns>
-        public String AppSettings(String key)
-        {
-            Configuration config = this.Config;
-            KeyValueConfigurationElement configEl = config.AppSettings.Settings[key];
-            return configEl == null ? "" : configEl.Value;
-        }
-
-        #region "protected method"
-
-        protected virtual void WatchConfigFile()
-        {
-            try
-            {
-                _watcher = new FileSystemWatcher();
-                _watcher.Path = MyString.LastLeftOf(_filePath.Replace("\\", "/"), "/");
-                _watcher.Changed += ConfigFile_Changed;
-                _watcher.IncludeSubdirectories = true;
-                _watcher.EnableRaisingEvents = true;
-                _watcher.Filter = MyString.LastRightOf(_filePath.Replace("\\", "/"), "/");
-            }
-            catch (Exception ex)
-            {
-                if (!DllExceptionEvent.TryFireExceptionEvent(callingAssembly, typeof(AssemblyConfiger), ex))
-                    throw ex;
-            }
-        }
-
-        protected virtual void ConfigFile_Changed(object sender, FileSystemEventArgs e) => this.LoadConfig();
-
-        /// <summary>
-        /// 初始化
-        /// </summary>
-        protected virtual void LoadConfig()
-        {
-            try
-            {
-                _configer = MyDll.GetDllConfiguration(_filePath);
-            }
-            catch (Exception ex)
-            {
-                if (!DllExceptionEvent.TryFireExceptionEvent(callingAssembly, typeof(AssemblyConfiger), ex))
-                    throw ex;
-            }
-        }
-
-        #endregion
     }
 }
 #endif

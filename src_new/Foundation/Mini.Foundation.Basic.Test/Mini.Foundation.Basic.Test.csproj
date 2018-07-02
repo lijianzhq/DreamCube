@@ -12,4 +12,17 @@
     <ProjectReference Include="..\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="LY.TEC.Data.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Mini.Foundation.Basic.Test.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

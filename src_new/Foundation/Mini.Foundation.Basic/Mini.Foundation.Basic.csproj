@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net45;net40;net35;net20;netstandard1.0;netstandard1.3;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net40;net35;net20;netstandard1.0;netstandard1.3;netstandard2.0;netcoreapp2.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
     <LangVersion>latest</LangVersion>
@@ -452,6 +452,18 @@
   </ItemGroup>
 
   <ItemGroup Condition="'$(TargetFramework)' == 'net45'">
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net451'">
+    <Reference Include="Microsoft.VisualBasic" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net461'">
     <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="System.Web" />
     <Reference Include="System.Configuration" />

@@ -5,9 +5,11 @@ $(document).ready(function () {
     //getQueryParam用于返回查询参数对象（必须）
     var grid = $.datagrid.create({
         el: $('#tb_datagrid'),
-        GridCODE: '123',
+        GridCODE: 'QUES_DISTRIBUTE',
         getQueryParam: function () {
-            return {};
+            return [{
+                "Name": "param1", "Value": "%左后门内侧后下部涂胶气泡%"
+            }];
         },
         EnableCellEdit: true, //是否启用单元格编辑 
         EnableRowEdit: false, //是否启用行编辑
@@ -27,6 +29,10 @@ $(document).ready(function () {
 
     $("#btn_save").click(function () {
         grid.save();
+    });
+
+    $("#btn_query").click(function () {
+        grid.load();
     });
 
     //初始化

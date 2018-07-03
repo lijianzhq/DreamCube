@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net45;net40;net35;net20</TargetFrameworks>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net40;net35;net20</TargetFrameworks>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
     <LangVersion>latest</LangVersion>
@@ -29,7 +29,7 @@
     <AssemblyName>Mini.Foundation.Office</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.0.3</Version>
   </PropertyGroup>
   
@@ -104,8 +104,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.10" />
     <PackageReference Include="NPOI" Version="2.3.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
   </ItemGroup>
 
 </Project>

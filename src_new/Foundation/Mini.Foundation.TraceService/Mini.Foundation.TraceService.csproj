@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net40;netstandard2.0</TargetFrameworks>
+    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net40;net20;netstandard2.0</TargetFrameworks>
     <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
     <LangVersion>latest</LangVersion>
@@ -30,7 +30,7 @@
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
     <Version>1.0.1</Version>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">

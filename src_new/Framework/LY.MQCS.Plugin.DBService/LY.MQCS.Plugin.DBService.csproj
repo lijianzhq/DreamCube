@@ -77,7 +77,8 @@
     <Compile Include="MQCSBUSEntities.cs" />
     <Compile Include="LYDBCommon.cs" />
     <Compile Include="PQ\EasyUIDataGrid.cs" />
-    <Compile Include="PQ\GridColumn.cs" />
+    <Compile Include="PQ\EasyUIDataGridColumn.cs" />
+    <Compile Include="ModelCommonField.cs" />
     <Compile Include="PQ\T_PQ_BU_PROD_GROUP_CM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -100,22 +101,6 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj">
-      <Project>{7ec16d10-1369-4e2e-8dc9-35cfe4a125d8}</Project>
-      <Name>Mini.Foundation.Basic</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj">
-      <Project>{c65582cb-a03c-4be0-83ab-273fa89a855a}</Project>
-      <Name>Mini.Foundation.Json</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj">
-      <Project>{f5cc2c1a-c49e-44d4-856a-eb8646d4fd85}</Project>
-      <Name>Mini.Foundation.LogService</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database.csproj">
-      <Project>{735d4cdb-8b2d-4eeb-b609-ce4cbebff302}</Project>
-      <Name>Mini.Framework.Database</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon.csproj">
       <Project>{d79243ca-1165-48db-b09e-ca8b17bae5be}</Project>
       <Name>Mini.Framework.EFCommon</Name>

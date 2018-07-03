@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <Description>A template engine for writing dynamic sql.</Description>
-    <TargetFrameworks>netcoreapp2.0;net451</TargetFrameworks>
+    <TargetFrameworks>net451</TargetFrameworks>
     <AssemblyName>Mini.Framework.Sdmap</AssemblyName>
     <PackageId>Mini.Framework.Sdmap</PackageId>
     <PackageTags>dynamic sql;ibatis</PackageTags>

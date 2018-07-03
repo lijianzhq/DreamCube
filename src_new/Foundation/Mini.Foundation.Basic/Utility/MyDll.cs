@@ -1,4 +1,4 @@
-﻿#if !(NETSTANDARD1_0 || NETSTANDARD1_3 || NETSTANDARD2_0)
+﻿#if !(NETSTANDARD1_0 || NETSTANDARD1_3 || NETSTANDARD2_0 || NETCOREAPP2_0)
 using System;
 using System.IO;
 using System.Reflection;

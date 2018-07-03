@@ -29,7 +29,7 @@
     <AssemblyName>Mini.Foundation.LogService</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net45'">
@@ -354,8 +354,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.1" />
-    <PackageReference Include="Mini.Foundation.TraceService" Version="1.0.1" />
+    <ProjectReference Include="..\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
+    <ProjectReference Include="..\Mini.Foundation.TraceService\Mini.Foundation.TraceService.csproj" />
   </ItemGroup>
 
   <ItemGroup>

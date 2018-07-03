@@ -53,6 +53,10 @@
       <Project>{735d4cdb-8b2d-4eeb-b609-ce4cbebff302}</Project>
       <Name>Mini.Framework.Database</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Mini.Framework.Sdmap.Extension\Mini.Framework.Sdmap.Extension.csproj">
+      <Project>{3822deb3-c4c1-48fe-87ca-d8fbf251a7ac}</Project>
+      <Name>Mini.Framework.Sdmap.Extension</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap.csproj">
       <Project>{1d79f8d9-2a6c-4421-9d8e-90c9321a7f9e}</Project>
       <Name>Mini.Framework.Sdmap</Name>

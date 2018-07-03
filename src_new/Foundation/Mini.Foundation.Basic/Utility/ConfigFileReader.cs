@@ -1,4 +1,4 @@
-﻿#if !(NETSTANDARD1_0 || NETSTANDARD1_3 || NETSTANDARD2_0)
+﻿#if !(NETSTANDARD1_0 || NETSTANDARD1_3 || NETSTANDARD2_0 || NETCOREAPP2_0)
 using System;
 using System.Reflection;
 using System.IO;
@@ -37,9 +37,21 @@ namespace Mini.Foundation.Basic.Utility
         /// 读取appsettings节点
         /// </summary>
         /// <param name="key"></param>
+        /// <param name="tryReadFromAppConfig">
+        /// 是否先从app.config里面尝试读取（假如读取不到的话，再从程序集配置文件中读取）
+        /// 注意：
+        /// 从app.config里面读取的key格式为：assemblyname.key，例如：Mini.Foundation.Basic.xxxx
+        /// </param>
         /// <returns></returns>
-        public String AppSettings(String key)
+        public String AppSettings(String key, Boolean tryReadFromAppConfigFirst = false)
         {
+            String value = String.Empty;
+            if (tryReadFromAppConfigFirst)
+            {
+                var newKey = $"{callingAssembly.GetName().Name}.{key}";
+                value = ConfigurationManager.AppSettings[newKey];
+                if (!String.IsNullOrEmpty(value)) return value;
+            }
             Configuration config = this.Config;
             KeyValueConfigurationElement configEl = config.AppSettings.Settings[key];
             return configEl == null ? "" : configEl.Value;

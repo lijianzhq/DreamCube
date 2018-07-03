@@ -3,11 +3,16 @@ using System.Collections.Generic;
 using System.Data;
 using System.Web;
 using System.Text;
+using System.Linq;
+using System.IO;
 
 using Mini.Foundation.Json;
 using Mini.Foundation.LogService;
 using Mini.Foundation.Basic.CommonObj;
 using Mini.Foundation.Basic.Utility;
+using Mini.Foundation.Office;
+using Mini.Framework.Sdmap.Extension;
+using Mini.Framework.Sdmap.Extension.Oracle;
 using Mini.Framework.Database;
 using Mini.Framework.Database.Oracle;
 using LY.MQCS.Plugin.DBService;
@@ -17,6 +22,16 @@ namespace Mini.Framework.Datagrid
 {
     public class DataTransfer : IHttpHandler
     {
+        static AssemblyConfiger _asmConfiger = null;
+        static AssemblyConfiger AsmConfiger
+        {
+            get
+            {
+                if (_asmConfiger == null) _asmConfiger = new AssemblyConfiger();
+                return _asmConfiger;
+            }
+        }
+
         /// <summary>
         /// 您将需要在网站的 Web.config 文件中配置此处理程序 
         /// 并向 IIS 注册它，然后才能使用它。有关详细信息，
@@ -57,6 +72,10 @@ namespace Mini.Framework.Datagrid
                 {
                     LoadColumnEditData(rqParam, ref rspParam);
                 }
+                else if (rqParam.OpType == "exportData")
+                {
+                    ExportData(rqParam, ref rspParam);
+                }
             }
             catch (Exception ex)
             {
@@ -74,6 +93,59 @@ namespace Mini.Framework.Datagrid
         }
 
         /// <summary>
+        /// 导出数据
+        /// </summary>
+        /// <param name="rqParam"></param>
+        /// <param name="rspParam"></param>
+        protected void ExportData(RequestParam rqParam, ref ExecResult rspParam)
+        {
+            var path = AsmConfiger.ConfigFileReader.AppSettings("tempFileCachePath");
+            var fileName = $"{DateTime.Now.ToString("yyyyMMddHHmmssffff")}.xlsx";
+            var fileFullPath = Path.Combine(rqParam.FieldCODE);
+            DataTable table = null;
+            Int32 recordCount = 0;
+            LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, true);
+            if (table == null)
+            {
+                rspParam.OpResult = false;
+                rspParam.Message = "查询无数据！";
+                return;
+            }
+            var excel = new ExcelWrapper(fileFullPath);
+            excel.AddSheet(table);
+            excel.Save();
+        }
+
+        /// <summary>
+        /// </summary>
+        /// <param name="rqParam"></param>
+        /// <param name="rspParam"></param>
+        /// <param name="recordCount"></param>
+        /// <param name="table"></param>
+        /// <param name="loadAllData"></param>
+        /// <returns></returns>
+        protected void LoadDataTable(RequestParam rqParam, ref ExecResult rspParam, ref Int32 recordCount, ref DataTable table, Boolean loadAllData = true)
+        {
+            table = null;
+            recordCount = 0;
+            var grid = GetGrid(rqParam);
+            if (grid == null) return;
+            var db = LYDBCommon.GetDB();
+            using (var ctx = db.BeginExecuteContext())
+            {
+                if (!loadAllData && rqParam.PageNumber > 0 && rqParam.PageSize > 0)
+                {
+                    table = ctx.GetDataTableBySqlTemplate(grid.SQL, rqParam.PageSize, rqParam.PageNumber, rqParam.QueryParamList);
+                }
+                else
+                {
+                    table = ctx.GetDataTableBySqlTemplate(grid.SQL, rqParam.QueryParamList);
+                }
+                recordCount = ctx.GetRecordCountBySqlTemplate(grid.SQL, rqParam.QueryParamList);
+            }
+        }
+
+        /// <summary>
         /// 加载数据
         /// </summary>
         /// <param name="rqParam">请求</param>
@@ -81,26 +153,10 @@ namespace Mini.Framework.Datagrid
         /// <returns></returns>
         protected void LoadData(RequestParam rqParam, ref ExecResult rspParam)
         {
-            //where rn > @STARTINDEX and rn <= @ENDINDEX
-            var grid = GetGrid(rqParam);
-            if (grid == null) return;
-            //var table = LYDBCommon.ExecuteDataTable(grid.SQL);
-            var db = LYDBCommon.GetDB();
             DataTable table = null;
             Int32 recordCount = 0;
-            using (var ctx = db.BeginExecuteContext())
-            {
-                if (rqParam.PageNumber > 0 && rqParam.PageSize > 0)
-                {
-                    table = ctx.GetDataTable(grid.SQL, rqParam.PageSize, rqParam.PageNumber);
-                }
-                else
-                {
-                    table = ctx.GetDataTable(grid.SQL);
-                }
-                recordCount = ctx.GetRecordCount(grid.SQL);
-            }
-            rspParam.OpData = new { rows = table, recordCount = 100 }; ;
+            LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, false);
+            rspParam.OpData = new { rows = table, recordCount }; ;
             rspParam.OpResult = table != null && table.Rows.Count > 0;
         }
 
@@ -148,71 +204,10 @@ namespace Mini.Framework.Datagrid
 
         protected EasyUIDataGrid GetGrid(RequestParam rqParam)
         {
-            var grid = new EasyUIDataGrid()
+            using (var db = LYDBCommon.GetDB_PQ())
             {
-                SQL = "select * from V1_ALL_QUES",
-                LoadDataAfterInital = true,
-                Columns = new List<EasyUIDataGridColumn>() {
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: 'DISTRI_GROUP_CODE', title: '分发目标班组', width: 180 }"
-                        },
-                        new EasyUIDataGridColumn(){
-                              Config = @"{ field: 'EFFECT_CONF_SCHE', title: '效果确认方案', width: 180,
-                                            formatter: function(value, row) {
-                                                    return row.DISTRI_GROUP_CODE;
-                                            },
-                                            editor:{
-                                                    type: 'combobox',
-                                                    options:{
-                                                        valueField: 'EFFECT_CONF_SCHE',
-                                                        textField: 'NAME',
-                                                        required: true
-                                                     }
-                                             }
-                                         }",
-                               EditDataSQL = "select LOOKUP_VALUE_CODE EFFECT_CONF_SCHE,LOOKUP_VALUE_NAME EFFECT_CONF_SCHE_NAME from T_DB_DB_LOOKUP_VALUE where LOOKUP_TYPE_CODE='118_EFFECT_CONF_SCHE'"
-                        },
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '问题点', title: '问题点', width: 180,sortable:true }"
-                        },
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '发生日期', title: '发生日期', width: 60, align: 'right' }"
-                        },
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '品情来源', title: '品情来源', width: 80 }"
-                        },
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '车型', title: '车型', width: 80 }"
-                        },
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '车号', title: '车号', width: 80 }"
-                        },
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '不良区分', title: '不良区分', width: 80 }"
-                        }
-                        ,
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '发生工站', title: '发生工站', width: 80 }"
-                        }
-                        ,
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '责任人', title: '责任人', width: 80 }"
-                        }
-                        ,
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '不良件数', title: '不良件数', width: 80 }"
-                        }
-                        ,
-                        new EasyUIDataGridColumn(){
-                              Config = "{ field: '是否再发', title: '是否再发', width: 80 }"
-                        }
-                    }
-            };
-            return grid;
-            //using (var db = new DB_PQ())
-            //{
-
-            //}
+                return db.EasyUIDataGrid.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
+            }
         }
 
         #endregion

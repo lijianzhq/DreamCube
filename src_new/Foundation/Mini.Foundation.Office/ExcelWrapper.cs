@@ -165,7 +165,8 @@ namespace Mini.Foundation.Office
         /// <exception cref="FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
         public ExcelWrapper(String fileFullPath, Boolean createIfNotExist = false)
         {
-            this.Init(fileFullPath, createIfNotExist);
+            //this.Init(fileFullPath, createIfNotExist);
+            this.Init2(fileFullPath, createIfNotExist);
         }
 
         #endregion
@@ -458,6 +459,38 @@ namespace Mini.Foundation.Office
                 }
             }
             return _fileFullPath;
+        }
+
+        /// <summary>
+        /// 根据文件初始化对象（如果指定的路径不存在，则会新增一个excel）
+        /// </summary>
+        /// <param name="excelFilePath"></param>
+        /// <param name="createIfNotExist"></param>
+        /// <exception cref="ArgumentNullException">excelFilePath参数为null并且createIfNotExist为false</exception>
+        /// <exception cref="FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
+        protected virtual void Init2(String excelFilePath, Boolean createIfNotExist = false)
+        {
+            if (File.Exists(excelFilePath))
+            {
+                var fs = new FileStream(_fileFullPath, FileMode.Open, FileAccess.ReadWrite);
+                // 2007版本  
+                if (_fileFullPath.IndexOf(".xlsx") > 0)
+                    _workbook = new XSSFWorkbook(fs);
+                // 2003版本  
+                else if (_fileFullPath.IndexOf(".xls") > 0)
+                    _workbook = new HSSFWorkbook(fs);
+            }
+            else
+            {
+                if (!createIfNotExist)
+                    MyArgumentsHelper.ThrowsIfFileNotExist(_fileFullPath, nameof(excelFilePath));
+                // 2007版本  
+                if (_fileFullPath.IndexOf(".xlsx") > 0)
+                    _workbook = new XSSFWorkbook();
+                // 2003版本  
+                else if (_fileFullPath.IndexOf(".xls") > 0)
+                    _workbook = new HSSFWorkbook();
+            }
         }
 
         /// <summary>

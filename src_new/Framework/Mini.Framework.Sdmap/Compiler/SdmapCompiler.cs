@@ -14,6 +14,18 @@ namespace sdmap.Compiler
     {
         private readonly SdmapCompilerContext _context;
 
+        private static SdmapCompiler _instance = null;
+
+        public static SdmapCompiler Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new SdmapCompiler();
+                return _instance;
+            }
+        }
+
         public SdmapCompiler()
         {
             _context = SdmapCompilerContext.CreateEmpty();
@@ -39,9 +51,9 @@ namespace sdmap.Compiler
         {
             return _context.MacroManager.Add(new Macro
             {
-                Name = id, 
-                Arguments = arguments, 
-                Method = method, 
+                Name = id,
+                Arguments = arguments,
+                Method = method,
             });
         }
 
@@ -49,15 +61,15 @@ namespace sdmap.Compiler
         {
             return _context.MacroManager.Add(new Macro
             {
-                Name = id, 
-                Method = method, 
+                Name = id,
+                Method = method,
                 SkipArgumentRuntimeCheck = true
             });
         }
 
         public Result<string> TryEmit(string id, object query)
         {
-            lock(_context)
+            lock (_context)
             {
                 return _context.TryGetEmiter(id, _context.CurrentNs)
                     .OnSuccess(emiter => emiter.TryEmit(new OneCallContext(_context, query)));

@@ -85,10 +85,20 @@ namespace Mini.Framework.Datagrid
             var grid = GetGrid(rqParam);
             if (grid == null) return;
             //var table = LYDBCommon.ExecuteDataTable(grid.SQL);
+            var db = LYDBCommon.GetDB();
             DataTable table = null;
-            if (rqParam.PageNumber > 0 && rqParam.PageSize > 0)
+            Int32 recordCount = 0;
+            using (var ctx = db.BeginExecuteContext())
             {
-                table
+                if (rqParam.PageNumber > 0 && rqParam.PageSize > 0)
+                {
+                    table = ctx.GetDataTable(grid.SQL, rqParam.PageSize, rqParam.PageNumber);
+                }
+                else
+                {
+                    table = ctx.GetDataTable(grid.SQL);
+                }
+                recordCount = ctx.GetRecordCount(grid.SQL);
             }
             rspParam.OpData = new { rows = table, recordCount = 100 }; ;
             rspParam.OpResult = table != null && table.Rows.Count > 0;

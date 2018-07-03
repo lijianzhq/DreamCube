@@ -1,0 +1,14 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>netcoreapp2.0;net451</TargetFrameworks>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap.csproj" />
+  </ItemGroup>
+
+</Project>

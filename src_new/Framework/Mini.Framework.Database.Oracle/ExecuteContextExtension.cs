@@ -34,5 +34,13 @@ namespace Mini.Framework.Database.Oracle
             //}
             return ctx.GetDataTable(pageSql, dbParams, commandType);
         }
+
+        public static Int32 GetRecordCount(this IExecute ctx, String commandText, DbParameter[] dbParams = null, CommandType commandType = CommandType.Text)
+        {
+            MyArgumentsHelper.ThrowsIfNull(ctx, nameof(ctx));
+            MyArgumentsHelper.ThrowsIfNullOrEmpty(commandText, nameof(commandText));
+            var pageSql = $"select count(*) from ({commandText}) t1";
+            return MyConvert.ToInt32(ctx.ExecuteScalar(pageSql, dbParams, commandType), 0);
+        }
     }
 }

@@ -1,0 +1,3 @@
+﻿作者：jianl
+
+动态拼接SQL。参考Mini.Framework.Sdmap.Test和Mini.Framework.Sdmap.Test2

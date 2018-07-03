@@ -29,8 +29,8 @@
     <AssemblyName>Mini.Foundation.Basic</AssemblyName>
     <GenerateDocumentationFile>true</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Version>1.0.17</Version>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Version>1.0.19</Version>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(TargetFramework)'=='net46'">

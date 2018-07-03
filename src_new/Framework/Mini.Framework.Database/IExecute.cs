@@ -6,6 +6,8 @@ namespace Mini.Framework.Database
 {
     public interface IExecute : IDisposable
     {
+        DB DB { get; }
+
         Int32 ExecuteNonQuery(String commandText, DbParameter[] dbParams = null, CommandType commandType = CommandType.Text);
 
         DbDataReader ExecuteReader(string commandText, DbParameter[] dbParams = null, CommandType commandType = CommandType.Text);

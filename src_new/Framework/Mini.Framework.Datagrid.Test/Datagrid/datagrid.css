@@ -1,0 +1,20 @@
+﻿body
+{
+    padding: 0px;
+    margin: 0px;
+    overflow-y: hidden;
+}
+
+.datagrid-header-row .datagrid-cell span
+{
+    font-weight: bold;
+    font-size: 12px;
+    font-family: :Verdana;
+}
+
+.datagrid-row .datagrid-cell,
+.datagrid-row .datagrid-cell span
+{
+    font-size: 12px;
+    font-family: :Verdana;
+}

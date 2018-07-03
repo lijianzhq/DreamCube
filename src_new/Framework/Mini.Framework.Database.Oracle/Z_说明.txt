@@ -1,0 +1,3 @@
+﻿基于Mini.Framework.Database之上的扩展，主要扩展一些业务逻辑层面的方法，例如：分页查询。
+
+调用案例可以参考：Mini.Framework.Database.Oracle.Test

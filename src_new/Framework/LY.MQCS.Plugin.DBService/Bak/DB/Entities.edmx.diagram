@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="5242538bf58c4ee5a58d1e801351daf8" Name="Diagram1">
+        <EntityTypeShape EntityType="Model.T_DB_BU_IMPORT_TMP" Width="1.5" PointX="0.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_BU_IMPORT_TMP2" Width="1.5" PointX="2.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_BU_INSTRING_TMP" Width="1.5" PointX="0.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_BU_LOG_APPLICATION" Width="1.5" PointX="2.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_BU_PART_MODEL_IMP" Width="1.5" PointX="17.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_AFFICHE" Width="1.5" PointX="4.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_ALARM_D" Width="1.5" PointX="22" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_ALARM_M" Width="1.5" PointX="19.75" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_AREA" Width="1.5" PointX="10.75" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_ASSEMBLY" Width="1.5" PointX="19.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_ATTA_FILE" Width="1.5" PointX="6.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_AUTO_RUN" Width="1.5" PointX="20.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_BAD_TYPE" Width="1.5" PointX="20.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_BIG_AREA" Width="1.5" PointX="13" PointY="6" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_CAR_COLOR" Width="1.5" PointX="21.75" PointY="6.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_CAR_CONFIG" Width="1.5" PointX="8.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_CAR_TYPE" Width="1.5" PointX="10.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_CAR_TYPE_INFO" Width="1.5" PointX="12.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_CAR_TYPE_INTERN" Width="1.5" PointX="22.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_CITY" Width="1.5" PointX="10" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_COST_CENTER" Width="1.5" PointX="14.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_COUNTY" Width="1.5" PointX="12.25" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_DEPT" Width="1.5" PointX="0.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_DEPT_SEC_USER" Width="1.5" PointX="22.75" PointY="15.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_EMAIL_D" Width="1.5" PointX="18" PointY="17.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_EMAIL_M" Width="1.5" PointX="15.75" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_EMP" Width="1.5" PointX="17" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_EQUIP" Width="1.5" PointX="16.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_FAC_CAR_TYPE" Width="1.5" PointX="18.75" PointY="22.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_FAC_LINK_MAN_INFO" Width="1.5" PointX="8" PointY="6.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_FAC_SEC" Width="1.5" PointX="8" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_FACTORY" Width="1.5" PointX="5.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_GSERIES_MFGSERIES" Width="1.5" PointX="22.75" PointY="20.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_INNER_COMP_SEC" Width="1.5" PointX="13" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_INNER_DUTY_COMP" Width="1.5" PointX="10.75" PointY="17" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_IP_INFO" Width="1.5" PointX="24.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_IP_INFO_TEMP" Width="1.5" PointX="24.75" PointY="7.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_IP_INFO2016" Width="1.5" PointX="24.75" PointY="14.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_LOG_COMP" Width="1.5" PointX="24.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_LOOKUP_TYPE" Width="1.5" PointX="15.75" PointY="11.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_LOOKUP_VALUE" Width="1.5" PointX="18" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_MAC_TYPE" Width="1.5" PointX="4.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_NOTICE_M" Width="1.5" PointX="5.75" PointY="16.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_NOTICE_OBJ_D" Width="1.5" PointX="8" PointY="16" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PART" Width="1.5" PointX="20.75" PointY="25.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PART_BILL" Width="1.5" PointX="26.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PART_CPL_PLAN" Width="1.5" PointX="26.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PART_CPL_PROD" Width="1.5" PointX="6.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PART_MODEL" Width="1.5" PointX="8.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PART_RANGE" Width="1.5" PointX="26.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PART_SWITCH" Width="1.5" PointX="10.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_POST" Width="1.5" PointX="14.75" PointY="1.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PRO_LINE" Width="1.5" PointX="0.75" PointY="15.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PRO_LINE_D" Width="1.5" PointX="3" PointY="15" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_PROVINCE" Width="1.5" PointX="7.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_SECTION" Width="1.5" PointX="3" PointY="1" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_SERIAL_CPL_REL" Width="1.5" PointX="26.75" PointY="16.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_SMALL_AREA" Width="1.5" PointX="15.25" PointY="6.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_SPEC_ID_PART" Width="1.5" PointX="26.75" PointY="21.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_SUPPLIER" Width="1.5" PointX="22.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_SUPPLIER_D" Width="1.5" PointX="24.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_TEAM" Width="1.5" PointX="5.25" PointY="1.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_USER_GROUP_D" Width="1.5" PointX="13" PointY="11.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_USER_GROUP_M" Width="1.5" PointX="10.75" PointY="11" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_VE_INFO" Width="1.5" PointX="26.75" PointY="26.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_WORKSHOP" Width="1.5" PointX="16.75" PointY="27.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_FAC_SEC171125" Width="1.5" PointX="28.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_INNER_COMP_SEC171125" Width="1.5" PointX="28.75" PointY="5.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_INNER_DUTY_COMP171125" Width="1.5" PointX="28.75" PointY="10.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_IP_INFO2" Width="1.5" PointX="12.75" PointY="28.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="Model.T_DB_DB_ROLE_MENU" Width="1.5" PointX="28.75" PointY="14.75" IsExpanded="true" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_ALARM_D" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_BIG_AREA" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_SMALL_AREA" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_CITY" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_COUNTY" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_SECTION" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_EMAIL_D" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_EMP" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_FAC_LINK_MAN_INFO" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_FAC_SEC" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_INNER_COMP_SEC" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_LOOKUP_VALUE" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_NOTICE_OBJ_D" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_PRO_LINE_D" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_TEAM" ManuallyRouted="false" />
+        <AssociationConnector Association="Model.FK1_T_DB_DB_USER_GROUP_D" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

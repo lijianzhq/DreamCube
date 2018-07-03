@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <title>不良分发-datagrid</title>
+    <!--easyui基础库-->
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.5.2/themes/default/easyui.css">
+    <link rel="stylesheet" type="text/css" href="jquery-easyui-1.5.5.2/themes/icon.css">
+    <!--自己封装的datagrid基础库-->
+    <link href="Datagrid/datagrid.css" rel="stylesheet" type="text/css" />
+</head>
+<body class="easyui-layout">
+    <div data-options="region:'center',border:false">
+        <table id="tb_datagrid" style="width: 100%; height: 50%;">
+        </table>
+        <input type="button" value="保存" id="btn_save"/>
+    </div>
+    <!--固定引入的模块，封装好的-->
+    <script src="Lib/compatibility/console.js" type="text/javascript"></script>
+    <script src="Lib/json2.js" type="text/javascript"></script>
+    <script src="jquery-easyui-1.5.5.2/jquery.min.js" type="text/javascript"></script>
+    <script src="jquery-easyui-1.5.5.2/jquery.easyui.min_update.js" type="text/javascript"></script>
+    <script src="jquery-easyui-1.5.5.2/locale/easyui-lang-zh_CN.js" type="text/javascript"></script>
+    <script src="Lib/mediator.js" type="text/javascript"></script>
+    <script src="Lib/mediator_extend.js" type="text/javascript"></script>
+    <script src="Datagrid/datagrid.js" type="text/javascript"></script>
+    <!--<script src="Datagrid/easyui_datagrid_cacheeditor.js" type="text/javascript"></script>-->
+    <script src="Datagrid/easyui_datagrid_cellediting.js" type="text/javascript"></script>
+    <!--模块独立的js-->
+    <script src="ques_distribute.js" type="text/javascript"></script>
+</body>
+</html>

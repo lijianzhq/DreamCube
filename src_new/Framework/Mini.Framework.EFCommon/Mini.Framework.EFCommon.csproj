@@ -4,15 +4,22 @@
     <TargetFrameworks>net45;net40</TargetFrameworks>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
-    <Version>1.0.3</Version>
+    <Version>1.0.4</Version>
     <Authors>Jianl</Authors>
     <AssemblyVersion>1.0.3.0</AssemblyVersion>
   </PropertyGroup>
 
   <ItemGroup>
     <PackageReference Include="EntityFramework" Version="6.2.0" />
-    <PackageReference Include="Mini.Foundation.Basic" Version="1.0.17" />
-    <PackageReference Include="Mini.Foundation.LogService" Version="1.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Configuration" />
   </ItemGroup>
 
   <ItemGroup>

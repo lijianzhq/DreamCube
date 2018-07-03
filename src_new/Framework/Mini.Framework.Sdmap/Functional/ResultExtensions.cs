@@ -7,14 +7,6 @@ namespace sdmap.Functional
 {
     public static class ResultExtensions
     {
-        public static Result<T> ToResult<T>(this Maybe<T> maybe, string errorMessage) where T : class
-        {
-            if (maybe.HasNoValue)
-                return Result.Fail<T>(errorMessage);
-
-            return Result.Ok(maybe.Value);
-        }
-
         public static Result<K> OnSuccess<T, K>(this Result<T> result, Func<T, K> func)
         {
             if (result.IsFailure)

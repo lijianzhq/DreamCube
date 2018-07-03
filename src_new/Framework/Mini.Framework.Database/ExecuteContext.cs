@@ -13,6 +13,8 @@ namespace Mini.Framework.Database
         protected DbConnection _connection = null;
         protected DbTransaction _trans = null;
 
+        public DB DB => _db;
+
         public ExecuteContext(DB db)
         {
             this._db = db;

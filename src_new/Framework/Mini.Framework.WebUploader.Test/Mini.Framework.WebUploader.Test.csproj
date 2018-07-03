@@ -178,6 +178,7 @@
     <Content Include="webuploader0.1.5\webuploader.nolog.min.js" />
     <Content Include="webuploader0.1.5\webuploader.withoutimage.js" />
     <Content Include="webuploader0.1.5\webuploader.withoutimage.min.js" />
+    <Content Include="Z_说明.txt" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Global.asax.cs">

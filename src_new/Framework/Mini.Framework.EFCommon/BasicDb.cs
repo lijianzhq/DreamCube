@@ -49,7 +49,7 @@ namespace Mini.Framework.EFCommon
         {
             String type = ConfigurationManager.AppSettings["DBInitializer"];
             if (String.IsNullOrEmpty(type))
-                type = Helper.AsmConfiger.AppSettings("DBInitializer");
+                type = Helper.AsmConfiger.ConfigFileReader.AppSettings("DBInitializer");
             if (String.IsNullOrEmpty(type)) type = "0";
             switch (type)
             {

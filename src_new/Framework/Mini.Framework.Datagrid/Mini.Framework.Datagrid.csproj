@@ -1,0 +1,25 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net461</TargetFrameworks>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
+    <Version>1.0.2</Version>
+    <Authors>Jianl</Authors>
+    <Company>Jianl</Company>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj" />
+    <ProjectReference Include="..\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Database.Oracle\Mini.Framework.Database.Oracle.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System.Web" />
+  </ItemGroup>
+
+</Project>

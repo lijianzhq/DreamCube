@@ -1,6 +1,10 @@
-﻿
+﻿DROP trigger TR_T_PQ_BU_UPLOADFILEOPHISTORY;
+DROP SEQUENCE SQ_T_PQ_BU_UPLOADFILEOPHISTORY;
+DROP TABLE T_PQ_BU_UPLOADFILEOPHISTORY;
+DROP TABLE T_PQ_BU_UPLOADFILE;
+
 -- Create table
-create table UPLOADFILE
+create table T_PQ_BU_UPLOADFILE
 (
   CODE         NVARCHAR2(50) not null,
   FILENAME     NVARCHAR2(500),
@@ -21,8 +25,8 @@ create table UPLOADFILE
   ORDERNO      NUMBER(10) not null
 );
 -- Create/Recreate primary, unique and foreign key constraints 
-alter table UPLOADFILE
-  add constraint PK_UPLOADFILE primary key (CODE)
+alter table T_PQ_BU_UPLOADFILE
+  add constraint PK_T_PQ_BU_UPLOADFILE primary key (CODE)
   using index 
   pctfree 10
   initrans 2
@@ -35,8 +39,9 @@ alter table UPLOADFILE
     maxextents unlimited
   );
 
+
   -- Create table
-create table UPLOADFILEOPHISTORY
+create table T_PQ_BU_UPLOADFILEOPHISTORY
 (
   ID             NUMBER(10) not null,
   UPLOADFILECODE NVARCHAR2(50),
@@ -46,21 +51,10 @@ create table UPLOADFILEOPHISTORY
   CREATEBY       NVARCHAR2(100),
   LASTUPDATEBY   NVARCHAR2(100),
   ORDERNO        NUMBER(10) not null
-)
-tablespace GUIYANG
-  pctfree 10
-  initrans 1
-  maxtrans 255
-  storage
-  (
-    initial 64K
-    next 1M
-    minextents 1
-    maxextents unlimited
-  );
+);
 -- Create/Recreate primary, unique and foreign key constraints 
-alter table UPLOADFILEOPHISTORY
-  add constraint PK_UPLOADFILEOPHISTORY primary key (ID)
+alter table T_PQ_BU_UPLOADFILEOPHISTORY
+  add constraint PK_T_PQ_BU_UPLOADFILEOPHISTORY primary key (ID)
   using index 
   pctfree 10
   initrans 2
@@ -72,11 +66,11 @@ alter table UPLOADFILEOPHISTORY
     minextents 1
     maxextents unlimited
   );
-alter table UPLOADFILEOPHISTORY
-  add constraint FK_UPLOADFILEOPHIST_1708377677 foreign key (UPLOADFILECODE)
-  references UPLOADFILE (CODE);
+alter table T_PQ_BU_UPLOADFILEOPHISTORY
+  add constraint FK_T_PQ_BU_UPLOADFI_1070844926 foreign key (UPLOADFILECODE)
+  references T_PQ_BU_UPLOADFILE (CODE);
 -- Create/Recreate indexes 
-create index IX_UPLOADFILEOPHISTO_390456111 on UPLOADFILEOPHISTORY (UPLOADFILECODE)
+create index IX_T_PQ_BU_UPLOADFIL_491304152 on T_PQ_BU_UPLOADFILEOPHISTORY (UPLOADFILECODE)
   pctfree 10
   initrans 2
   maxtrans 255
@@ -88,18 +82,17 @@ create index IX_UPLOADFILEOPHISTO_390456111 on UPLOADFILEOPHISTORY (UPLOADFILECO
     maxextents unlimited
   );
 
--- Create sequence 
-create sequence SQ_UPLOADFILEOPHISTORY
+  -- Create sequence 
+create sequence SQ_T_PQ_BU_UPLOADFILEOPHISTORY
 minvalue 1
 maxvalue 9999999999999999999999999999
 start with 21
 increment by 1
 cache 20;
 
---触发器
-create or replace trigger TR_UPLOADFILEOPHISTORY
-before insert on UPLOADFILEOPHISTORY
+create or replace trigger TR_T_PQ_BU_UPLOADFILEOPHISTORY
+before insert on T_PQ_BU_UPLOADFILEOPHISTORY
 for each row
 begin
-  select SQ_UPLOADFILEOPHISTORY.nextval into :new.ID from dual;
+  select SQ_T_PQ_BU_UPLOADFILEOPHISTORY.nextval into :new.ID from dual;
 end;

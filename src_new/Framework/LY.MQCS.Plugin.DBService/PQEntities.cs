@@ -19,6 +19,6 @@ namespace LY.MQCS.Plugin.DBService
         }
 
         public DbSet<PQ.T_PQ_BU_PROD_GROUP_CM> T_PQ_BU_PROD_GROUP_CM { get; set; }
-        public DbSet<PQ.EasyUIDataGrid> EasyUIDataGrid { get; set; }
+        public DbSet<PQ.T_PQ_BU_DATAGRID> T_PQ_BU_DATAGRID { get; set; }
     }
 }

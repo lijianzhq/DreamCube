@@ -7,8 +7,8 @@ using Newtonsoft.Json;
 
 namespace LY.MQCS.Plugin.DBService.PQ
 {
-    [Table("EASYUIDATAGRID")]
-    public class EasyUIDataGrid : ModelCommonField
+    [Table("T_PQ_BU_DATAGRID")]
+    public class T_PQ_BU_DATAGRID : ModelCommonField
     {
         [Key]
         [Column("CODE")]
@@ -33,6 +33,6 @@ namespace LY.MQCS.Plugin.DBService.PQ
         [Column("LOADDATAAFTERINITAL")]
         public Boolean LoadDataAfterInital { get; set; }
 
-        public List<EasyUIDataGridColumn> Columns { get; set; }
+        public List<T_PQ_BU_DATAGRID_COL> Columns { get; set; }
     }
 }

@@ -4,8 +4,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace LY.MQCS.Plugin.DBService.PQ
 {
-    [Table("EASYUIDATAGRIDCOLUMN")]
-    public class EasyUIDataGridColumn : ModelCommonField
+    [Table("T_PQ_BU_DATAGRID_COL")]
+    public class T_PQ_BU_DATAGRID_COL : ModelCommonField
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

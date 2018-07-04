@@ -163,10 +163,10 @@ namespace Mini.Foundation.Office
         /// <param name="createIfNotExist">指示如果指定路径文件不存在，是否创建新的文件</param>
         /// <exception cref="ArgumentNullException">excelFilePath参数为null并且createIfNotExist为false</exception>
         /// <exception cref="FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
-        public ExcelWrapper(String fileFullPath, Boolean createIfNotExist = false)
+        public ExcelWrapper(String fileFullPath, Boolean createIfNotExist = true)
         {
-            //this.Init(fileFullPath, createIfNotExist);
-            this.Init2(fileFullPath, createIfNotExist);
+            this.Init(fileFullPath, createIfNotExist);
+            //this.Init2(fileFullPath, createIfNotExist);
         }
 
         #endregion
@@ -205,8 +205,9 @@ namespace Mini.Foundation.Office
             data.TableName = sheetName;
             int startRow = 0;
 
-            sheet = _workbook.GetSheet(sheetName);
-            if (sheet == null || !ContainsSheet(sheetName)) throw new Exception(String.Format("excel file does not has the sheet named [{0}]!", sheetName));
+            //sheet = _workbook.GetSheet(sheetName);
+            //if (sheet == null || !ContainsSheet(sheetName)) throw new Exception(String.Format("excel file does not has the sheet named [{0}]!", sheetName));
+            sheet = GetSheet(sheetName);
 
             var firstRow = sheet.GetRow(0);
             if (firstRow == null) return data;
@@ -258,26 +259,30 @@ namespace Mini.Foundation.Office
         public virtual String SaveToFile(String fileFullPath)
         {
             //生成文件
-            using (MemoryStream ms = new MemoryStream())
+            //using (MemoryStream ms = new MemoryStream())
+            //{
+            //    _workbook.Write(ms);
+            //    ms.Flush();
+            //    ms.Position = 0L;
+            //    using (FileStream fs = new FileStream(fileFullPath, FileMode.Create))
+            //    {
+            //        //Byte[] buffer = new Byte[1024];
+            //        //Int32 offset = 0;
+            //        //Int32 read = 0;
+            //        //while ((read = ms.Read(buffer, offset, buffer.Length)) > 0)
+            //        //{
+            //        //    fs.Write(buffer, offset, read);
+            //        //    offset += read;
+            //        //}
+            //        //fs.Flush();
+            //        Byte[] data = ms.ToArray();
+            //        fs.Write(data, 0, data.Length);
+            //        fs.Flush();
+            //    }
+            //}
+            using (FileStream fs = new FileStream(fileFullPath, FileMode.Create))
             {
-                _workbook.Write(ms);
-                ms.Flush();
-                ms.Position = 0L;
-                using (FileStream fs = new FileStream(fileFullPath, FileMode.Create))
-                {
-                    //Byte[] buffer = new Byte[1024];
-                    //Int32 offset = 0;
-                    //Int32 read = 0;
-                    //while ((read = ms.Read(buffer, offset, buffer.Length)) > 0)
-                    //{
-                    //    fs.Write(buffer, offset, read);
-                    //    offset += read;
-                    //}
-                    //fs.Flush();
-                    Byte[] data = ms.ToArray();
-                    fs.Write(data, 0, data.Length);
-                    fs.Flush();
-                }
+                _workbook.Write(fs);
             }
             return fileFullPath;
         }
@@ -288,14 +293,12 @@ namespace Mini.Foundation.Office
         /// <param name="table"></param>
         /// <param name="sheetName"></param>
         /// <param name="ignoreColumns"></param>
-        public virtual void AddSheet(DataTable table, String sheetName = "Sheet2", String[] ignoreColumns = null)
+        public virtual void SetSheetData(DataTable table, String sheetName = "Sheet1", String[] ignoreColumns = null)
         {
             MyArgumentsHelper.ThrowsIfNull(table, nameof(table));
             MyArgumentsHelper.ThrowsIfIsInvisibleString(sheetName, nameof(sheetName));
             ISheet sheet = null;
-            sheet = _workbook.GetSheet(sheetName);
-            if (sheet != null) throw new Exception(String.Format("The sheet name[{0}] has already existed!", sheetName));
-            sheet = _workbook.CreateSheet(sheetName);
+            sheet = GetSheet(sheetName);
             //渲染列头
             IRow row = sheet.CreateRow(0);//添加第一行（列头）
             //设置表头样式
@@ -333,6 +336,23 @@ namespace Mini.Foundation.Office
                     excelColumnIndex++;
                 }
             }
+        }
+
+        /// <summary>
+        /// 添加一个sheet
+        /// </summary>
+        /// <param name="table"></param>
+        /// <param name="sheetName"></param>
+        /// <param name="ignoreColumns"></param>
+        public virtual void AddSheet(DataTable table, String sheetName = "Sheet2", String[] ignoreColumns = null)
+        {
+            MyArgumentsHelper.ThrowsIfNull(table, nameof(table));
+            MyArgumentsHelper.ThrowsIfIsInvisibleString(sheetName, nameof(sheetName));
+            ISheet sheet = null;
+            sheet = _workbook.GetSheet(sheetName);
+            if (sheet != null) throw new Exception(String.Format("The sheet name[{0}] has already existed!", sheetName));
+            sheet = _workbook.CreateSheet(sheetName);
+            SetSheetData(table, sheetName, ignoreColumns);
         }
 
         /// <summary>
@@ -431,6 +451,13 @@ namespace Mini.Foundation.Office
 
         #region "protected method"
 
+        protected virtual ISheet GetSheet(String sheetName)
+        {
+            ISheet sheet = _workbook.GetSheet(sheetName);
+            if (sheet == null || !ContainsSheet(sheetName)) throw new Exception(String.Format("excel file does not has the sheet named [{0}]!", sheetName));
+            return sheet;
+        }
+
         protected virtual Boolean ContainsSheet(String sheetName, Boolean containHiddenSheet = false)
         {
             var names = containHiddenSheet ? SheetNames : NoHiddenSheetNames;
@@ -468,9 +495,10 @@ namespace Mini.Foundation.Office
         /// <param name="createIfNotExist"></param>
         /// <exception cref="ArgumentNullException">excelFilePath参数为null并且createIfNotExist为false</exception>
         /// <exception cref="FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
-        protected virtual void Init2(String excelFilePath, Boolean createIfNotExist = false)
+        protected virtual void Init2(String excelFilePath, Boolean createIfNotExist = true)
         {
-            if (File.Exists(excelFilePath))
+            _fileFullPath = excelFilePath;
+            if (File.Exists(_fileFullPath))
             {
                 var fs = new FileStream(_fileFullPath, FileMode.Open, FileAccess.ReadWrite);
                 // 2007版本  

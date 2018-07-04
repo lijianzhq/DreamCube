@@ -76,8 +76,8 @@
     <Compile Include="PQEntities.cs" />
     <Compile Include="MQCSBUSEntities.cs" />
     <Compile Include="LYDBCommon.cs" />
-    <Compile Include="PQ\EasyUIDataGrid.cs" />
-    <Compile Include="PQ\EasyUIDataGridColumn.cs" />
+    <Compile Include="PQ\T_PQ_BU_DATAGRID.cs" />
+    <Compile Include="PQ\T_PQ_BU_DATAGRID_COL.cs" />
     <Compile Include="ModelCommonField.cs" />
     <Compile Include="PQ\T_PQ_BU_PROD_GROUP_CM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -101,6 +101,14 @@
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj">
+      <Project>{7ec16d10-1369-4e2e-8dc9-35cfe4a125d8}</Project>
+      <Name>Mini.Foundation.Basic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database.csproj">
+      <Project>{735d4cdb-8b2d-4eeb-b609-ce4cbebff302}</Project>
+      <Name>Mini.Framework.Database</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon.csproj">
       <Project>{d79243ca-1165-48db-b09e-ca8b17bae5be}</Project>
       <Name>Mini.Framework.EFCommon</Name>

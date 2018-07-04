@@ -24,6 +24,13 @@ namespace Mini.Framework.Database.DefaultProviders
         {
             return _connStr;
         }
+
+        public override string FormatParameterName(string name)
+        {
+            if (name.StartsWith(":")) return name;
+            else if (name.StartsWith("@")) return $":{name.Substring(1)}";
+            else return $":{name}";
+        }
     }
 #endif
 }

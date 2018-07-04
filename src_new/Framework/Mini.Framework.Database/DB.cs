@@ -11,6 +11,7 @@ namespace Mini.Framework.Database
         protected DBCharacterProvider _characterProvider = null;
 
         public DbProviderFactory DbProviderFactory => _characterProvider.DbProviderFactory;
+        public DBCharacterProvider DBCharacterProvider => _characterProvider;
 
         public DB(DBCharacterProvider characterProvider)
         {
@@ -71,7 +72,7 @@ namespace Mini.Framework.Database
                                                    ParameterDirection direction = ParameterDirection.Input)
         {
             DbParameter param = DbProviderFactory.CreateParameter();
-            param.ParameterName = _characterProvider.FormatParameterName(name);
+            param.ParameterName = name;
             if (dbType != null) param.DbType = dbType.Value;
             if (size.HasValue) param.Size = size.Value;
             param.Value = value ?? DBNull.Value;

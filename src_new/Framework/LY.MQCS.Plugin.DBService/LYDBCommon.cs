@@ -110,8 +110,8 @@ namespace LY.MQCS.Plugin.DBService
         /// <returns></returns>
         public static String GetConnectionString()
         {
-            //return "User Id=MQCSBUS;Password=MQCSBUS;Data Source=172.26.136.162/KFMQCS;Unicode=True";
-            return "User Id=test;Password=guanliyuan;Data Source=127.0.0.1/orcl";
+            return "User Id=MQCSBUS;Password=MQCSBUS;Data Source=172.26.136.162/KFMQCS";
+            //return "User Id=test;Password=guanliyuan;Data Source=127.0.0.1/orcl";
             if (!String.IsNullOrEmpty(connectionStr)) return connectionStr;
             var asmConfiger = new AssemblyConfiger();
             var type = asmConfiger.ConfigFileReader.AppSettings("readConnectionStringType");

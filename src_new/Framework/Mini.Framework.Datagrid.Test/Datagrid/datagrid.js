@@ -153,7 +153,26 @@
         };
         this.export = function () {
             /// <summary>导出</summary>
-
+            me.dg.datagrid("loading");
+            var pager = me.dg.datagrid("getPager");
+            var pagerOpts = pager.pagination("options");
+            var postData = { OpType: 'exportData', GridCODE: me.config.GridCODE, pageSize: pagerOpts.pageSize, pageNumber: pagerOpts.pageNumber };
+            $.post(me.config.server, postData)
+                .done(function (data, textStatus, jqXHR) {
+                    me.dg.datagrid("loaded");
+                    var callBackBreak = false;
+                    if (!data.OpResult) {
+                        $.messager.alert('提醒', data.OpResult.Message);
+                        return;
+                    }
+                    if (me.config.onExport)
+                        callBackBreak = me.config.onExport.call(me, changeData);
+                    //如果返回true，则中断后面的处理，否则进行后面的处理
+                    if (!callBackBreak) {
+                        alert(data.OpData);
+                        window.open(data.OpData);
+                    }
+                });
         };
         this.save = function () {
             /// <summary>保存操作</summary>

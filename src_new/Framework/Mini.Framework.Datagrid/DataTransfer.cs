@@ -17,6 +17,7 @@ using Mini.Framework.Database;
 using Mini.Framework.Database.Oracle;
 using LY.MQCS.Plugin.DBService;
 using LY.MQCS.Plugin.DBService.PQ;
+using Mini.Framework.Database.DefaultProviders;
 
 namespace Mini.Framework.Datagrid
 {
@@ -99,9 +100,11 @@ namespace Mini.Framework.Datagrid
         /// <param name="rspParam"></param>
         protected void ExportData(RequestParam rqParam, ref ExecResult rspParam)
         {
-            var path = AsmConfiger.ConfigFileReader.AppSettings("tempFileCachePath");
+            var path = rqParam.Context.Server.MapPath(AsmConfiger.ConfigFileReader.AppSettings("tempFileCachePath"));
+            Directory.CreateDirectory(path);
             var fileName = $"{DateTime.Now.ToString("yyyyMMddHHmmssffff")}.xlsx";
-            var fileFullPath = Path.Combine(rqParam.FieldCODE);
+
+            var fileFullPath = Path.Combine(path, fileName);
             DataTable table = null;
             Int32 recordCount = 0;
             LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, true);
@@ -112,8 +115,10 @@ namespace Mini.Framework.Datagrid
                 return;
             }
             var excel = new ExcelWrapper(fileFullPath);
-            excel.AddSheet(table);
+            excel.SetSheetData(table);
             excel.Save();
+            rspParam.OpData = MyString.RightOf(fileFullPath, rqParam.Context.Server.MapPath("~"));
+            rspParam.OpResult = true;
         }
 
         /// <summary>
@@ -130,7 +135,8 @@ namespace Mini.Framework.Datagrid
             recordCount = 0;
             var grid = GetGrid(rqParam);
             if (grid == null) return;
-            var db = LYDBCommon.GetDB();
+            //var db = LYDBCommon.GetDB();
+            var db= new DB(new OracleProvider("User Id=MQCSBUS;Password=MQCSBUS;Data Source=172.26.136.162/KFMQCS;Unicode=true"));
             using (var ctx = db.BeginExecuteContext())
             {
                 if (!loadAllData && rqParam.PageNumber > 0 && rqParam.PageSize > 0)
@@ -157,7 +163,7 @@ namespace Mini.Framework.Datagrid
             Int32 recordCount = 0;
             LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, false);
             rspParam.OpData = new { rows = table, recordCount }; ;
-            rspParam.OpResult = table != null && table.Rows.Count > 0;
+            rspParam.OpResult = table != null;
         }
 
         /// <summary>
@@ -202,11 +208,11 @@ namespace Mini.Framework.Datagrid
             rspParam.OpResult = true;
         }
 
-        protected EasyUIDataGrid GetGrid(RequestParam rqParam)
+        protected T_PQ_BU_DATAGRID GetGrid(RequestParam rqParam)
         {
             using (var db = LYDBCommon.GetDB_PQ())
             {
-                return db.EasyUIDataGrid.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
+                return db.T_PQ_BU_DATAGRID.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
             }
         }
 

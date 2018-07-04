@@ -20,9 +20,11 @@ namespace sdmap.Compiler
         {
             get
             {
-                if (_instance == null)
-                    _instance = new SdmapCompiler();
-                return _instance;
+                //不用单例，单例存在太多问题了
+                //if (_instance == null)
+                //    _instance = new SdmapCompiler();
+                //return _instance;
+                return new SdmapCompiler();
             }
         }
 

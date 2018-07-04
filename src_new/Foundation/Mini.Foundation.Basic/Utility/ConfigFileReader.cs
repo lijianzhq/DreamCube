@@ -14,7 +14,7 @@ namespace Mini.Foundation.Basic.Utility
     {
         private String _filePath = String.Empty;
         private static FileSystemWatcher _watcher = null;
-        private Assembly callingAssembly;
+        private Assembly _callingAssembly;
 
         public ConfigFileReader(String filePath, Assembly callingAssembly = null)
         {
@@ -23,6 +23,7 @@ namespace Mini.Foundation.Basic.Utility
                 //计算程序集的配置文件路径
                 callingAssembly = Assembly.GetCallingAssembly();
             }
+            _callingAssembly = callingAssembly;
             _filePath = filePath;
             //监听配置文件 
             WatchConfigFile();
@@ -43,12 +44,12 @@ namespace Mini.Foundation.Basic.Utility
         /// 从app.config里面读取的key格式为：assemblyname.key，例如：Mini.Foundation.Basic.xxxx
         /// </param>
         /// <returns></returns>
-        public String AppSettings(String key, Boolean tryReadFromAppConfigFirst = false)
+        public String AppSettings(String key, Boolean tryReadFromAppConfigFirst = true)
         {
             String value = String.Empty;
             if (tryReadFromAppConfigFirst)
             {
-                var newKey = $"{callingAssembly.GetName().Name}.{key}";
+                var newKey = $"{_callingAssembly.GetName().Name}.{key}";
                 value = ConfigurationManager.AppSettings[newKey];
                 if (!String.IsNullOrEmpty(value)) return value;
             }
@@ -78,7 +79,7 @@ namespace Mini.Foundation.Basic.Utility
             }
             catch (Exception ex)
             {
-                if (!DllExceptionEvent.TryFireExceptionEvent(callingAssembly, typeof(AssemblyConfiger), ex))
+                if (!DllExceptionEvent.TryFireExceptionEvent(_callingAssembly, typeof(AssemblyConfiger), ex))
                     throw ex;
             }
         }
@@ -96,7 +97,7 @@ namespace Mini.Foundation.Basic.Utility
             }
             catch (Exception ex)
             {
-                if (!DllExceptionEvent.TryFireExceptionEvent(callingAssembly, typeof(AssemblyConfiger), ex))
+                if (!DllExceptionEvent.TryFireExceptionEvent(_callingAssembly, typeof(AssemblyConfiger), ex))
                     throw ex;
             }
         }

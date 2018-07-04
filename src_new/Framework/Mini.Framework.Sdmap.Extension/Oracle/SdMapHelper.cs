@@ -30,9 +30,11 @@ namespace Mini.Framework.Sdmap.Extension.Oracle
             MyArgumentsHelper.ThrowsIfNullOrEmpty(commandTextTemplate, nameof(commandTextTemplate));
             var compiler = SdmapCompiler.Instance;
             var start = (pageIndex - 1) * pageSize + 1;
+            var startParamName = "STARTINDEX";
+            var endParamName = "ENDINDEX";
             var end = pageIndex * pageSize;
-            var newSql = $"select * from(select t1.*,rownum rn from ({commandTextTemplate}) t1) where rn>=:STARTINDEX and rn<=:ENDINDEX";
-            var pageDBParam = new DbParameter[] { ctx.DB.CreateParameter("STARTINDEX", start), ctx.DB.CreateParameter("ENDINDEX", end) };
+            var newSql = $"select * from(select t1.*,rownum rn from ({commandTextTemplate}) t1) where rn>={ctx.DB.DBCharacterProvider.FormatParameterName(startParamName)} and rn<={ctx.DB.DBCharacterProvider.FormatParameterName(endParamName)}";
+            var pageDBParam = new DbParameter[] { ctx.DB.CreateParameter(startParamName, start), ctx.DB.CreateParameter(endParamName, end) };
             newSql = $"sql {SQLCODE_FOR_GETDATATABLEBYSQLTEMPLATE}{{{newSql}}}";
             compiler.AddSourceCode(newSql);
 
@@ -43,7 +45,12 @@ namespace Mini.Framework.Sdmap.Extension.Oracle
                 foreach (var p in inputParamList)
                 {
                     if (p.Type == QueryParamType.SqlParam)
-                        dbParams.Add(ctx.DB.CreateParameter(p.Name, p.Value));
+                    {
+                        var paramName = ctx.DB.DBCharacterProvider.FormatParameterName(p.Name);
+                        //再判断sql中是否已经使用了这个参数变量
+                        if (newSql.IndexOf(paramName, StringComparison.CurrentCultureIgnoreCase) >= 0)
+                            dbParams.Add(ctx.DB.CreateParameter(p.Name, p.Value));
+                    }
                     templateParams.Add(p.Name, p.Value);
                 }
             }
@@ -67,7 +74,12 @@ namespace Mini.Framework.Sdmap.Extension.Oracle
                 foreach (var p in inputParamList)
                 {
                     if (p.Type == QueryParamType.SqlParam)
-                        dbParams.Add(ctx.DB.CreateParameter(p.Name, p.Value));
+                    {
+                        var paramName = ctx.DB.DBCharacterProvider.FormatParameterName(p.Name);
+                        //再判断sql中是否已经使用了这个参数变量
+                        if (newSql.IndexOf(paramName, StringComparison.CurrentCultureIgnoreCase) >= 0)
+                            dbParams.Add(ctx.DB.CreateParameter(p.Name, p.Value));
+                    }
                     templateParams.Add(p.Name, p.Value);
                 }
             }

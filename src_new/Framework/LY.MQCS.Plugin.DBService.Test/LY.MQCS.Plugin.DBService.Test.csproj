@@ -63,11 +63,11 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Mini.Framework.EFCommon\Mini.Framework.EFCommon.csproj">
+    <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon.csproj">
       <Project>{D79243CA-1165-48DB-B09E-CA8B17BAE5BE}</Project>
       <Name>Mini.Framework.EFCommon</Name>
     </ProjectReference>
-    <ProjectReference Include="..\LY.MQCS.Plugin.DBService.csproj">
+    <ProjectReference Include="..\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.csproj">
       <Project>{12aabfc7-69ae-4d2d-923b-6d52adf61edf}</Project>
       <Name>LY.MQCS.Plugin.DBService</Name>
     </ProjectReference>

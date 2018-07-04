@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace LY.MQCS.Plugin.DBService.PQ
+namespace LY.MQCS.Plugin.DBService.MQCSBUS
 {
     [Table("T_PQ_BU_DATAGRID_COL")]
     public class T_PQ_BU_DATAGRID_COL : ModelCommonField

@@ -73,11 +73,9 @@
   <ItemGroup>
     <Compile Include="ConnectionString.cs" />
     <Compile Include="DBEntities.cs" />
-    <Compile Include="PQEntities.cs" />
-    <Compile Include="MQCSBUSEntities.cs" />
     <Compile Include="LYDBCommon.cs" />
-    <Compile Include="PQ\T_PQ_BU_DATAGRID.cs" />
-    <Compile Include="PQ\T_PQ_BU_DATAGRID_COL.cs" />
+    <Compile Include="MQCSBUS\T_PQ_BU_DATAGRID.cs" />
+    <Compile Include="MQCSBUS\T_PQ_BU_DATAGRID_COL.cs" />
     <Compile Include="ModelCommonField.cs" />
     <Compile Include="PQ\T_PQ_BU_PROD_GROUP_CM.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -85,7 +83,6 @@
   <ItemGroup>
     <Folder Include="Bak\" />
     <Folder Include="DB\" />
-    <Folder Include="MQCSBUS\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

@@ -63,7 +63,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mini.Framework.Database.Ora
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mini.Framework.Sdmap.Extension", "Framework\Mini.Framework.Sdmap.Extension\Mini.Framework.Sdmap.Extension.csproj", "{3822DEB3-C4C1-48FE-87CA-D8FBF251A7AC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LY.MQCS.Plugin.DBService.Test", "Framework\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.Test\LY.MQCS.Plugin.DBService.Test.csproj", "{BCA642C7-40C1-4FAC-BE11-9539D47FC14A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LY.MQCS.Plugin.DBService.Test", "Framework\LY.MQCS.Plugin.DBService.Test\LY.MQCS.Plugin.DBService.Test.csproj", "{BCA642C7-40C1-4FAC-BE11-9539D47FC14A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

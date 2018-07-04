@@ -98,10 +98,10 @@ namespace LY.MQCS.Plugin.DBService
         /// 获取pq数据库
         /// </summary>
         /// <returns></returns>
-        public static PQEntities GetDB_PQ()
+        public static DBEntities GetDBEntities()
         {
             var conn = new Ora.OracleConnection(GetConnectionString());
-            return new PQEntities(conn, true);
+            return new DBEntities(conn, true);
         }
 
         /// <summary>

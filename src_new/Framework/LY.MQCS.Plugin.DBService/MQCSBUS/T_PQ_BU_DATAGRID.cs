@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 using Newtonsoft.Json;
 
-namespace LY.MQCS.Plugin.DBService.PQ
+namespace LY.MQCS.Plugin.DBService.MQCSBUS
 {
     [Table("T_PQ_BU_DATAGRID")]
     public class T_PQ_BU_DATAGRID : ModelCommonField

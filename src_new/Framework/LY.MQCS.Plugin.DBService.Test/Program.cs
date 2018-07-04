@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using LY.MQCS.Plugin.DBService.MQCSBUS;
 using LY.MQCS.Plugin.DBService.PQ;
 
 namespace LY.MQCS.Plugin.DBService.Test
@@ -76,7 +77,7 @@ namespace LY.MQCS.Plugin.DBService.Test
                                 }
             };
 
-            using (var db = LYDBCommon.GetDB_PQ())
+            using (var db = LYDBCommon.GetDBEntities())
             {
                 Console.WriteLine(db.T_PQ_BU_DATAGRID.Add(grid));
                 db.SaveChanges();

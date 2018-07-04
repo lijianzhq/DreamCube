@@ -16,8 +16,9 @@ using Mini.Framework.Sdmap.Extension.Oracle;
 using Mini.Framework.Database;
 using Mini.Framework.Database.Oracle;
 using LY.MQCS.Plugin.DBService;
-using LY.MQCS.Plugin.DBService.PQ;
 using Mini.Framework.Database.DefaultProviders;
+using LY.MQCS.Plugin.DBService.PQ;
+using LY.MQCS.Plugin.DBService.MQCSBUS;
 
 namespace Mini.Framework.Datagrid
 {
@@ -210,7 +211,7 @@ namespace Mini.Framework.Datagrid
 
         protected T_PQ_BU_DATAGRID GetGrid(RequestParam rqParam)
         {
-            using (var db = LYDBCommon.GetDB_PQ())
+            using (var db = LYDBCommon.GetDBEntities())
             {
                 return db.T_PQ_BU_DATAGRID.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
             }

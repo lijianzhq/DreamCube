@@ -56,50 +56,6 @@
                         columns.push(eval("(" + data.OpData.Columns[i].Config + ")"));
                     }
                     console.info(columns);
-                    //me.config是默认值，data.config是返回的值，最后的是返回的列参数
-                    columns = [{ field: 'DISTRI_GROUP_CODE', title: '分发目标班组', width: 180 },
-                    {
-                        field: 'EFFECT_CONF_SCHE', title: '效果确认方案', width: 180,
-                        formatter: function (value, row) {
-                            return row.EFFECT_CONF_SCHE_NAME; //return返回的必须是textField字段的值
-                        },
-                        editor: {
-                            type: 'combobox',
-                            options: {
-                                editable: false,
-                                valueField: 'EFFECT_CONF_SCHE', //必须与列的field字段一致
-                                textField: 'EFFECT_CONF_SCHE_NAME',
-                                onBeforeLoad: function (data) {
-                                    var editor = $(this);
-                                    var postData = { OpType: 'loadColumnEditData', GridCODE: me.config.GridCODE, FieldCODE: 'EFFECT_CONF_SCHE' };
-                                    data = $.extend(data, postData);
-                                },
-                                loadFilter: function (data) {
-                                    if (data.OpResult) {
-                                        return data.OpData;
-                                    }
-                                    return [];
-                                },
-                                url: me.config.server,
-                                required: true
-                            }
-                        }
-                    },
-                    {
-                        field: '问题点', title: '问题点', width: 180,
-                        editor: {
-                            type: 'text'
-                        }
-                    },
-                    { field: '发生日期', title: '发生日期', width: 60, align: 'right' },
-                    { field: '品情来源', title: '品情来源', width: 80 },
-                    { field: '车型', title: '车型', width: 80 },
-                    { field: '车号', title: '车号', width: 80 },
-                    { field: '不良区分', title: '不良区分', width: 80 },
-                    { field: '发生工站', title: '发生工站', width: 80 },
-                    { field: '责任人', title: '责任人', width: 80 },
-                    { field: '不良件数', title: '不良件数', width: 80 },
-                    { field: '是否再发', title: '是否再发', width: 80 }];
                     var config = $.extend({}, me.config, data.Config, { columns: [columns] });
                     me.dg.datagrid(config);
                     //回调方法

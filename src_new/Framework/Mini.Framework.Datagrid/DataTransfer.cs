@@ -87,7 +87,7 @@ namespace Mini.Framework.Datagrid
             }
             finally
             {
-                if (!rspParam.OpResult) context.Response.StatusCode = 500;
+                //if (!rspParam.OpResult) context.Response.StatusCode = 500;
                 if (context.Response.IsClientConnected && context.Response.OutputStream.CanWrite)
                     context.Response.Write(MyJson.Serialize(rspParam));
                 context.Response.End();
@@ -137,7 +137,7 @@ namespace Mini.Framework.Datagrid
             var grid = GetGrid(rqParam);
             if (grid == null) return;
             //var db = LYDBCommon.GetDB();
-            var db= new DB(new OracleProvider("User Id=MQCSBUS;Password=MQCSBUS;Data Source=172.26.136.162/KFMQCS;Unicode=true"));
+            var db = new DB(new OracleProvider("User Id=MQCSBUS;Password=MQCSBUS;Data Source=172.26.136.162/KFMQCS;Unicode=true"));
             using (var ctx = db.BeginExecuteContext())
             {
                 if (!loadAllData && rqParam.PageNumber > 0 && rqParam.PageSize > 0)
@@ -213,7 +213,9 @@ namespace Mini.Framework.Datagrid
         {
             using (var db = LYDBCommon.GetDBEntities())
             {
-                return db.T_PQ_BU_DATAGRID.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
+                var grid = db.T_PQ_BU_DATAGRID.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
+                grid.Columns = grid.Columns.OrderBy(it => it.OrderNO).ToList();
+                return grid;
             }
         }
 

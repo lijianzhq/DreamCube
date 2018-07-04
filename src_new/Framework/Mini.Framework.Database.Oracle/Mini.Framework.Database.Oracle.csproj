@@ -15,9 +15,4 @@
     <Content Include="Z_说明.txt" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
-    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database.csproj" />
-  </ItemGroup>
-
 </Project>

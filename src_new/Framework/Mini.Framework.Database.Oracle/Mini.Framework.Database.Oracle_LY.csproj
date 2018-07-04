@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40</TargetFrameworks>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Z_说明.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Z_说明.txt" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database.csproj" />
+  </ItemGroup>
+
+</Project>

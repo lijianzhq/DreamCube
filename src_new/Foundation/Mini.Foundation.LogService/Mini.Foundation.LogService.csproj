@@ -1,8 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks Condition="'$(LibraryFrameworks)'==''">net40</TargetFrameworks>
-    <TargetFrameworks Condition="'$(LibraryFrameworks)'!=''">$(LibraryFrameworks)</TargetFrameworks>
+    <TargetFrameworks>net40</TargetFrameworks>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
     <LangVersion>latest</LangVersion>
     <!-- version numbers will be updated by build -->
@@ -354,7 +353,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
     <ProjectReference Include="..\Mini.Foundation.TraceService\Mini.Foundation.TraceService.csproj" />
   </ItemGroup>
 

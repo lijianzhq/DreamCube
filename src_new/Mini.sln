@@ -55,15 +55,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mini.Framework.Datagrid", "
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mini.Framework.Datagrid.Test", "Framework\Mini.Framework.Datagrid.Test\Mini.Framework.Datagrid.Test.csproj", "{44FF0C2F-7EB6-41D7-BE98-FA430AFEA4EF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LY.MQCS.Plugin.DBService", "Framework\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.csproj", "{12AABFC7-69AE-4D2D-923B-6D52ADF61EDF}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mini.Framework.Database.Oracle", "Framework\Mini.Framework.Database.Oracle\Mini.Framework.Database.Oracle.csproj", "{5719EDE3-8D5A-43A5-8FB2-109ED22F6F3D}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mini.Framework.Database.Oracle.Test", "Framework\Mini.Framework.Database.Oracle.Test\Mini.Framework.Database.Oracle.Test.csproj", "{7CE3DD94-3480-40D9-9A56-936F8D4B5703}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mini.Framework.Sdmap.Extension", "Framework\Mini.Framework.Sdmap.Extension\Mini.Framework.Sdmap.Extension.csproj", "{3822DEB3-C4C1-48FE-87CA-D8FBF251A7AC}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LY.MQCS.Plugin.DBService.Test", "Framework\LY.MQCS.Plugin.DBService.Test\LY.MQCS.Plugin.DBService.Test.csproj", "{BCA642C7-40C1-4FAC-BE11-9539D47FC14A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -163,10 +159,6 @@ Global
 		{44FF0C2F-7EB6-41D7-BE98-FA430AFEA4EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{44FF0C2F-7EB6-41D7-BE98-FA430AFEA4EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{44FF0C2F-7EB6-41D7-BE98-FA430AFEA4EF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{12AABFC7-69AE-4D2D-923B-6D52ADF61EDF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{12AABFC7-69AE-4D2D-923B-6D52ADF61EDF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{12AABFC7-69AE-4D2D-923B-6D52ADF61EDF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{12AABFC7-69AE-4D2D-923B-6D52ADF61EDF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{5719EDE3-8D5A-43A5-8FB2-109ED22F6F3D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5719EDE3-8D5A-43A5-8FB2-109ED22F6F3D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5719EDE3-8D5A-43A5-8FB2-109ED22F6F3D}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -179,10 +171,6 @@ Global
 		{3822DEB3-C4C1-48FE-87CA-D8FBF251A7AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3822DEB3-C4C1-48FE-87CA-D8FBF251A7AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3822DEB3-C4C1-48FE-87CA-D8FBF251A7AC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{BCA642C7-40C1-4FAC-BE11-9539D47FC14A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{BCA642C7-40C1-4FAC-BE11-9539D47FC14A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{BCA642C7-40C1-4FAC-BE11-9539D47FC14A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{BCA642C7-40C1-4FAC-BE11-9539D47FC14A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -211,11 +199,9 @@ Global
 		{53A0DF15-6236-4D9A-A8EE-0513A8298BD0} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 		{BBE40AA6-E3A9-4AEC-8FD0-6C2C7F414739} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 		{44FF0C2F-7EB6-41D7-BE98-FA430AFEA4EF} = {193F806B-CED3-4FF2-88C1-F043665A2454}
-		{12AABFC7-69AE-4D2D-923B-6D52ADF61EDF} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 		{5719EDE3-8D5A-43A5-8FB2-109ED22F6F3D} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 		{7CE3DD94-3480-40D9-9A56-936F8D4B5703} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 		{3822DEB3-C4C1-48FE-87CA-D8FBF251A7AC} = {193F806B-CED3-4FF2-88C1-F043665A2454}
-		{BCA642C7-40C1-4FAC-BE11-9539D47FC14A} = {193F806B-CED3-4FF2-88C1-F043665A2454}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EB25A0FB-6F55-4E56-AF88-7510D3C8D58D}

@@ -14,13 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Office\Mini.Foundation.Office.csproj" />
-    <ProjectReference Include="..\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.csproj" />
-    <ProjectReference Include="..\Mini.Framework.Database.Oracle\Mini.Framework.Database.Oracle.csproj" />
-    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database.csproj" />
+    <ProjectReference Include="..\..\..\..\..\szlanyou\TQMP_公共产出\00_源程序\EAP.BS\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.csproj" />
     <ProjectReference Include="..\Mini.Framework.Sdmap.Extension\Mini.Framework.Sdmap.Extension.csproj" />
     <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap.csproj" />
   </ItemGroup>

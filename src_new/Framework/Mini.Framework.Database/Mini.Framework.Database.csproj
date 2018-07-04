@@ -11,8 +11,4 @@
     <Reference Include="System.Data.OracleClient" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
-  </ItemGroup>
-
 </Project>

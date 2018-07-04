@@ -181,8 +181,6 @@ namespace Mini.Framework.Datagrid
             var sql = String.Empty;
             for (var i = 0; i < grid.Columns.Count; i++)
             {
-                //var dic = MyJson.Deserialize<Dictionary<String, String>>(grid.Columns[i].Config);
-                //if (dic.ContainsKey(rqParam.FieldCODE)) sql = grid.Columns[i].EditDataSQL;
                 if (grid.Columns[i].Config.IndexOf($"'{rqParam.FieldCODE}'", StringComparison.CurrentCultureIgnoreCase) >= 0)
                 {
                     sql = grid.Columns[i].EditDataSQL;

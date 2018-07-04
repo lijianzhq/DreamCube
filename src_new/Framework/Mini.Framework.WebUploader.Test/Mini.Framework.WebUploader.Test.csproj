@@ -166,6 +166,7 @@
     <Content Include="Z_说明.txt" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DBConnectionProvider.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -179,6 +180,15 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Mini.Framework.EFCommon.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="bin\Mini.Framework.EFCommon.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Mini.Framework.WebUploader.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
@@ -203,9 +213,17 @@
     <Folder Include="Models\" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj">
+      <Project>{7ec16d10-1369-4e2e-8dc9-35cfe4a125d8}</Project>
+      <Name>Mini.Foundation.Basic</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj">
       <Project>{c65582cb-a03c-4be0-83ab-273fa89a855a}</Project>
       <Name>Mini.Foundation.Json</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon.csproj">
+      <Project>{d79243ca-1165-48db-b09e-ca8b17bae5be}</Project>
+      <Name>Mini.Framework.EFCommon</Name>
     </ProjectReference>
     <ProjectReference Include="..\Mini.Framework.WebUploader\Mini.Framework.WebUploader.csproj">
       <Project>{f536a7bf-2109-4b48-90e5-06e035cc7d42}</Project>

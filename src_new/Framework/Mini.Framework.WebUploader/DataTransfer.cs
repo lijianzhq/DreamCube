@@ -80,7 +80,7 @@ namespace Mini.Framework.WebUploader
                 Message = "",
             };
             String[] codes = MyJson.Deserialize<String[]>(rqParam.RmFCodes);
-            using (var db = new DBService.DB())
+            using (var db = Helper.CreateEFDB())
             {
                 foreach (var code in codes)
                 {
@@ -113,7 +113,7 @@ namespace Mini.Framework.WebUploader
                 Status = true,
                 Message = "",
             };
-            using (var db = new DBService.DB())
+            using (var db = Helper.CreateEFDB())
             {
                 var emptyQ = db.UploadFiles.Where(it => it.Status == DBService.FileStatus.Normal);
                 var whereQ = emptyQ;

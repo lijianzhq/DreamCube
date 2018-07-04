@@ -7,6 +7,7 @@ using System.Reflection;
 
 using Mini.Foundation.Basic.Utility;
 using Mini.Foundation.LogService;
+using Mini.Framework.EFCommon;
 
 namespace Mini.Framework.WebUploader
 {
@@ -66,6 +67,39 @@ namespace Mini.Framework.WebUploader
             if (String.IsNullOrEmpty(protocol)) return null;
             if (_workers.ContainsKey(protocol)) return _workers[protocol];
             return null;
+        }
+
+        static IDBConnectionProvider _connectionProvider = null;
+        internal static IDBConnectionProvider ConnectionProvider
+        {
+            get
+            {
+                if (_connectionProvider == null)
+                {
+                    _connectionProvider = CreateInstance<IDBConnectionProvider>("DBConnectionProvider");
+                }
+                return _connectionProvider;
+            }
+        }
+
+        internal static DBService.DB CreateEFDB(Boolean autoCloseConn = true)
+        {
+            if (ConnectionProvider != null)
+                return new DBService.DB(ConnectionProvider.CreateConnection(false), autoCloseConn);
+            else
+                return new DBService.DB();
+        }
+
+        internal static T CreateInstance<T>(String appSettingKey)
+        {
+            var typeName = AsmConfiger.ConfigFileReader.AppSettings(appSettingKey);
+            if (!String.IsNullOrEmpty(typeName))
+            {
+                var type = Type.GetType(typeName);
+                if (type != null)
+                    return (T)type.Assembly.CreateInstance(type.FullName);
+            }
+            return default(T);
         }
     }
 }

@@ -21,12 +21,6 @@
     <Reference Include="System.Web" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' == 'net40'">
-    <PackageReference Include="Mini.Foundation.LogService">
-      <Version>1.0.1</Version>
-    </PackageReference>
-  </ItemGroup>
-
   <ItemGroup>
     <None Update="Mini.Framework.WebUploader.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
@@ -35,6 +29,12 @@
 
   <ItemGroup>
     <Folder Include="Files\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj" />
+    <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon.csproj" />
   </ItemGroup>
 
 </Project>

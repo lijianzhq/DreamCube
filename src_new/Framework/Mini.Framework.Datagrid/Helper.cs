@@ -56,7 +56,6 @@ namespace Mini.Framework.Datagrid
             return default(T);
         }
 
-
         internal static DBService.DB CreateEFDB(Boolean autoCloseConn = true)
         {
             if (ConnectionProvider != null)

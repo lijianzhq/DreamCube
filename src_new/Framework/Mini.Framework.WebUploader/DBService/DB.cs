@@ -9,15 +9,31 @@ using Mini.Framework.EFCommon;
 
 namespace Mini.Framework.WebUploader.DBService
 {
-    public class DB : BasicDb
+    public class DB : BasicDb<DB>
     {
-        public DB(String nameOrConnectionString = "UploadFileDB")
+        public DB(String nameOrConnectionString = "Mini.Framework.WebUploader.ConnectionStr")
             : base(nameOrConnectionString)
         { }
 
         public DB(DbConnection existingConnection, Boolean contextOwnsConnection = true)
             : base(existingConnection, contextOwnsConnection)
         { }
+
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<UploadFile>().Map(it =>
+            {
+                it.ToTable(Helper.AsmConfiger.ConfigFileReader.AppSettings("UploadFile_TableName"));
+            });
+
+            modelBuilder.Entity<UploadFileOpHistory>().Map(it =>
+            {
+                it.ToTable(Helper.AsmConfiger.ConfigFileReader.AppSettings("UploadFileOpHistory_TableName"));
+            });
+            base.OnModelCreating(modelBuilder);
+            base.OnModelCreating(modelBuilder);
+        }
 
         public DbSet<UploadFile> UploadFiles { get; set; }
 
@@ -30,7 +46,7 @@ namespace Mini.Framework.WebUploader.DBService
 
         public static void SaveUploadFileRecord(UploadFile filedata)
         {
-            using (var db = new DB())
+            using (var db = Helper.CreateEFDB())
             {
                 filedata.OpHistory = new List<UploadFileOpHistory>() {
                      new UploadFileOpHistory()

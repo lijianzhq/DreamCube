@@ -369,4 +369,8 @@
     </DefineConstants>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Mini.Foundation.Json100r1\Mini.Foundation.Json100r1_LY.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Mini.Foundation.Office</name>
+    </assembly>
+    <members>
+        <member name="T:Mini.Foundation.Office.ExcelWrapper">
+            <summary>
+            excel的封装类
+            </summary>
+        </member>
+        <member name="F:Mini.Foundation.Office.ExcelWrapper._cellMaxDataLength">
+            <summary>
+            缓存单元格最大的宽度（用于在构造execl的过程中，根据列内容的大小，调整宽度）
+            key： columnindex
+            value：max dataLength
+            </summary>
+        </member>
+        <member name="F:Mini.Foundation.Office.ExcelWrapper._workbook">
+            <summary>  
+            使用NOPI读取Excel数据  
+            </summary>  
+        </member>
+        <member name="F:Mini.Foundation.Office.ExcelWrapper._hasInitial">
+            <summary>
+            是否已经初始化了
+            </summary>
+        </member>
+        <member name="F:Mini.Foundation.Office.ExcelWrapper._fileFullPath">
+            <summary>
+            文件路径
+            </summary>
+        </member>
+        <member name="P:Mini.Foundation.Office.ExcelWrapper.DefaultHeaderCellStyle">
+            <summary>
+            创建表头的样式
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="P:Mini.Foundation.Office.ExcelWrapper.SheetNames">
+            <summary>
+            获取excel的所有sheet名称
+            </summary>
+        </member>
+        <member name="P:Mini.Foundation.Office.ExcelWrapper.NoHiddenSheetNames">
+            <summary>
+            获取excel的所有sheet名称（不包括隐藏的）
+            </summary>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.#ctor">
+            <summary>
+            datatable数据加载到excel文件中
+            </summary>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.#ctor(System.String,System.Boolean)">
+            <summary>
+            </summary>
+            <param name="fileFullPath">excel文件路径</param>
+            <param name="createIfNotExist">指示如果指定路径文件不存在，是否创建新的文件</param>
+            <exception cref="T:System.ArgumentNullException">excelFilePath参数为null并且createIfNotExist为false</exception>
+            <exception cref="T:System.IO.FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.GetDataTables(System.String[],System.Boolean)">
+            <summary>
+            将excel中的所有的表格数据导入到DataTable中
+            </summary>
+            <param name="sheetNames">如果不传入该参数，则默认读取所有的 sheet 数据到DataSet</param>
+            <param name="isFirstRowColumnName">第一行是否是DataTable的列名</param>  
+            <returns></returns>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.GetDataTable(System.String,System.Boolean,System.Boolean)">
+            <summary>  
+            将excel中的数据导入到DataTable中  
+            </summary>  
+            <param name="sheetName">excel工作薄sheet的名称</param>  
+            <param name="isFirstRowColumnName">第一行是否是DataTable的列名</param>  
+            <param name="containHiddenSheet">是否包含隐藏表单</param>  
+            <returns>返回的DataTable</returns>  
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.Save">
+            <summary>
+            保存修改
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.SaveToFile(System.String)">
+            <summary>
+            保存workbook到磁盘上（另存为指定的其他目录）
+            </summary>
+            <param name="fileFullPath"></param>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.SetSheetData(System.Data.DataTable,System.String,System.String[])">
+            <summary>
+            添加一个sheet
+            </summary>
+            <param name="table"></param>
+            <param name="sheetName"></param>
+            <param name="ignoreColumns"></param>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.AddSheet(System.Data.DataTable,System.String,System.String[])">
+            <summary>
+            添加一个sheet
+            </summary>
+            <param name="table"></param>
+            <param name="sheetName"></param>
+            <param name="ignoreColumns"></param>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.AddCellImage(NPOI.SS.UserModel.ICell,System.Byte[])">
+            <summary>
+            图片在单元格等比缩放居中显示
+            </summary>
+            <param name="cell">单元格</param>
+            <param name="image">图片二进制流</param>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.Init2(System.String,System.Boolean)">
+            <summary>
+            根据文件初始化对象（如果指定的路径不存在，则会新增一个excel）
+            </summary>
+            <param name="excelFilePath"></param>
+            <param name="createIfNotExist"></param>
+            <exception cref="T:System.ArgumentNullException">excelFilePath参数为null并且createIfNotExist为false</exception>
+            <exception cref="T:System.IO.FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.Init(System.String,System.Boolean)">
+            <summary>
+            根据文件初始化对象（如果指定的路径不存在，则会新增一个excel）
+            </summary>
+            <param name="excelFilePath"></param>
+            <param name="createIfNotExist"></param>
+            <exception cref="T:System.ArgumentNullException">excelFilePath参数为null并且createIfNotExist为false</exception>
+            <exception cref="T:System.IO.FileNotFoundException">excelFilePath参数不为null并且createIfNotExist为false</exception>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.IsColumnIgnore(System.String,System.String[])">
+            <summary>
+            判断列是否被忽略掉
+            </summary>
+            <param name="columnName"></param>
+            <param name="ignoreColumns"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.GetColumnWidth(System.Int32)">
+            <summary>
+            根据数据的长度，获取单元格的宽度
+            </summary>
+            <param name="dataLength"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Mini.Foundation.Office.ExcelWrapper.UpdateSetMaxColumnWidth(System.Int32,System.String,System.Int32@)">
+            <summary>
+            获取合适的列宽值
+            </summary>
+            <param name="columnIndex"></param>
+            <param name="cellData"></param>
+            <param name="dataLength"></param>
+            <returns></returns>
+        </member>
+    </members>
+</doc>

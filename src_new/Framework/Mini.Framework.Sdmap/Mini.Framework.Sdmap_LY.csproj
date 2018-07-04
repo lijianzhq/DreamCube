@@ -15,7 +15,7 @@
     <FileVersion>0.14.2</FileVersion>
     <Authors>sdcb</Authors>
     <Copyright>MIT</Copyright>
-    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\LYOutput\</OutputPath>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <RootNamespace>Mini.Framework.Sdmap</RootNamespace>
   </PropertyGroup>

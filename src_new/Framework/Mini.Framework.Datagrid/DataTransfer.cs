@@ -15,25 +15,12 @@ using Mini.Framework.Sdmap.Extension;
 using Mini.Framework.Sdmap.Extension.Oracle;
 using Mini.Framework.Database;
 using Mini.Framework.Database.Oracle;
-using LY.MQCS.Plugin.DBService;
 using Mini.Framework.Database.DefaultProviders;
-using LY.MQCS.Plugin.DBService.PQ;
-using LY.MQCS.Plugin.DBService.MQCSBUS;
 
 namespace Mini.Framework.Datagrid
 {
     public class DataTransfer : IHttpHandler
     {
-        static AssemblyConfiger _asmConfiger = null;
-        static AssemblyConfiger AsmConfiger
-        {
-            get
-            {
-                if (_asmConfiger == null) _asmConfiger = new AssemblyConfiger();
-                return _asmConfiger;
-            }
-        }
-
         /// <summary>
         /// 您将需要在网站的 Web.config 文件中配置此处理程序 
         /// 并向 IIS 注册它，然后才能使用它。有关详细信息，
@@ -101,7 +88,7 @@ namespace Mini.Framework.Datagrid
         /// <param name="rspParam"></param>
         protected void ExportData(RequestParam rqParam, ref ExecResult rspParam)
         {
-            var path = rqParam.Context.Server.MapPath(AsmConfiger.ConfigFileReader.AppSettings("tempFileCachePath"));
+            var path = rqParam.Context.Server.MapPath(Helper.AsmConfiger.ConfigFileReader.AppSettings("tempFileCachePath"));
             Directory.CreateDirectory(path);
             var fileName = $"{DateTime.Now.ToString("yyyyMMddHHmmssffff")}.xlsx";
 
@@ -136,8 +123,7 @@ namespace Mini.Framework.Datagrid
             recordCount = 0;
             var grid = GetGrid(rqParam);
             if (grid == null) return;
-            //var db = LYDBCommon.GetDB();
-            var db = new DB(new OracleProvider("User Id=MQCSBUS;Password=MQCSBUS;Data Source=172.26.136.162/KFMQCS;Unicode=true"));
+            var db = Helper.CreateDBObj();
             using (var ctx = db.BeginExecuteContext())
             {
                 if (!loadAllData && rqParam.PageNumber > 0 && rqParam.PageSize > 0)
@@ -188,9 +174,15 @@ namespace Mini.Framework.Datagrid
                 }
             }
             if (String.IsNullOrEmpty(sql)) return;
-            var table = LYDBCommon.ExecuteDataTable(sql);
+
+            var db = Helper.CreateDBObj();
+            DataTable table = null;
+            using (var ctx = db.BeginExecuteContext())
+            {
+                table = ctx.GetDataTableBySqlTemplate(sql, rqParam.QueryParamList);
+            }
             rspParam.OpData = table;
-            rspParam.OpResult = table != null && table.Rows.Count > 0;
+            rspParam.OpResult = table != null;
         }
 
         /// <summary>
@@ -207,11 +199,11 @@ namespace Mini.Framework.Datagrid
             rspParam.OpResult = true;
         }
 
-        protected T_PQ_BU_DATAGRID GetGrid(RequestParam rqParam)
+        protected DBService.Datagrid GetGrid(RequestParam rqParam)
         {
-            using (var db = LYDBCommon.GetDBEntities())
+            using (var db = Helper.CreateEFDB())
             {
-                var grid = db.T_PQ_BU_DATAGRID.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
+                var grid = db.Datagrids.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
                 grid.Columns = grid.Columns.OrderBy(it => it.OrderNO).ToList();
                 return grid;
             }

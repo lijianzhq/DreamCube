@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFrameworks>net461</TargetFrameworks>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\LYOutput\</OutputPath>
     <Version>1.0.2</Version>
     <Authors>Jianl</Authors>
     <Company>Jianl</Company>
@@ -11,18 +11,6 @@
 
   <ItemGroup>
     <None Remove="Files\dbscript.sql" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\szlanyou\TQMP_公共产出\00_源程序\EAP.BS\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Office\Mini.Foundation.Office.csproj" />
-    <ProjectReference Include="..\Mini.Framework.Database.Oracle\Mini.Framework.Database.Oracle.csproj" />
-    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database.csproj" />
-    <ProjectReference Include="..\Mini.Framework.Sdmap.Extension\Mini.Framework.Sdmap.Extension.csproj" />
-    <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -37,6 +25,19 @@
 
   <ItemGroup>
     <Folder Include="Files\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\..\..\szlanyou\TQMP_公共产出\00_源程序\EAP.BS\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic_LY.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json100r1\Mini.Foundation.Json100r1_LY.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json_LY.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService_LY.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Office\Mini.Foundation.Office_LY.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Database.Oracle\Mini.Framework.Database.Oracle_LY.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database_LY.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Sdmap.Extension\Mini.Framework.Sdmap.Extension_LY.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap_LY.csproj" />
   </ItemGroup>
 
 </Project>

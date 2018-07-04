@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net40;net35;net20</TargetFrameworks>
-    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\LYOutput</OutputPath>
     <LangVersion>latest</LangVersion>
     <!-- version numbers will be updated by build -->
     <AssemblyVersion>1.0.0.0</AssemblyVersion>

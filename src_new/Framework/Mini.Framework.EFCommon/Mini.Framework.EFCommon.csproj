@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Reference Include="System.Configuration" />
   </ItemGroup>
 

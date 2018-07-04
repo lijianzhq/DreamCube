@@ -3,8 +3,10 @@
   <PropertyGroup>
     <TargetFrameworks>net40</TargetFrameworks>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output\</OutputPath>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\LYOutput\</OutputPath>
     <Version>1.0.0</Version>
+    <AssemblyName>Mini.Framework.Database.Oracle</AssemblyName>
+    <RootNamespace>Mini.Framework.Database.Oracle</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>

@@ -353,8 +353,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
-    <ProjectReference Include="..\Mini.Foundation.TraceService\Mini.Foundation.TraceService.csproj" />
+    <ProjectReference Include="..\Mini.Foundation.Basic\Mini.Foundation.Basic_LY.csproj" />
+    <ProjectReference Include="..\Mini.Foundation.TraceService\Mini.Foundation.TraceService_LY.csproj" />
   </ItemGroup>
 
   <ItemGroup>

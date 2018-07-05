@@ -13,6 +13,67 @@ namespace Mini.Foundation.Basic.Utility
     public static class MyString
     {
         /// <summary>
+        /// ascii码转成对应的字符串
+        /// </summary>
+        /// <param name="ascii"></param>
+        /// <param name="defaultString">ascii码必须在0-255之间，转换失败后返回的值</param>
+        /// <returns></returns>
+#if NET20
+        public static String RecoverFromAsciiCode(Int32 asciiCode, String defaultString)
+#else
+        public static String RecoverFromAsciiCode(this Int32 asciiCode, String defaultString = "")
+#endif
+        {
+#if !NETSTANDARD1_0
+            if (asciiCode >= 0 && asciiCode <= 255)
+            {
+                Byte[] bytes = new Byte[1] { Convert.ToByte(asciiCode) };
+                return Encoding.ASCII.GetString(bytes);
+            }
+            else
+            {
+                return defaultString;
+            }
+#else 
+            throw new NotImplementedException();
+#endif
+        }
+
+        /// <summary>
+        /// 把字符串转换成ascii码
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static Int32 ToAsciiCode(String target)
+        {
+#if !NETSTANDARD1_0
+            Byte[] charBytes = Encoding.ASCII.GetBytes(target);
+            Int32 aWordIndex = 1;
+            Int32.TryParse(Convert.ToString(charBytes[0]), out aWordIndex);
+            return aWordIndex;
+#else
+            throw new NotImplementedException();
+#endif
+        }
+
+        /// <summary>
+        /// 把字符串转换成ascii码
+        /// </summary>
+        /// <param name="target"></param>
+        /// <returns></returns>
+        public static Int32 ToAsciiCode(Char target)
+        {
+#if !NETSTANDARD1_0
+            Byte[] charBytes = Encoding.ASCII.GetBytes(new Char[] { target });
+            Int32 aWordIndex = 1;
+            Int32.TryParse(Convert.ToString(charBytes[0]), out aWordIndex);
+            return aWordIndex;
+#else
+            throw new NotImplementedException();
+#endif
+        }
+
+        /// <summary>
         /// 从给定的字符串，获取两个字符串之间的内容
         /// </summary>
         /// <param name="value"></param>

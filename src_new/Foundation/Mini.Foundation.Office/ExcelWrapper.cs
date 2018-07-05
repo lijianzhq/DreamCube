@@ -47,9 +47,35 @@ namespace Mini.Foundation.Office
         /// </summary>
         protected String _fileFullPath = String.Empty;
 
+        /// <summary>
+        /// 保存字母与数字的映射关系，A-Z分别对应：1-26
+        /// </summary>
+        private static Dictionary<String, Int32> wordNumberMapper = new Dictionary<String, Int32>();
+
         #endregion
 
         #region "property"
+
+        /// <summary>
+        /// 字母与数字的一一对应关系
+        /// </summary>
+        private static Dictionary<String, Int32> WordNumberMapper
+        {
+            get
+            {
+                //先把字母缓存起来A=1----Z=26
+                if (wordNumberMapper.Count == 0)
+                {
+                    Int32 aWordIndex = MyString.ToAsciiCode("A");
+                    for (Int32 i = 1; i <= 26; i++)
+                    {
+                        wordNumberMapper.Add(MyString.RecoverFromAsciiCode(aWordIndex, ""), i);
+                        aWordIndex++;
+                    }
+                }
+                return wordNumberMapper;
+            }
+        }
 
         /// <summary>
         /// 创建表头的样式
@@ -194,38 +220,42 @@ namespace Mini.Foundation.Office
         /// 将excel中的数据导入到DataTable中  
         /// </summary>  
         /// <param name="sheetName">excel工作薄sheet的名称</param>  
+        /// <param name="startRowIndex">起始行（序号从1开始）</param>  
         /// <param name="isFirstRowColumnName">第一行是否是DataTable的列名</param>  
         /// <param name="containHiddenSheet">是否包含隐藏表单</param>  
         /// <returns>返回的DataTable</returns>  
-        public virtual DataTable GetDataTable(String sheetName = "Sheet1", Boolean isFirstRowColumnName = false, Boolean containHiddenSheet = false)
+        public virtual DataTable GetDataTable(String sheetName = "Sheet1", Int32 startRowIndex = 1, Boolean isFirstRowColumnName = false, Boolean containHiddenSheet = false)
         {
             MyArgumentsHelper.ThrowsIfIsInvisibleString(sheetName, nameof(sheetName));
             ISheet sheet = null;
             var data = new DataTable();
             data.TableName = sheetName;
-            int startRow = 0;
 
             //sheet = _workbook.GetSheet(sheetName);
             //if (sheet == null || !ContainsSheet(sheetName)) throw new Exception(String.Format("excel file does not has the sheet named [{0}]!", sheetName));
             sheet = GetSheet(sheetName);
-
-            var firstRow = sheet.GetRow(0);
+            startRowIndex = startRowIndex - 1;
+            var firstRow = sheet.GetRow(startRowIndex);
             if (firstRow == null) return data;
+            //最后一列的标号  
             int cellCount = firstRow.LastCellNum; //一行最后一个cell的编号 即总的列数  
-            startRow = isFirstRowColumnName ? sheet.FirstRowNum + 1 : sheet.FirstRowNum;
 
             for (int i = firstRow.FirstCellNum; i < cellCount; ++i)
             {
-                var column = new DataColumn(Convert.ToChar('A' + i).ToString());
+                DataColumn column = null;
                 if (isFirstRowColumnName)
                 {
                     var columnName = firstRow.GetCell(i).StringCellValue;
                     column = new DataColumn(columnName);
                 }
+                else
+                {
+                    column = new DataColumn(Convert.ToChar('A' + i).ToString());
+                }
                 data.Columns.Add(column);
             }
 
-            //最后一列的标号  
+            int startRow = isFirstRowColumnName ? startRowIndex + 1 : startRowIndex;
             int rowCount = sheet.LastRowNum;
             for (int i = startRow; i <= rowCount; ++i)
             {
@@ -235,12 +265,62 @@ namespace Mini.Foundation.Office
                 DataRow dataRow = data.NewRow();
                 for (int j = row.FirstCellNum; j < cellCount; ++j)
                 {
-                    if (row.GetCell(j) != null) //同理，没有数据的单元格都默认是null  
-                        dataRow[j] = row.GetCell(j, MissingCellPolicy.RETURN_NULL_AND_BLANK).ToString();
+                    var cell = row.GetCell(j);
+                    if (cell != null)
+                    {
+                        if (cell.CellType == CellType.Numeric && DateUtil.IsCellDateFormatted(cell))
+                            dataRow[j] = cell.DateCellValue;
+                        else
+                            dataRow[j] = cell.ToString();
+                    }
                 }
                 data.Rows.Add(dataRow);
             }
             return data;
+        }
+
+        /// <summary>  
+        /// 将excel中的数据导入到DataTable中  
+        /// </summary>  
+        /// <param name="sheetName">excel工作薄sheet的名称</param>  
+        /// <param name="isFirstRowColumnName">第一行是否是DataTable的列名</param>  
+        /// <param name="containHiddenSheet">是否包含隐藏表单</param>  
+        /// <returns>返回的DataTable</returns>  
+        public virtual DataTable GetDataTable(String sheetName = "Sheet1", Boolean isFirstRowColumnName = false, Boolean containHiddenSheet = false)
+        {
+            return GetDataTable(sheetName, 1, isFirstRowColumnName, containHiddenSheet);
+        }
+
+        /// <summary>
+        /// 获取单元格的值
+        /// </summary>
+        /// <param name="sheetName"></param>
+        /// <param name="rowIndex">从1开始</param>
+        /// <param name="columnIndex">从1开始</param>
+        /// <returns></returns>
+        public virtual Object GetCellValue(Int32 rowIndex, Int32 columnIndex, String sheetName = "Sheet1")
+        {
+            if (rowIndex < 0) throw new ArgumentException(nameof(rowIndex));
+            if (columnIndex < 0) throw new ArgumentException(nameof(columnIndex));
+            var sheet = GetSheet(sheetName);
+            var row = sheet.GetRow(rowIndex);
+            if (row == null) return null;
+            var cell = row.GetCell(columnIndex);
+            if (cell != null)
+                return cell.ToString();
+            return null;
+        }
+
+        /// <summary>
+        /// 获取单元格的值
+        /// </summary>
+        /// <param name="cellName">A1,B2之类的</param>
+        /// <param name="columnIndex"></param>
+        /// <returns></returns>
+        public virtual Object GetCellValue(String cellName, String sheetName = "Sheet1")
+        {
+            Int32[] xy = ConvertCellNameToIndex(cellName);
+            return GetCellValue(xy[0], xy[1], sheetName);
         }
 
         /// <summary>
@@ -447,9 +527,46 @@ namespace Mini.Foundation.Office
 
         }
 
+        /// <summary>
+        /// 把标准单元格名称转换成序号，返回数组【x,y】
+        /// </summary>
+        /// <param name="cellName">标准单元格名称，例如：A1，A2，AA1</param>
+        /// <returns></returns>
+        public Int32[] ConvertCellNameToIndex(String cellName)
+        {
+            if (String.IsNullOrEmpty(cellName)) return null;
+            cellName = cellName.ToUpper();
+            Int32 columnCharIndex = 0;
+            for (; columnCharIndex < cellName.Length; columnCharIndex++)
+            {
+                //A-Z:65-90;a-z:97-122
+                Int32 code = MyString.ToAsciiCode(cellName[columnCharIndex]);
+                if (code >= 65 && code <= 90) { }
+                else break;
+            }
+            String row = cellName.Substring(columnCharIndex);
+            String column = cellName.Substring(0, columnCharIndex);
+            return new Int32[] { Int32.Parse(row), ParseColumnCharToIndex(column) };
+        }
+
         #endregion
 
         #region "protected method"
+
+        /// <summary>
+        /// 把Excel列的字母转换成序号，例如：A=1；AA=27；AB=28
+        /// </summary>
+        /// <param name="charStr"></param>
+        /// <returns></returns>
+        protected virtual Int32 ParseColumnCharToIndex(String charStr)
+        {
+            //长度代表平方数
+            Int32 length = charStr.Length;
+            Double columnIndex = 0;
+            for (Int32 i = 0; i < length; i++)
+                columnIndex += WordNumberMapper[charStr[i].ToString()] * Math.Pow(26, length - i - 1);
+            return (Int32)columnIndex;
+        }
 
         protected virtual ISheet GetSheet(String sheetName)
         {

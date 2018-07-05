@@ -26,7 +26,7 @@
     <RepositoryType>git</RepositoryType>
     <RootNamespace>Mini.Foundation.Json</RootNamespace>
     <AssemblyName>Mini.Foundation.Json</AssemblyName>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.0.1</Version>
@@ -367,6 +367,10 @@
       HAVE_CONCURRENT_DICTIONARY;
       $(AdditionalConstants)
     </DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net40|AnyCPU'">
+    <DocumentationFile />
   </PropertyGroup>
 
   <ItemGroup>

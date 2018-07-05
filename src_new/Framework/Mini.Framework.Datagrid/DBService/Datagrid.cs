@@ -7,7 +7,6 @@ using Newtonsoft.Json;
 
 namespace Mini.Framework.Datagrid.DBService
 {
-    [Table("T_PQ_BU_DATAGRID")]
     public class Datagrid : ModelCommonField
     {
         [Key]

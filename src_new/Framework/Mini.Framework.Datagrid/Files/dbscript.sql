@@ -32,19 +32,18 @@ alter table T_PQ_BU_DATAGRID
     maxextents unlimited
   );
 
-  -- Create table
+-- Create table
 create table T_PQ_BU_DATAGRID_COL
 (
-  ID                    NUMBER(10) not null,
-  GRIDCODE              NVARCHAR2(2000),
-  CONFIG                NVARCHAR2(2000),
-  EDITDATASQL           NVARCHAR2(2000),
-  CREATEON              DATE not null,
-  LASTUPDATEON          DATE not null,
-  CREATEBY              NVARCHAR2(100),
-  LASTUPDATEBY          NVARCHAR2(100),
-  ORDERNO               NUMBER(10) not null,
-  T_PQ_BU_DATAGRID_CODE NVARCHAR2(128)
+  ID           NUMBER(10) not null,
+  GRIDCODE     NVARCHAR2(128),
+  CONFIG       NCLOB,
+  EDITDATASQL  NCLOB,
+  CREATEON     DATE not null,
+  LASTUPDATEON DATE not null,
+  CREATEBY     NVARCHAR2(100),
+  LASTUPDATEBY NVARCHAR2(100),
+  ORDERNO      NUMBER(10) not null
 );
 -- Create/Recreate primary, unique and foreign key constraints 
 alter table T_PQ_BU_DATAGRID_COL
@@ -61,10 +60,10 @@ alter table T_PQ_BU_DATAGRID_COL
     maxextents unlimited
   );
 alter table T_PQ_BU_DATAGRID_COL
-  add constraint FK_T_PQ_BU_DATAGRID_1749833684 foreign key (T_PQ_BU_DATAGRID_CODE)
+  add constraint FK_T_PQ_BU_DATAGRID_1076169610 foreign key (GRIDCODE)
   references T_PQ_BU_DATAGRID (CODE);
 -- Create/Recreate indexes 
-create index IX_T_PQ_BU_DATAGRID_1754199859 on T_PQ_BU_DATAGRID_COL (T_PQ_BU_DATAGRID_CODE)
+create index IX_T_PQ_BU_DATAGRID__567145794 on T_PQ_BU_DATAGRID_COL (GRIDCODE)
   pctfree 10
   initrans 2
   maxtrans 255

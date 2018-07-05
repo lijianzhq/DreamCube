@@ -68,9 +68,9 @@ namespace Mini.Framework.Datagrid
             }
             catch (Exception ex)
             {
-                Log.Root.LogError("", ex);
                 rspParam.OpResult = false;
                 rspParam.Message = ExceptionHelper.FormatException(ex);
+                Log.Root.LogError(rspParam.Message, ex);
             }
             finally
             {
@@ -204,7 +204,8 @@ namespace Mini.Framework.Datagrid
             using (var db = Helper.CreateEFDB())
             {
                 var grid = db.Datagrids.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
-                grid.Columns = grid.Columns.OrderBy(it => it.OrderNO).ToList();
+                if (grid != null && grid.Columns != null)
+                    grid.Columns = grid.Columns.OrderBy(it => it.OrderNO).ToList();
                 return grid;
             }
         }

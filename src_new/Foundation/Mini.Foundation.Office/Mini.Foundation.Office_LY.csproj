@@ -26,7 +26,7 @@
     <RepositoryType>git</RepositoryType>
     <RootNamespace>Mini.Foundation.Office</RootNamespace>
     <AssemblyName>Mini.Foundation.Office</AssemblyName>
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
     <MinClientVersion>2.12</MinClientVersion>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <Version>1.0.3</Version>

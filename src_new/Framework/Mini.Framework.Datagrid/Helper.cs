@@ -7,7 +7,7 @@ using Mini.Framework.EFCommon;
 
 namespace Mini.Framework.Datagrid
 {
-    class Helper
+    public static class Helper
     {
         static AssemblyConfiger _asmConfiger = null;
         internal static AssemblyConfiger AsmConfiger
@@ -56,7 +56,7 @@ namespace Mini.Framework.Datagrid
             return default(T);
         }
 
-        internal static DBService.DB CreateEFDB(Boolean autoCloseConn = true)
+        public static DBService.DB CreateEFDB(Boolean autoCloseConn = true)
         {
             if (ConnectionProvider != null)
                 return new DBService.DB(ConnectionProvider.CreateConnection(false), autoCloseConn);

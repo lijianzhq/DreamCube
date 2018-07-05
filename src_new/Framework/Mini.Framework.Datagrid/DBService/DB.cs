@@ -5,7 +5,7 @@ using Mini.Framework.EFCommon;
 
 namespace Mini.Framework.Datagrid.DBService
 {
-    internal class DB : BasicDb<DB>
+    public class DB : BasicDb<DB>
     {
         public DB(String nameOrConnectionString = "Mini.Framework.Datagrid.ConnectionStr")
             : base(nameOrConnectionString)

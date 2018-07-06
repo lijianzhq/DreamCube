@@ -1,9 +1,10 @@
-﻿using FluentFTP;
-using Mini.Foundation.Basic.Utility;
-using System;
+﻿using System;
 using System.IO;
 using System.Net;
 using System.Web;
+
+using FluentFTP;
+using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Framework.WebUploader
 {

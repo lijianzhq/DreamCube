@@ -5,6 +5,8 @@
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\LYOutput\</OutputPath>
     <Version>1.0.2</Version>
+    <AssemblyName>Mini.Framework.WebUploader</AssemblyName>
+    <RootNamespace>Mini.Framework.WebUploader</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -32,9 +34,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj" />
-    <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic_LY.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json_LY.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService_LY.csproj" />
+    <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database_LY.csproj" />
+    <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon_LY.csproj" />
   </ItemGroup>
 
 </Project>

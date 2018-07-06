@@ -13,6 +13,7 @@ namespace Mini.Framework.Datagrid
         public String OpType { get; set; }
         public String GridCode { get; set; }
         public String FieldCODE { get; set; }
+        public String ExportDataType { get; set; } //导出数据的方案，1：全部数据；2：当前页数据
         public Int32 PageNumber { get; set; } = 1;//从1开始
         public Int32 PageSize { get; set; } = 1;//页面大小，最小为1
         public HttpContext Context { get;  }
@@ -28,7 +29,7 @@ namespace Mini.Framework.Datagrid
             PageNumber = MyConvert.ToInt32(context.Request.Params["pageNumber"], -1);
             PageNumber = PageNumber == 0 ? 1 : PageNumber;
             PageSize = MyConvert.ToInt32(context.Request.Params["pageSize"], -1);
-
+            ExportDataType = context.Request.Params["ExportDataType"];
             var queryParamStr = context.Request.Params["QueryParam"];
             if(!String.IsNullOrEmpty(queryParamStr))
             {

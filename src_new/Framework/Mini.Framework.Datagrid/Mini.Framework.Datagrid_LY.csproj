@@ -30,14 +30,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\..\..\szlanyou\TQMP_公共产出\00_源程序\EAP.BS\LY.MQCS.Plugin.DBService\LY.MQCS.Plugin.DBService.csproj" />
     <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic_LY.csproj" />
-    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json100r1\Mini.Foundation.Json100r1_LY.csproj" />
     <ProjectReference Include="..\..\Foundation\Mini.Foundation.Json\Mini.Foundation.Json_LY.csproj" />
     <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService_LY.csproj" />
     <ProjectReference Include="..\..\Foundation\Mini.Foundation.Office\Mini.Foundation.Office_LY.csproj" />
     <ProjectReference Include="..\Mini.Framework.Database.Oracle\Mini.Framework.Database.Oracle_LY.csproj" />
     <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database_LY.csproj" />
+    <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon_LY.csproj" />
     <ProjectReference Include="..\Mini.Framework.Sdmap.Extension\Mini.Framework.Sdmap.Extension_LY.csproj" />
     <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap_LY.csproj" />
   </ItemGroup>

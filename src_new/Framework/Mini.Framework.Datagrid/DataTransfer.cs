@@ -95,7 +95,7 @@ namespace Mini.Framework.Datagrid
             var fileFullPath = Path.Combine(path, fileName);
             DataTable table = null;
             Int32 recordCount = 0;
-            LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, true);
+            LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, rqParam.ExportDataType == "1");
             if (table == null)
             {
                 rspParam.OpResult = false;

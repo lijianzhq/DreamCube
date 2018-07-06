@@ -374,7 +374,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Mini.Foundation.Json100r1\Mini.Foundation.Json100r1_LY.csproj" />
+    <ProjectReference Include="..\..\Rename\Mini.Rename.Json100r1\Mini.Rename.Json100r1_LY.csproj" />
   </ItemGroup>
 
 </Project>

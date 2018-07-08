@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Mini.Framework.Datagrid.DBService
+namespace Mini.Framework.EFCommon_LY
 {
     public class ModelCommonField
     {

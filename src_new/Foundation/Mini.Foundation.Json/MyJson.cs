@@ -33,6 +33,22 @@ namespace Mini.Foundation.Json
             return JsonConvert.SerializeObject(target, Formatting.None, settings);
         }
 
+        private static JsonSerializerSettings _defaultJsonSettings = null;
+        public static JsonSerializerSettings DefaultJsonSettings
+        {
+            get
+            {
+                if (_defaultJsonSettings == null)
+                {
+                    _defaultJsonSettings = new JsonSerializerSettings()
+                    {
+                        DateFormatString = "yyyy-MM-dd HH:mm:ss"
+                    };
+                }
+                return _defaultJsonSettings;
+            }
+        }
+
         /// <summary>
         /// 根据json反序列化成指定的对象实例
         /// </summary>

@@ -83,6 +83,13 @@ namespace sdmap.Compiler
             return TryEmit(id, query).Value;
         }
 
+        public string Emit(string id, object query, out List<String> testIsNotEmptyResultPropertyName)
+        {
+            var result = TryEmit(id, query).Value;
+            testIsNotEmptyResultPropertyName = _context.TestIsNotEmptyResultPropertyName as List<String>;
+            return result;
+        }
+
         public Result EnsureCompiled()
         {
             foreach (var kv in _context.Emiters.ToList())

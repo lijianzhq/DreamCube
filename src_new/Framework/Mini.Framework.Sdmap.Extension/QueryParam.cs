@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+using System.Data;
 
 namespace Mini.Framework.Sdmap.Extension
 {
@@ -15,6 +14,8 @@ namespace Mini.Framework.Sdmap.Extension
         public String Name { get; set; }
 
         public Object Value { get; set; }
+
+        public DbType DbType { get; set; } = DbType.String;
 
         /// <summary>
         /// 0=Parameter查询参数；1=Value匹配参数

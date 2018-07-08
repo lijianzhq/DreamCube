@@ -30,5 +30,6 @@ namespace Mini.Framework.Datagrid.DBService
         }
 
         public DbSet<Datagrid> Datagrids { get; set; }
+        public DbSet<DatagridCol> DatagridCols { get; set; }
     }
 }

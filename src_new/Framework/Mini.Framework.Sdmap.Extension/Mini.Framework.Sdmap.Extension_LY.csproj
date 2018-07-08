@@ -13,4 +13,8 @@
     <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap_LY.csproj" />
   </ItemGroup>
 
+  <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+    <Exec Command="copy $(TargetPath) D:\01.Work\szlanyou\TQMP_公共产出\00_源程序\EAP.BS\LY.EAP.Web\bin" />
+  </Target>
+
 </Project>

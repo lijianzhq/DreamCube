@@ -62,8 +62,13 @@ namespace sdmap.Macros
             {
                 return Result.Fail<string>(rtCheck.Error);
             }
-
-            return macro.Method(context, ns, self, arguments);
+            var result = macro.Method(context, ns, self, arguments);
+            if (result.IsSuccess && !String.IsNullOrEmpty(result.Value))
+            {
+                var prop = DynamicRuntimeMacros.GetProp(self, arguments[0]);
+                context.Compiler.TestIsNotEmptyResultPropertyName.Add(prop.Name);
+            }
+            return result;
         }
     }
 }

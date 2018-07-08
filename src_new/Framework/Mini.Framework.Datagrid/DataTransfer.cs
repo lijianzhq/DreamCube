@@ -76,7 +76,7 @@ namespace Mini.Framework.Datagrid
             {
                 //if (!rspParam.OpResult) context.Response.StatusCode = 500;
                 if (context.Response.IsClientConnected && context.Response.OutputStream.CanWrite)
-                    context.Response.Write(MyJson.Serialize(rspParam));
+                    context.Response.Write(MyJson.Serialize(rspParam, MyJson.DefaultJsonSettings));
                 context.Response.End();
             }
         }
@@ -203,10 +203,23 @@ namespace Mini.Framework.Datagrid
         {
             using (var db = Helper.CreateEFDB())
             {
-                var grid = db.Datagrids.Include("Columns").Where(it => it.CODE == rqParam.GridCode).SingleOrDefault();
-                if (grid != null && grid.Columns != null)
-                    grid.Columns = grid.Columns.OrderBy(it => it.OrderNO).ToList();
-                return grid;
+                //var grid = db.Datagrids.Include("Columns").Where(it => it.CODE == rqParam.GridCode && it.IsEnable == true).SingleOrDefault();
+                //if (grid != null && grid.Columns != null)
+                //    grid.Columns = grid.Columns.OrderBy(it => it.OrderNO).ToList();
+                //return grid;
+
+                //Where查询条件中用到的关联实体不需要Include
+                var cols = db.DatagridCols.Include("Datagrid")
+                                          .Where(it => it.GridCODE == rqParam.GridCode && it.IsEnable == true && it.Datagrid.IsEnable == true)
+                                 .OrderBy(it => it.OrderNO)
+                                 .ToList();
+                if (cols != null && cols.Count > 0)
+                {
+                    var grid = cols[0].Datagrid;
+                    grid.Columns = cols;
+                    return grid;
+                }
+                return null;
             }
         }
 

@@ -9,6 +9,11 @@ namespace sdmap.Compiler
 {
     public class SdmapCompilerContext
     {
+        /// <summary>
+        /// 测试条件，结果字符串不为空的属性名（外层需要根据这个集合来判定，哪些sql变量需要添加到查询中）
+        /// </summary>
+        public IList<String> TestIsNotEmptyResultPropertyName { get; } = new List<String>(); 
+
         public Dictionary<string, SqlEmiter> Emiters { get; }
 
         public Stack<string> NsStack { get; }

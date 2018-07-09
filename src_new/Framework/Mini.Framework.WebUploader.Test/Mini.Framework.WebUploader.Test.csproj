@@ -86,6 +86,7 @@
     <Content Include="test2.html" />
     <Content Include="test.html" />
     <Content Include="testdb.aspx" />
+    <Content Include="testuploadFile.html" />
     <Content Include="webuploader\css\uploadFileDialog.css" />
     <Content Include="webuploader\css\uploadbar.css" />
     <Content Include="webuploader\html\bartemplate.html" />

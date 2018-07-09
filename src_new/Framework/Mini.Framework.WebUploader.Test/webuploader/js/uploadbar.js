@@ -64,7 +64,7 @@
             /// <summary>uploadbar提供的ready函数</summary>
             /// <param name="callback" type="Function">回调函数，ready之后回调的函数</param>
             /// <param name="sFolderUrl" type="folderurl">本插件摆放的目录路径（相对web目录的路径）</param>
-            me.config.folderUrl = sFolderUrl;
+            me.config.folderUrl = sFolderUrl;//如果不传入，内部会自动计算
             if (typeof (callback) === "function") {
                 me.config.callbackFuncs.push(callback);
             }

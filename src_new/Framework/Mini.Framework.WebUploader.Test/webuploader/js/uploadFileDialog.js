@@ -13,23 +13,32 @@
                 }
             }
             return src || js[last].src;
-        }();
+        } ();
         /**
         * 获取本插件所在的web的目录url
         * */
         function getFolderUrl() {
             //获得js文件的path目录路径，再往上递归一层，就是插件路径了
-            var jsPath = currentPath.substring(0, currentPath.lastIndexOf('/') + 1);
-            if (jsPath.lastIndexOf("/") === jsPath.length - 1)
-                jsPath = jsPath.substring(0, jsPath.length - 1);
-            console.log(jsPath);
-            console.log(jsPath.substring(0, jsPath.lastIndexOf('/') + 1));
-            return jsPath.substring(0, jsPath.lastIndexOf('/') + 1);
+            var jsPath = currentPath.substring(0, currentPath.lastIndexOf('js/'));
+            //在ie浏览器下，js路径返回是不包含完整路径的，只包含了实际引用那时候的路径，如果js文件是相对路径引用的，则IE会返回相对路径；
+            //所以这里需要做判断，如果是相对路径，则加上页面的路径
+            if (jsPath.indexOf("http") != 0) {
+                var href = window.location.href;
+                var folderUrl = href.substring(0, href.lastIndexOf('/') + 1);
+                jsPath = folderUrl + jsPath;
+            }
+            return jsPath;
         };
 
         /**
-         * 获取html模板文件的url
-         * */
+        * 获取本插件所在的web的目录url
+        * */
+        function getWebsiteUrl() {
+            return window.location.protocol + '//' + window.location.host + '/';
+        };
+        /**
+        * 获取html模板文件的url
+        * */
         function getHtmlTemplateFileUrl() {
             var sFolderUrl = me.getFolderUrl();
             return sFolderUrl + "html/bartemplate.html";
@@ -39,8 +48,8 @@
             var me = this,
                 refTableName, refTableCode, barCode,
                 uploader,
-                fileCount = 0,//等待上传的文件
-                mediator,//围观者
+                fileCount = 0, //等待上传的文件
+                mediator, //围观者
                 GUID = WebUploader.Base.guid(), //当前页面是生成的GUID作为标示
                 $table = $("#tb_fileList"),
                 $uploadBtn = $('#selectFileBtn');
@@ -52,8 +61,8 @@
                 swf: getFolderUrl() + 'lib/webuploader0.1.5/Uploader.swf',
                 chunked: true, //分片处理大文件
                 chunkSize: 2 * 1024 * 1024,
-                server: 'FileTransfer.ashx',
-                merge: 'FileTransfer.ashx',
+                server: getWebsiteUrl() + 'FileTransfer.ashx',
+                merge: getWebsiteUrl() + 'FileTransfer.ashx',
                 disableGlobalDnd: true,
                 threads: 1, //上传并发数
                 //由于Http的无状态特征，在往服务器发送数据过程传递一个进入当前页面是生成的GUID作为标示
@@ -63,7 +72,6 @@
                 fileSizeLimit: 6 * 1024 * 1024 * 1024,    // 所有文件总大小限制 6G
                 fileSingleSizeLimit: 5 * 1024 * 1024 * 1024    // 单个文件大小限制 5 G
             };
-
             //初始化表格
             $table.bootstrapTable({
                 classes: 'table table-hover',
@@ -131,7 +139,7 @@
 
             //重新计算宽度和高度
             var resetHeight = function () {
-                var tableHeight = $(window).height() - 45 - 30;//45为按钮区域的高度，10为padding的高度
+                var tableHeight = $(window).height() - 45 - 30; //45为按钮区域的高度，10为padding的高度
                 $table.bootstrapTable('resetView', { height: tableHeight });
             };
             resetHeight();
@@ -146,9 +154,9 @@
             });
 
             /**
-             * 广播事件
-             * @param {any} event
-             */
+            * 广播事件
+            * @param {any} event
+            */
             var publishEvent = function (event, data) {
                 if (event == "uploadFinished") {
                     uploader.enable();
@@ -279,7 +287,7 @@
                             chunks: file.chunks,
                             RefTableName: me.refTableName,
                             RefTableCode: me.refTableCode,
-                            BarCode: me.barCode,
+                            BarCode: me.barCode
                         },
                         dataType: "json",
                         success: function (msg) {
@@ -348,19 +356,19 @@
             };
 
             /**
-             * 从数组中移除文件
-             * @param {object} file webuploader的file对象
-             */
+            * 从数组中移除文件
+            * @param {object} file webuploader的file对象
+            */
             var removeFileHtml = function (file) {
                 $table.bootstrapTable('removeByUniqueId', file.id);
             };
 
             /**
-              * 从数组中移除文件
-              * 上传文件成功调用的处理方法
-              * @param {object} file webuploader的file对象
-              * @param {number} percentage 上传的百分比
-              */
+            * 从数组中移除文件
+            * 上传文件成功调用的处理方法
+            * @param {object} file webuploader的file对象
+            * @param {number} percentage 上传的百分比
+            */
             var updateFileProgressHtml = function (file, percentage) {
                 //alert(JSON.stringify(row));
                 var row = $table.bootstrapTable('getRowByUniqueId', file.id);
@@ -369,9 +377,9 @@
             };
 
             /**
-             * 上传文件成功调用的处理方法
-             * @param {object} file webuploader的file对象
-             */
+            * 上传文件成功调用的处理方法
+            * @param {object} file webuploader的file对象
+            */
             var updateFileSuccess = function (file) {
                 if (fileCount == 0) {
                     publishEvent("uploadFinished");
@@ -385,26 +393,26 @@
             };
 
             /**
-             * 文件上传成功后更新html内容
-             * @param {any} file
-             */
+            * 文件上传成功后更新html内容
+            * @param {any} file
+            */
             var updateFileUploadCompleteHtml = function (file) {
             };
 
             //***************************************对外公开方法***************************************
 
             /**
-             * 移除文件 
-             * @param {any} sFileID webuploader的file对象的id
-             */
+            * 移除文件 
+            * @param {any} sFileID webuploader的file对象的id
+            */
             this.removeFile = function (sFileID) {
                 uploader.removeFile(sFileID);
             };
 
             /**
-             * 执行上传文件
-             * @param {any} sFileID
-             */
+            * 执行上传文件
+            * @param {any} sFileID
+            */
             this.startUpload = function () {
                 uploader.disable();
                 console.log(uploader.getStats());
@@ -413,8 +421,8 @@
             };
 
             /**
-             * 获取队列中还没有成功上传的文件数
-             * */
+            * 获取队列中还没有成功上传的文件数
+            * */
             this.getNeedUploadFilesCount = function () {
                 //var stats = uploader.getStats();
                 //alert(JSON.stringify(uploader.queue));
@@ -423,9 +431,9 @@
             };
 
             /**
-             * 注册围观者（用于接收页面传出去的事件）
-             * @param {any} mediator
-             */
+            * 注册围观者（用于接收页面传出去的事件）
+            * @param {any} mediator
+            */
             this.registerConfig = function (config) {
                 me.mediator = config.Mediator;
                 me.refTableCode = config.RefTableCode;
@@ -437,6 +445,5 @@
         //对外公开唯一接口
         window.uploader = new uploaderWrapper();
     });
-
 })(jQuery);
 

@@ -25,8 +25,8 @@
     };
 
     /**
-     * 获取html模板文件的url
-     * */
+    * 获取html模板文件的url
+    * */
     function getHtmlTemplateFileUrl() {
         var sFolderUrl = getFolderUrl();
         return sFolderUrl + "html/bartemplate.html";
@@ -34,12 +34,13 @@
 
     function uploadbar() {
         var me = this;
+        me.callbackFuncs = [];
         /**
-         * 获取配置的方法
-         * */
+        * 获取配置的方法
+        * */
         this.defaultConfigs = function () {
             var config = {
-                index: 0,//当前的barindex（一个页面可以有多个这种bar）
+                index: 0, //当前的barindex（一个页面可以有多个这种bar）
                 templateid: "uploadbar_htmltemplate",
                 serverurl: getFolderUrl() + "DataTransfer.ashx",
                 downloadurl: getFolderUrl() + "FileSave.ashx?optype=download"
@@ -51,7 +52,7 @@
         };
 
         this.ready = function (callback) {
-            me.callback = callback;
+            me.callbackFuncs.push(callback);
         };
     };
 
@@ -66,7 +67,7 @@
         this.addFile = function () {
             var me = this,
                 mediator = new Mediator(),
-                winIndex;//弹出窗口的index值
+                winIndex; //弹出窗口的index值
 
             mediator.subscribe("uploadFinished", function () {
                 //alert('uploadFinished');
@@ -232,8 +233,16 @@
     //加载依赖的资源文件
     $.when($.getScript(rs[0]), $.getScript(rs[1]), $.getScript(rs[2]), $.getScript(rs[3]), $.getScript(rs[4]))
         .done(function () {
-            if (bar.callback)
-                bar.callback();
+            //if (bar.callback)
+            //    bar.callback();
+            if (bar.callbackFuncs) {
+                try {
+                    for (var i = 0; i < bar.callbackFuncs.length; i++)
+                        bar.callbackFuncs[i].call(bar);
+                } catch (e) {
+                    console.error(e);
+                }
+            }
         });
 
     $.extend({ uploadbar: bar });

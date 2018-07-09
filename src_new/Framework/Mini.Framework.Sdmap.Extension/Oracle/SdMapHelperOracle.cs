@@ -9,13 +9,13 @@ using sdmap.Compiler;
 
 namespace Mini.Framework.Sdmap.Extension.Oracle
 {
-    public static partial class SdMapHelper
+    public static class SdMapHelperOracle
     {
         const String SQLCODE_FOR_GETDATATABLEBYSQLTEMPLATE = "F2EA1EB1BDB249FDBA0EF53F705367C8";
         const String SQLCODE_FOR_GETRECORDCOUNTBYSQLTEMPLATE = "F2EA1EB1BDB249FDBA0EF53F705367C9";
 
         /// <summary>
-        /// 根据sql语句模板查询
+        /// 根据sql语句模板查询（支持分页）
         /// </summary>
         /// <param name="ctx"></param>
         /// <param name="commandTextTemplate"></param>
@@ -38,7 +38,7 @@ namespace Mini.Framework.Sdmap.Extension.Oracle
 
             String sql;
             List<DbParameter> dbParams;
-            EmitSql(ctx, newSql, inputParamList, out sql, out dbParams);
+            SdMapHelper.EmitSql(ctx, newSql, inputParamList, out sql, out dbParams);
 
             dbParams.AddRange(pageDBParam);
             return ctx.GetDataTable(sql, dbParams.ToArray(), commandType);
@@ -52,42 +52,8 @@ namespace Mini.Framework.Sdmap.Extension.Oracle
             //newSql = $"sql {SQLCODE_FOR_GETRECORDCOUNTBYSQLTEMPLATE}{{{newSql}}}";
             String sql;
             List<DbParameter> dbParams;
-            EmitSql(ctx, newSql, inputParamList, out sql, out dbParams);
+            SdMapHelper.EmitSql(ctx, newSql, inputParamList, out sql, out dbParams);
             return MyConvert.ToInt32(ctx.ExecuteScalar(sql, dbParams.ToArray(), commandType), 0);
-        }
-
-        private static void EmitSql(this IExecute ctx, String sql, IList<QueryParam> inputParamList, out String newsql, out List<DbParameter> dbParams)
-        {
-            var sqlTemplate = $"sql v1{{{sql}}}";
-            var templateParams = new Dictionary<String, Object>();
-            if (inputParamList != null)
-            {
-                foreach (var p in inputParamList)
-                {
-                    templateParams.Add(p.Name, p.Value);
-                }
-            }
-            var compiler = SdmapCompiler.Instance;
-            compiler.AddSourceCode(sqlTemplate);
-            List<String> paramsNameList = null;//返回来的，构造sql需要用到的参数名称列表
-            newsql = compiler.Emit("v1", templateParams, out paramsNameList);
-
-            //构造sql的参数（根据sql语句具体使用了哪个参数，然后构造sqlparameter查询参数）
-            dbParams = new List<DbParameter>();
-            if (inputParamList != null && inputParamList.Count > 0
-                && paramsNameList != null && paramsNameList.Count > 0)
-            {
-                foreach (var p in inputParamList)
-                {
-                    if (p.Type == QueryParamType.SqlParam)
-                    {
-                        var paramName = ctx.DB.DBCharacterProvider.FormatParameterName(p.Name);
-                        //再判断sql中是否已经使用了这个参数变量
-                        if (sqlTemplate.IndexOf(paramName, StringComparison.CurrentCultureIgnoreCase) >= 0 && paramsNameList.Contains(p.Name))
-                            dbParams.Add(ctx.DB.CreateParameter(p.Name, p.Value, p.DbType));
-                    }
-                }
-            }
         }
     }
 }

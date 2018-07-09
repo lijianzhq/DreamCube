@@ -12,7 +12,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Files\dbscript - 复制.sql" />
     <None Remove="Files\dbscript.sql" />
+    <None Remove="Files\otherscript.sql" />
   </ItemGroup>
 
   <ItemGroup>

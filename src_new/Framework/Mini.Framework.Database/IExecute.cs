@@ -4,6 +4,10 @@ using System.Data.Common;
 
 namespace Mini.Framework.Database
 {
+    /// <summary>
+    /// 应该用AOP植入记录日志的功能的
+    /// 留待以后完善。
+    /// </summary>
     public interface IExecute : IDisposable
     {
         DB DB { get; }

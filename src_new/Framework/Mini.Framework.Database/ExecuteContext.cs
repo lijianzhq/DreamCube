@@ -84,6 +84,7 @@ namespace Mini.Framework.Database
 
         public virtual DataTable GetDataTable(String commandText, DbParameter[] dbParams = null, CommandType commandType = CommandType.Text)
         {
+            LogHelper.Log(commandText, dbParams, (strMsg) => Mini.Foundation.LogService.Log.Root.LogDebug(strMsg));
             var command = _db.CreateCommand(commandText, dbParams, commandType);
             SetConnection(command);
             var adapter = _db.DbProviderFactory.CreateDataAdapter();

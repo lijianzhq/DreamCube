@@ -22,6 +22,7 @@ create table T_PQ_BU_UPLOADFILE
   LASTUPDATEON DATE not null,
   CREATEBY     NVARCHAR2(100),
   LASTUPDATEBY NVARCHAR2(100),
+  ISENABLE     NUMBER(1)  DEFAULT '1' NULL,
   ORDERNO      NUMBER(10) not null
 );
 -- Create/Recreate primary, unique and foreign key constraints 
@@ -50,6 +51,7 @@ create table T_PQ_BU_UPLOADFILEOPHISTORY
   LASTUPDATEON   DATE not null,
   CREATEBY       NVARCHAR2(100),
   LASTUPDATEBY   NVARCHAR2(100),
+  ISENABLE     NUMBER(1)  DEFAULT '1' NULL,
   ORDERNO        NUMBER(10) not null
 );
 -- Create/Recreate primary, unique and foreign key constraints 

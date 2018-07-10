@@ -156,7 +156,7 @@
         this.refTableCode = refTableCode;
         this.barCode = barCode;
         this.checkedAll = false;
-        this.readOnly = readOnly;
+        this.showToolbar = !readOnly;
         this.loadingImage = ko.observable(bar.getFolderUrl() + "/images/loading.gif");
         //以下是方法
         this.addFile = function () {

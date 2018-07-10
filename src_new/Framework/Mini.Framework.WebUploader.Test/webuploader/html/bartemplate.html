@@ -1,6 +1,6 @@
 ﻿<script type="text/html" id="{templateid}">
     <div class="btnbar">
-        <div class="toolBar" data-bind="attr:{'data-RefTableName':refTableName,'data-RefTableCode':refTableCode,'data-BarCode':barCode},visible: readOnly">
+        <div class="toolBar" data-bind="attr:{'data-RefTableName':refTableName,'data-RefTableCode':refTableCode,'data-BarCode':barCode},visible: showToolbar">
             <ul>
                 <li>
                     <a href="#" data-bind="click:addFile,clickBubble: false" title="添加文件"> ＋ </a>
@@ -20,7 +20,7 @@
             </div>
             <ul class="files" data-bind="foreach: files">
                 <li>
-                    <input type="checkbox" data-bind="checked:selected,visible: $parent.readOnly" />
+                    <input type="checkbox" data-bind="checked:selected,visible: $parent.showToolbar" />
                     <a href="#" data-bind="text:FileName,click:function(data){$parent.downloadFile(data);}"></a>
                 </li>
             </ul>

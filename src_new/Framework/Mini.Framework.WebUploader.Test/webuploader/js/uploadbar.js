@@ -13,6 +13,13 @@
         return src || js[last].src;
     } ();
 
+    /**
+    * 获取本插件所在的web的目录url
+    * */
+    function getWebsiteUrl() {
+        return window.location.protocol + '//' + window.location.host + '/';
+    };
+
     function uploadbar() {
         var me = this;
         me.config = { folderUrl: "", callbackFuncs: [] };
@@ -51,8 +58,9 @@
                 templateid: "uploadbar_htmltemplate",
                 //serverurl: getFolderUrl() + "DataTransfer.ashx",
                 //downloadurl: getFolderUrl() + "FileSave.ashx?optype=download"
-                serverurl: "DataTransfer.ashx",
-                downloadurl: "FileSave.ashx?optype=download"
+                serverurl: getWebsiteUrl() + "DataTransfer.ashx",
+                downloadurl: getWebsiteUrl() + "FileTransfer.ashx?optype=download",
+                onFileLoaded: function () { } //加载完文件之后的回调方法
             };
             var config2 = {
                 barHtml: "<div data-bind=\"template: '" + config.templateid + "'\"></div>"
@@ -64,17 +72,24 @@
             /// <summary>uploadbar提供的ready函数</summary>
             /// <param name="callback" type="Function">回调函数，ready之后回调的函数</param>
             /// <param name="sFolderUrl" type="folderurl">本插件摆放的目录路径（相对web目录的路径）</param>
-            me.config.folderUrl = sFolderUrl;//如果不传入，内部会自动计算
-            if (typeof (callback) === "function") {
-                me.config.callbackFuncs.push(callback);
+            me.config.folderUrl = sFolderUrl;
+            if (me.hasLoadResource) {
+                if (typeof (callback) === "function") {
+                    callback.call(me);
+                }
             }
-            //加载资源
-            me.loadResource();
+            else {
+                if (typeof (callback) === "function") {
+                    me.config.callbackFuncs.push(callback);
+                }
+                //加载资源
+                me.loadResource();
+            }
         };
 
         this.loadResource = function () {
-            if (me.hasLoadResource) return;
-            me.hasLoadResource = true;
+            if (me.hasCallLoadResource) return;
+            me.hasCallLoadResource = true;
             var css = [me.getFolderUrl() + 'lib/layer/theme/default/layer.css'
                         , me.getFolderUrl() + 'css/uploadbar.css'];
             var loadCSS = function (urls) {
@@ -118,6 +133,7 @@
             //加载依赖的资源文件
             $.when($.getScript(rs[0]), $.getScript(rs[1]), $.getScript(rs[2]), $.getScript(rs[3]), $.getScript(rs[4]), loadTemplate())
                 .done(function () {
+                    me.hasLoadResource = true;
                     if (me.config.callbackFuncs) {
                         try {
                             for (var i = 0; i < me.config.callbackFuncs.length; i++)
@@ -134,12 +150,13 @@
     var bar = new uploadbar();
     $.extend({ uploadbar: bar });
 
-    function viewModel(refTableName, refTableCode, barCode, configs) {
+    function viewModel(refTableName, refTableCode, barCode, readOnly, configs) {
         this.configs = configs;
         this.refTableName = refTableName;
         this.refTableCode = refTableCode;
         this.barCode = barCode;
         this.checkedAll = false;
+        this.readOnly = readOnly;
         this.loadingImage = ko.observable(bar.getFolderUrl() + "/images/loading.gif");
         //以下是方法
         this.addFile = function () {
@@ -286,13 +303,14 @@
     };
 
     $.fn.extend({
-        "makeuploadbar": function (sTableName, sPrimaryKey, sBarCode, config) {
+        "makeuploadbar": function (sTableName, sPrimaryKey, sBarCode, readOnly, config) {
             var configs = $.extend({}, bar.defaultConfigs(), config);
             var $barContainer = $(this);
             if ($barContainer.length == 0) return;
+            if ($barContainer.find(".btnbar").length > 0) return; //避免重复渲染
             //加载模板完毕则生成附件栏
             $barContainer.append(configs.barHtml);
-            var model = new viewModel(sTableName, sPrimaryKey, sBarCode, configs);
+            var model = new viewModel(sTableName, sPrimaryKey, sBarCode, readOnly, configs);
             ko.applyBindings(model, $barContainer[0]);
             //同时加载附件栏的附件
             $.get(configs.serverurl, { optype: 'loadFile', RefTableName: sTableName, RefTableCode: sPrimaryKey, BarCode: sBarCode })
@@ -301,6 +319,9 @@
                     var files = response.Result;
                     for (var i = 0; i < files.length; i++) {
                         model.appendNewFile(files[i]);
+                    }
+                    if (typeof (configs.onFileLoaded) === "function") {
+                        configs.onFileLoaded.call($barContainer, sTableName, sPrimaryKey, sBarCode, readOnly, config);
                     }
                 });
         }

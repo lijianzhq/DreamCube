@@ -65,10 +65,13 @@ namespace Mini.Framework.WebUploader
             }
             finally
             {
-                if (!result.Status) context.Response.StatusCode = 500;
+                if (result != null && !result.Status) context.Response.StatusCode = 500;
                 if (context.Response.IsClientConnected && context.Response.OutputStream.CanWrite)
-                    context.Response.Write(MyJson.Serialize(result));
-                context.Response.End();
+                {
+                    if (result != null)
+                        context.Response.Write(MyJson.Serialize(result));
+                    context.Response.End();
+                }
             }
         }
 

@@ -57,6 +57,25 @@ namespace Mini.Framework.WebUploader
             return result;
         }
 
+        protected override Boolean IsFileExist(HttpContext context, DBService.UploadFile fileObj)
+        {
+            var ftpParam = GetFtpParam(fileObj.SavePath);
+            FtpClient conn = null;
+            Stream ostream = null;
+            try
+            {
+                conn = new FtpClient(ftpParam.Host);
+                conn.Credentials = new NetworkCredential(ftpParam.UserName, ftpParam.Password);
+                return conn.FileExists(ftpParam.FileUrl);
+            }
+            catch (Exception)
+            {
+                if (ostream != null) ostream.Dispose();
+                if (conn != null) conn.Dispose();
+                throw;
+            }
+        }
+
         protected override Stream GetFileStreamBySavePath(HttpContext context, String fileSavePath)
         {
             var ftpParam = GetFtpParam(fileSavePath);
@@ -66,7 +85,6 @@ namespace Mini.Framework.WebUploader
             {
                 conn = new FtpClient(ftpParam.Host);
                 conn.Credentials = new NetworkCredential(ftpParam.UserName, ftpParam.Password);
-                conn.CreateDirectory(MyString.LastLeftOf(ftpParam.FileUrl, "/"));
                 ostream = conn.OpenRead(ftpParam.FileUrl);
                 return new FtpFileStream(conn, ostream);
             }

@@ -16,21 +16,24 @@ namespace Mini.Framework.WebUploader
             //在此处写入您的处理程序实现。
             FileSaveRespParams result = null;
             String optype = context.Request["optype"];//操作类型
-            if (optype == "save") //保存文件数据
-            {
-                result = DoSaveFile(savePath, context) as FileSaveRespParams;
-            }
-            else if (optype == "merge") //合并文件
-            {
-                result = MergeFile(savePath, context) as FileSaveRespParams;
-            }
-            else if (optype == "download")
+            if (optype == "download")
             {
                 WriteFileDataToClient(context);
             }
-            //保存数据库记录
-            if (result != null && result.Status && (!result.Chunked || optype == "merge"))
-                result.FileCode = SaveDBRecord(context, result.FileSavePath);
+            else
+            {
+                if (optype == "save") //保存文件数据
+                {
+                    result = DoSaveFile(savePath, context) as FileSaveRespParams;
+                }
+                else if (optype == "merge") //合并文件
+                {
+                    result = MergeFile(savePath, context) as FileSaveRespParams;
+                }
+                //保存数据库记录
+                if (result != null && result.Status && (!result.Chunked || optype == "merge"))
+                    result.FileCode = SaveDBRecord(context, result.FileSavePath);
+            }
             return result;
         }
 
@@ -41,7 +44,7 @@ namespace Mini.Framework.WebUploader
 
             String fileSaveFullPath = String.Empty;
             DBService.UploadFile fileObj = null;
-            using (var db = new DBService.DB())
+            using (var db = Helper.CreateEFDB())
             {
                 fileObj = db.UploadFiles.Where(it => it.CODE == rqParams.FileCode).SingleOrDefault();
                 if (fileObj != null) fileSaveFullPath = fileObj.SavePath;
@@ -52,6 +55,11 @@ namespace Mini.Framework.WebUploader
 
         protected virtual void DoWriteFileDataToClient(HttpContext context, DBService.UploadFile fileObj)
         {
+            if (!IsFileExist(context, fileObj))
+            {
+                context.Response.Write("file does not exist! Just ask the administrator for helper!");
+                return;
+            }
             using (var fs = GetFileStreamBySavePath(context, fileObj.SavePath))
             {
                 const long ChunkSize = 1024 * 1024;//100K 每次读取文件，只读取100Ｋ，这样可以缓解服务器的压力
@@ -72,6 +80,11 @@ namespace Mini.Framework.WebUploader
                 } while (read > 0 && context.Response.IsClientConnected);
                 context.Response.End();
             }
+        }
+
+        protected virtual Boolean IsFileExist(HttpContext context, DBService.UploadFile fileObj)
+        {
+            return File.Exists(context.Server.MapPath(fileObj.SavePath));
         }
 
         protected virtual Stream GetFileStreamBySavePath(HttpContext context, String fileSavePath)

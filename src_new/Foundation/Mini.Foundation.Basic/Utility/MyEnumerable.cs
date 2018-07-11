@@ -55,6 +55,7 @@ namespace Mini.Foundation.Basic.Utility
                                             Func<TInput, String> parseItemToString = null)
 #endif
         {
+            if (target == null) return String.Empty;
             StringBuilder builder = new StringBuilder();
             String tempStr = null;
             Int32 index = 0;

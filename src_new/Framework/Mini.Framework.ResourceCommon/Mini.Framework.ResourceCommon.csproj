@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40</TargetFrameworks>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Resource\en\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Resource\cn\emailTemplate%28demo%29.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

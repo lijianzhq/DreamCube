@@ -1,0 +1,28 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFrameworks>net40</TargetFrameworks>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\LYOutput</OutputPath>
+    <AssemblyName>Mini.Framework.ResourceCommon</AssemblyName>
+    <RootNamespace>Mini.Framework.ResourceCommon</RootNamespace>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Resource\en\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.Basic\Mini.Foundation.Basic_LY.csproj" />
+    <ProjectReference Include="..\..\Foundation\Mini.Foundation.LogService\Mini.Foundation.LogService_LY.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Mini.Framework.ResourceCommon.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resource\cn\emailTemplate%28demo%29.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+</Project>

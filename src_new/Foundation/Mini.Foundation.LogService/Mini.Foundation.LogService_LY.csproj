@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFrameworks>net40</TargetFrameworks>
-    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\Output</OutputPath>
+    <OutputPath>D:\01.Work\GitHub\DreamCube\src_new\LYOutput</OutputPath>
     <LangVersion>latest</LangVersion>
     <!-- version numbers will be updated by build -->
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
@@ -354,6 +354,12 @@
 
   <ItemGroup>
     <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Mini.Foundation.LogService.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

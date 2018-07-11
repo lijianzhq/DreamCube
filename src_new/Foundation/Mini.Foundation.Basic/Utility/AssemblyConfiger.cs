@@ -24,6 +24,14 @@ namespace Mini.Foundation.Basic.Utility
             var filePath = Path.Combine(uri.LocalPath, callingAssembly.GetName().Name + ".config");
             _reader = new ConfigFileReader(filePath, callingAssembly);
         }
+
+        internal AssemblyConfiger(Assembly callingAssembly)
+        {
+            //计算程序集的配置文件路径
+            Uri uri = new Uri(Path.GetDirectoryName(callingAssembly.CodeBase));
+            var filePath = Path.Combine(uri.LocalPath, callingAssembly.GetName().Name + ".config");
+            _reader = new ConfigFileReader(filePath, callingAssembly);
+        }
     }
 }
 #endif

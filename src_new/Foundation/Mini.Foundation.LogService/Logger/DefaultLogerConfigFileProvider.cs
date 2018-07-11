@@ -5,6 +5,7 @@ using System.Configuration;
 #endif
 
 using Mini.Foundation.TraceService;
+using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Foundation.LogService.Logger
 {
@@ -15,7 +16,9 @@ namespace Mini.Foundation.LogService.Logger
 #if (NET45 ||NET40||NET35||NET20)
             try
             {
-                String cfgFilePath = ConfigurationManager.AppSettings["LogConfigFilePath"];
+
+                //String cfgFilePath = ConfigurationManager.AppSettings["LogConfigFilePath"];
+                String cfgFilePath = AsmConfigerHelper.AsmConfiger.ConfigFileReader.AppSettings("LogConfigFilePath");
                 cfgFilePath = String.IsNullOrEmpty(cfgFilePath) ? @"config\logconfig.xml" : cfgFilePath;
                 String cfgFileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, cfgFilePath);
                 return cfgFileFullPath;

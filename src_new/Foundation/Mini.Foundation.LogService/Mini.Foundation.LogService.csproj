@@ -353,11 +353,18 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Mini.Foundation.Basic\Mini.Foundation.Basic.csproj" />
     <ProjectReference Include="..\Mini.Foundation.TraceService\Mini.Foundation.TraceService.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Reference Include="System.Configuration" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Mini.Foundation.LogService.config">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>

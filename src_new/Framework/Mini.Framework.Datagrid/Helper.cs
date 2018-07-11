@@ -9,6 +9,8 @@ namespace Mini.Framework.Datagrid
 {
     public static class Helper
     {
+        public const String RESOURCE_NS = @"\Mini.Framework.Datagrid.xml";
+
         static IDBConnectionProvider _connectionProvider = null;
         internal static IDBConnectionProvider ConnectionProvider
         {

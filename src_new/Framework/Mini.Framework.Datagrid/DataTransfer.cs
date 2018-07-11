@@ -97,27 +97,67 @@ namespace Mini.Framework.Datagrid
             DataTable table = null;
             Int32 recordCount = 0;
 
+            //找不到对应的表格
             var grid = GetGrid(rqParam);
             if (grid == null)
             {
                 rspParam.OpResult = false;
-                rspParam.Message = StrResourceManager.Current.GetString("ConfigError");
+                rspParam.Message = StrResourceManager.Current.GetString("ConfigError", Helper.RESOURCE_NS);
                 return;
             }
 
-            var exportCols = grid.Columns;
-            LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, rqParam.ExportDataType == "1");
+            //到处列为空
+            var exportCols = grid.Columns.Where(it => it.Export);
+            if (exportCols == null && exportCols.Count() == 0)
+            {
+                rspParam.OpResult = false;
+                rspParam.Message = StrResourceManager.Current.GetString("NoExportColumn", Helper.RESOURCE_NS);
+                return;
+            }
+            var fieldNameList = new List<String>();
+            foreach (var col in exportCols)
+            {
+                fieldNameList.Add(GetFieldName(col.Config));
+            }
+            var newSql = $"select {MyEnumerable.JoinEx(fieldNameList, ",")} from ({grid.SQL})";
+            LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, rqParam.ExportDataType == "1", newSql);
+            //查询无数据
             if (table == null)
             {
                 rspParam.OpResult = false;
-                rspParam.Message = StrResourceManager.Current.GetString("NoData");
+                rspParam.Message = StrResourceManager.Current.GetString("NoData", Helper.RESOURCE_NS);
                 return;
             }
             var excel = new ExcelWrapper(fileFullPath);
             excel.SetSheetData(table);
             excel.Save();
-            rspParam.OpData = MyString.RightOf(fileFullPath, rqParam.Context.Server.MapPath("~"));
-            rspParam.OpResult = true;
+            if (rqParam.FileDownloadType == "1")
+            {
+                rspParam.OpData = MyString.RightOf(fileFullPath, rqParam.Context.Server.MapPath("~"));
+                rspParam.OpResult = true;
+            }
+            else
+            {
+                MyWebUtility.WriteFileToClient(rqParam.Context, fileFullPath);
+            }
+        }
+
+        /// <summary>
+        /// 根据配置的json字符串，获取fieldname值
+        /// 例如：{field:"name",title:"姓名"}，返回name值
+        /// </summary>
+        /// <param name="colConfigString"></param>
+        /// <returns></returns>
+        protected String GetFieldName(String colConfigString)
+        {
+            var reader = new JsonPropertyReader(colConfigString);
+            String field = String.Empty;
+            if (reader.Read().TryGetValue("field", out field))
+            {
+                //去掉单引号或者是双引号
+                field.Substring(1, field.Length - 1);
+            }
+            return field;
         }
 
         /// <summary>
@@ -127,25 +167,28 @@ namespace Mini.Framework.Datagrid
         /// <param name="recordCount"></param>
         /// <param name="table"></param>
         /// <param name="loadAllData"></param>
+        /// <param name="querySql">查询语句，如果指定了，则使用这个指定的sql，否则就直接用datagrid配置的sql</param>
         /// <returns></returns>
-        protected void LoadDataTable(RequestParam rqParam, ref ExecResult rspParam, ref Int32 recordCount, ref DataTable table, Boolean loadAllData = true)
+        protected void LoadDataTable(RequestParam rqParam, ref ExecResult rspParam, ref Int32 recordCount, ref DataTable table, Boolean loadAllData = true, String querySql = "")
         {
             table = null;
             recordCount = 0;
             var grid = GetGrid(rqParam);
             if (grid == null) return;
+            if (String.IsNullOrWhiteSpace(querySql))
+                querySql = grid.SQL;
             var db = Helper.CreateDBObj();
             using (var ctx = db.BeginExecuteContext())
             {
                 if (!loadAllData && rqParam.PageNumber > 0 && rqParam.PageSize > 0)
                 {
-                    table = ctx.GetDataTableBySqlTemplate(grid.SQL, rqParam.PageSize, rqParam.PageNumber, rqParam.QueryParamList);
+                    table = ctx.GetDataTableBySqlTemplate(querySql, rqParam.PageSize, rqParam.PageNumber, rqParam.QueryParamList);
                 }
                 else
                 {
-                    table = ctx.GetDataTableBySqlTemplate(grid.SQL, rqParam.QueryParamList);
+                    table = ctx.GetDataTableBySqlTemplate(querySql, rqParam.QueryParamList);
                 }
-                recordCount = ctx.GetRecordCountBySqlTemplate(grid.SQL, rqParam.QueryParamList);
+                recordCount = ctx.GetRecordCountBySqlTemplate(querySql, rqParam.QueryParamList);
             }
         }
 

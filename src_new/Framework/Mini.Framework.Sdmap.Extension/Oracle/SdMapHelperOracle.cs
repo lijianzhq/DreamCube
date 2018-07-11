@@ -41,7 +41,9 @@ namespace Mini.Framework.Sdmap.Extension.Oracle
             SdMapHelper.EmitSql(ctx, newSql, inputParamList, out sql, out dbParams);
 
             dbParams.AddRange(pageDBParam);
-            return ctx.GetDataTable(sql, dbParams.ToArray(), commandType);
+            var tb = ctx.GetDataTable(sql, dbParams.ToArray(), commandType);
+            if (tb != null) tb.Columns.Remove("rn");
+            return tb;
         }
 
         public static Int32 GetRecordCountBySqlTemplate(this IExecute ctx, String commandTextTemplate, IList<QueryParam> inputParamList, CommandType commandType = CommandType.Text)

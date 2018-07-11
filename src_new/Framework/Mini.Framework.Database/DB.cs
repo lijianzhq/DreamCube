@@ -18,9 +18,14 @@ namespace Mini.Framework.Database
             this._characterProvider = characterProvider;
         }
 
-        public virtual IExecute BeginExecuteContext()
+        /// <summary>
+        /// 打开上下文是否只是读操作（仅仅是select操作），如果是，则内部不会启用事务执行，提高效率。
+        /// </summary>
+        /// <param name="justSelect"></param>
+        /// <returns></returns>
+        public virtual IExecute BeginExecuteContext(Boolean justSelect = false)
         {
-            return new ExecuteContext(this);
+            return new ExecuteContext(this, justSelect);
         }
 
         /// <summary>
@@ -48,7 +53,7 @@ namespace Mini.Framework.Database
             DbCommand command = this.DbProviderFactory.CreateCommand();
             command.CommandText = commandText;
             command.CommandType = commandType;
-            if(dbParams!=null)
+            if (dbParams != null)
             {
                 foreach (var p in dbParams)
                     command.Parameters.Add(p);

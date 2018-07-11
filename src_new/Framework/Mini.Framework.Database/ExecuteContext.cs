@@ -12,12 +12,14 @@ namespace Mini.Framework.Database
         protected DB _db = null;
         protected DbConnection _connection = null;
         protected DbTransaction _trans = null;
+        protected Boolean _justSelect = true;
 
         public DB DB => _db;
 
-        public ExecuteContext(DB db)
+        public ExecuteContext(DB db, Boolean justSelect = false)
         {
             this._db = db;
+            this._justSelect = justSelect;
         }
 
         ~ExecuteContext()
@@ -37,7 +39,7 @@ namespace Mini.Framework.Database
             {
                 if (_connection != null)
                 {
-                    if (_connection.State == ConnectionState.Open)
+                    if (_trans != null && _connection.State == ConnectionState.Open)
                         _trans.Commit();
                     _connection.Dispose();
                 }
@@ -46,13 +48,13 @@ namespace Mini.Framework.Database
 
         public virtual void Commit()
         {
-            if (_connection != null && _connection.State == ConnectionState.Open)
+            if (_trans != null && _connection != null && _connection.State == ConnectionState.Open)
                 _trans.Commit();
         }
 
         public virtual void Rollback()
         {
-            if (_connection != null && _connection.State == ConnectionState.Open)
+            if (_trans != null && _connection != null && _connection.State == ConnectionState.Open)
                 _trans.Rollback();
         }
 
@@ -102,7 +104,8 @@ namespace Mini.Framework.Database
             if (_connection == null)
             {
                 _connection = _db.GetConnection(true);
-                _trans = _connection.BeginTransaction();
+                if (!_justSelect)
+                    _trans = _connection.BeginTransaction();
             }
             command.Connection = _connection;
             command.Transaction = _trans;

@@ -152,10 +152,19 @@ namespace Mini.Framework.Datagrid
         {
             var reader = new JsonPropertyReader(colConfigString);
             String field = String.Empty;
-            if (reader.Read().TryGetValue("field", out field))
+            var dic = reader.Read();
+            if (dic.TryGetValue("field", out field))
             {
                 //去掉单引号或者是双引号
-                field.Substring(1, field.Length - 1);
+                field = field.Substring(1, field.Length - 2);
+                //然后重命名列名
+                String title = String.Empty;
+                dic.TryGetValue("title", out title);
+                if (!String.IsNullOrEmpty(title))
+                {
+                    title = title.Substring(1, title.Length - 2);
+                    field = $"{field} as {title}";
+                }
             }
             return field;
         }
@@ -178,7 +187,7 @@ namespace Mini.Framework.Datagrid
             if (String.IsNullOrWhiteSpace(querySql))
                 querySql = grid.SQL;
             var db = Helper.CreateDBObj();
-            using (var ctx = db.BeginExecuteContext())
+            using (var ctx = db.BeginExecuteContext(true))
             {
                 if (!loadAllData && rqParam.PageNumber > 0 && rqParam.PageSize > 0)
                 {
@@ -231,7 +240,7 @@ namespace Mini.Framework.Datagrid
 
             var db = Helper.CreateDBObj();
             DataTable table = null;
-            using (var ctx = db.BeginExecuteContext())
+            using (var ctx = db.BeginExecuteContext(true))
             {
                 table = ctx.GetDataTableBySqlTemplate(sql, rqParam.QueryParamList);
             }

@@ -9,16 +9,6 @@ namespace Mini.Framework.Datagrid
 {
     public static class Helper
     {
-        static AssemblyConfiger _asmConfiger = null;
-        internal static AssemblyConfiger AsmConfiger
-        {
-            get
-            {
-                if (_asmConfiger == null) _asmConfiger = new AssemblyConfiger();
-                return _asmConfiger;
-            }
-        }
-
         static IDBConnectionProvider _connectionProvider = null;
         internal static IDBConnectionProvider ConnectionProvider
         {
@@ -47,7 +37,7 @@ namespace Mini.Framework.Datagrid
 
         internal static T CreateInstance<T>(String appSettingKey)
         {
-            var typeName = AsmConfiger.ConfigFileReader.AppSettings(appSettingKey);
+            var typeName = AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings(appSettingKey);
             if (!String.IsNullOrEmpty(typeName))
             {
                 var type = Type.GetType(typeName);

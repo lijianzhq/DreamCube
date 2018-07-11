@@ -1,0 +1,118 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <!--判定用户的角色名称-->
+  <add key="judgeUserRole" value="test1111"></add>
+  <!--各车间的领导角色名称-->
+  <add key="WorkshopBoss" value="wsleader_for_pq"></add>
+  <!--关联速报超时-->
+  <!--<add key="Email_for_RPT_ID_TimeoutRole" value="PQ_Email_for_RPT_ID_Timeout"></add>-->
+  <!--上线该模块的工厂编码，多个工厂编码以逗号隔开-->
+  <add key="SapFactoryCode" value="4070"></add>
+  <!--上线该模块的工厂编码，多个工厂编码以逗号隔开-->
+  <add key="SendRPT_ID_TimeoutEmail_SapFactoryCode" value="4070"></add>
+  <!--title邮件标题-->
+  <!--rolecode_append邮件收件人的角色code，直接追加到收件人队列中；多个角色名以逗号隔开-->
+  <!--rolecode_choose邮件收件人的角色code，收件人队列为空时，才把该角色指定的人加到收件人队列中；多个角色名以逗号隔开-->
+  <!--content邮件内容-->
+
+  <!--待判定的邮件通知-->
+  <add key="email_for_pd">
+    <![CDATA[
+    <email>
+      <title>不合格品申请待判定通知</title>
+      <rolecode_append></rolecode_append>
+      <rolecode_choose></rolecode_choose>
+      <content>
+      <![CDATA[
+您有以下待判定任务：{newLine}{content}{newLine}{newLine}
+【{Datetime,yyyy-MM-dd HH:mm:ss}】{newLine}如果已判定，请忽略此邮件！
+      ]]]]><![CDATA[>
+      </content>
+    </email>
+    ]]>
+  </add>
+  <add key="email_for_pd_contentItem">（{0}）存放位置：[{1}]，单据数：[{2}]单。</add>
+
+  <add key="email_for_recy">
+    <![CDATA[
+<email>
+  <title>不合格品待回收通知</title>
+  <rolecode_append>PQ_FAC_RECY</rolecode_append>
+  <rolecode_choose></rolecode_choose>
+  <content>
+  <![CDATA[
+您好！您有以下NG品待回收：{newLine}{content}{newLine}{newLine}
+【{Datetime,yyyy-MM-dd HH:mm:ss}】{newLine}如果已回收，请忽略此邮件！
+  ]]]]><![CDATA[>
+  </content>
+</email>
+    ]]>
+  </add>
+  <add key="email_for_recy_contentItem">（{0}）存放位置：[{1}]，单据数：[{2}]单。</add>
+
+  <add key="email_for_defect_ques">
+    <![CDATA[
+<email>
+  <title>缺陷超时未申请通知</title>
+  <rolecode_append></rolecode_append>
+  <rolecode_choose></rolecode_choose>
+  <content>
+  <![CDATA[
+您好！您所在的车间[{workshop_name}]，有[{count}]个问题点已超过[{days}]天未进行不合格品判定申请，请尽快处理，谢谢！{newLine}{newLine}
+【{Datetime,yyyy-MM-dd HH:mm:ss}】{newLine}如果已处理，请忽略此邮件！
+  ]]]]><![CDATA[>
+  </content>
+</email>
+    ]]>
+  </add>
+
+  <add key="email_for_defect_ques_for_bp">
+    <![CDATA[
+<email>
+  <title>缺陷超时未申请通知</title>
+  <rolecode_append>PQ_BP_defect_ques</rolecode_append>
+  <rolecode_choose></rolecode_choose>
+  <content>
+  <![CDATA[
+您好！[{workshop_name}]车间，有[{count}]个问题点已超过[{days}]天未进行不合格品判定申请，请知悉，谢谢！{newLine}{newLine}
+【{Datetime,yyyy-MM-dd HH:mm:ss}】{newLine}如果已处理，请忽略此邮件！
+  ]]]]><![CDATA[>
+  </content>
+</email>
+    ]]>
+  </add>
+
+  <add key="email_for_RPT_ID_Timeout">
+    <![CDATA[
+<email>
+  <title>不合格品单超时未填写RPT通知</title>
+  <rolecode_append></rolecode_append>
+  <rolecode_choose></rolecode_choose>
+  <content>
+  <![CDATA[
+您好！有[{count}]个不合格品单已超过[{days}]天未填写RPT，请及时处理，谢谢！{newLine}{newLine}
+【{Datetime,yyyy-MM-dd HH:mm:ss}】{newLine}如果已处理，请忽略此邮件！
+  ]]]]><![CDATA[>
+  </content>
+</email>
+    ]]>
+  </add>
+
+  <add key="email_for_RPT_ID_Timeout2">
+    <![CDATA[
+<email>
+  <title>TQMP-您有【{count}】个不合格品单需要维护PIR单号</title>
+  <rolecode_append></rolecode_append>
+  <rolecode_choose></rolecode_choose>
+  <content>
+  <![CDATA[
+您好！您有[<span style='color:red;font-weight:bolder'>{count}</span>]个不合格品单已超过[<span style='color:red;font-weight:bolder'>{days}</span>]天未填写相关PIR单号，请及时登录系统【<a href="http://tqmp.dongfeng-nissan.com">http://tqmp.dongfeng-nissan.com</a>】维护PIR号并提交，否则将影响该条不合格品单的发布。谢谢！{newLine}{newLine}
+不合格品单如下：{newLine}
+{REJ_BILL_CODES}{newLine}{newLine}
+【{Datetime,yyyy-MM-dd HH:mm:ss}】{newLine}如果已处理，请忽略此邮件！
+  ]]]]><![CDATA[>
+  </content>
+</email>
+    ]]>
+  </add>
+</items>

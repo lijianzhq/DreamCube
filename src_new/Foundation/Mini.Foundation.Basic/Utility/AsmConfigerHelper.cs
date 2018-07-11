@@ -1,6 +1,7 @@
 ﻿#if !(NETSTANDARD1_0 || NETSTANDARD1_3 || NETSTANDARD2_0 || NETCOREAPP2_0)
 using System;
 using System.Reflection;
+using System.Collections.Generic;
 
 using Mini.Foundation.Basic.Utility;
 
@@ -10,33 +11,21 @@ namespace Mini.Foundation.Basic.Utility
     /// </summary>
     public static class AsmConfigerHelper
     {
-        //static AssemblyConfiger _asmConfiger = null;
-        //static Object _locker = new Object();
-
-        //internal static AssemblyConfiger AsmConfiger
-        //{
-        //    get
-        //    {
-        //        if (_asmConfiger == null)
-        //        {
-        //            lock (_locker)
-        //            {
-        //                if (_asmConfiger == null)
-        //                    _asmConfiger = new AssemblyConfiger();
-        //            }
-        //        }
-        //        return _asmConfiger;
-        //    }
-        //}
+        static Dictionary<String, AssemblyConfiger> _cache = new Dictionary<String, AssemblyConfiger>();
 
         /// <summary>
-        /// 传入当前的程序集，以获取程序集配置对象
+        /// 获取指定程序集配置对象
         /// </summary>
-        /// <param name="callingAssembly"></param>
+        /// <param name="asm">不传入，默认获取CallingAssembly的配置对象</param>
         /// <returns></returns>
-        public static AssemblyConfiger GetConfiger(Assembly callingAssembly)
+        public static AssemblyConfiger GetConfiger(Assembly asm = null)
         {
-            return new AssemblyConfiger(callingAssembly);
+            if (asm == null) asm = Assembly.GetCallingAssembly();
+            if (!_cache.ContainsKey(asm.FullName))
+            {
+                _cache[asm.FullName] = new AssemblyConfiger(asm);
+            }
+            return _cache[asm.FullName];
         }
     }
 }

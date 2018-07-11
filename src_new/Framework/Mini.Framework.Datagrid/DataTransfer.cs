@@ -13,6 +13,7 @@ using Mini.Foundation.Basic.Utility;
 using Mini.Foundation.Office;
 using Mini.Framework.Sdmap.Extension;
 using Mini.Framework.Sdmap.Extension.Oracle;
+using Mini.Framework.ResourceCommon;
 using Mini.Framework.Database;
 using Mini.Framework.Database.Oracle;
 using Mini.Framework.Database.DefaultProviders;
@@ -88,18 +89,28 @@ namespace Mini.Framework.Datagrid
         /// <param name="rspParam"></param>
         protected void ExportData(RequestParam rqParam, ref ExecResult rspParam)
         {
-            var path = rqParam.Context.Server.MapPath(Helper.AsmConfiger.ConfigFileReader.AppSettings("tempFileCachePath"));
+            var path = rqParam.Context.Server.MapPath(AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings("tempFileCachePath"));
             Directory.CreateDirectory(path);
-            var fileName = $"{DateTime.Now.ToString("yyyyMMddHHmmssffff")}.xlsx";
+            var fileName = $"{Guid.NewGuid().ToString("N")}.xlsx";
 
             var fileFullPath = Path.Combine(path, fileName);
             DataTable table = null;
             Int32 recordCount = 0;
+
+            var grid = GetGrid(rqParam);
+            if (grid == null)
+            {
+                rspParam.OpResult = false;
+                rspParam.Message = StrResourceManager.Current.GetString("ConfigError");
+                return;
+            }
+
+            var exportCols = grid.Columns;
             LoadDataTable(rqParam, ref rspParam, ref recordCount, ref table, rqParam.ExportDataType == "1");
             if (table == null)
             {
                 rspParam.OpResult = false;
-                rspParam.Message = "查询无数据！";
+                rspParam.Message = StrResourceManager.Current.GetString("NoData");
                 return;
             }
             var excel = new ExcelWrapper(fileFullPath);

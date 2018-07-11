@@ -6,6 +6,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 
 using Mini.Foundation.LogService;
 using Mini.Framework.EFCommon;
+using Mini.Foundation.Basic.Utility;
 
 namespace Mini.Framework.WebUploader.DBService
 {
@@ -24,12 +25,12 @@ namespace Mini.Framework.WebUploader.DBService
         {
             modelBuilder.Entity<UploadFile>().Map(it =>
             {
-                it.ToTable(Helper.AsmConfiger.ConfigFileReader.AppSettings("UploadFile_TableName"));
+                it.ToTable(AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings("UploadFile_TableName"));
             });
 
             modelBuilder.Entity<UploadFileOpHistory>().Map(it =>
             {
-                it.ToTable(Helper.AsmConfiger.ConfigFileReader.AppSettings("UploadFileOpHistory_TableName"));
+                it.ToTable(AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings("UploadFileOpHistory_TableName"));
             });
             base.OnModelCreating(modelBuilder);
             base.OnModelCreating(modelBuilder);

@@ -25,10 +25,14 @@
     <None Update="Mini.Framework.Datagrid.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Mini_Resource\cn\emailTemplate(demo).xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Files\" />
+    <Folder Include="Mini_Resource\en\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -39,6 +43,7 @@
     <ProjectReference Include="..\Mini.Framework.Database.Oracle\Mini.Framework.Database.Oracle_LY.csproj" />
     <ProjectReference Include="..\Mini.Framework.Database\Mini.Framework.Database_LY.csproj" />
     <ProjectReference Include="..\Mini.Framework.EFCommon\Mini.Framework.EFCommon_LY.csproj" />
+    <ProjectReference Include="..\Mini.Framework.ResourceCommon\Mini.Framework.ResourceCommon_LY.csproj" />
     <ProjectReference Include="..\Mini.Framework.Sdmap.Extension\Mini.Framework.Sdmap.Extension_LY.csproj" />
     <ProjectReference Include="..\Mini.Framework.Sdmap\Mini.Framework.Sdmap_LY.csproj" />
   </ItemGroup>

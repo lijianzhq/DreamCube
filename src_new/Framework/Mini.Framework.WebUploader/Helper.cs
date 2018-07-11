@@ -13,20 +13,6 @@ namespace Mini.Framework.WebUploader
 {
     static class Helper
     {
-        private static AssemblyConfiger _asmConfiger = null;
-        public static AssemblyConfiger AsmConfiger
-        {
-            get
-            {
-                if (_asmConfiger == null)
-                {
-                    Mini.Foundation.Basic.DllExceptionEvent.ExceptionEvent += DllExceptionEvent_ExceptionEvent; ;
-                    _asmConfiger = new AssemblyConfiger();
-                }
-                return _asmConfiger;
-            }
-        }
-
         private static Boolean DllExceptionEvent_ExceptionEvent(Assembly callingAsembly, Type arg1, Exception arg2)
         {
             if (callingAsembly == typeof(Helper).Assembly)
@@ -92,7 +78,7 @@ namespace Mini.Framework.WebUploader
 
         internal static T CreateInstance<T>(String appSettingKey)
         {
-            var typeName = AsmConfiger.ConfigFileReader.AppSettings(appSettingKey);
+            var typeName = AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings(appSettingKey);
             if (!String.IsNullOrEmpty(typeName))
             {
                 var type = Type.GetType(typeName);

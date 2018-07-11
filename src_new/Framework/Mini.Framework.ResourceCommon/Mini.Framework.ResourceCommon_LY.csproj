@@ -8,7 +8,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Resource\en\" />
+    <Folder Include="Mini_Resource\en\" />
   </ItemGroup>
 
   <ItemGroup>
@@ -20,7 +20,7 @@
     <None Update="Mini.Framework.ResourceCommon.config">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="Resource\cn\emailTemplate%28demo%29.xml">
+    <None Update="Mini_Resource\cn\emailTemplate(demo).xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>

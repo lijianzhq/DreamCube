@@ -12,9 +12,7 @@ namespace Mini.Foundation.Basic.Utility
     /// </summary>
     public class AssemblyConfiger
     {
-        private ConfigFileReader _reader = null;
-
-        public ConfigFileReader ConfigFileReader => _reader;
+        public ConfigFileReader ConfigFileReader { get; protected set; } = null;
 
         public AssemblyConfiger()
         {
@@ -22,7 +20,7 @@ namespace Mini.Foundation.Basic.Utility
             var callingAssembly = Assembly.GetCallingAssembly();
             Uri uri = new Uri(Path.GetDirectoryName(callingAssembly.CodeBase));
             var filePath = Path.Combine(uri.LocalPath, callingAssembly.GetName().Name + ".config");
-            _reader = new ConfigFileReader(filePath, callingAssembly);
+            ConfigFileReader = new ConfigFileReader(filePath, callingAssembly);
         }
 
         internal AssemblyConfiger(Assembly callingAssembly)
@@ -30,7 +28,7 @@ namespace Mini.Foundation.Basic.Utility
             //计算程序集的配置文件路径
             Uri uri = new Uri(Path.GetDirectoryName(callingAssembly.CodeBase));
             var filePath = Path.Combine(uri.LocalPath, callingAssembly.GetName().Name + ".config");
-            _reader = new ConfigFileReader(filePath, callingAssembly);
+            ConfigFileReader = new ConfigFileReader(filePath, callingAssembly);
         }
     }
 }

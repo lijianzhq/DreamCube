@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Data.Common;
 using System.Data.Entity;
+
+using Mini.Foundation.Basic.Utility;
 using Mini.Framework.EFCommon;
 
 namespace Mini.Framework.Datagrid.DBService
@@ -19,12 +21,12 @@ namespace Mini.Framework.Datagrid.DBService
         {
             modelBuilder.Entity<Datagrid>().Map(it =>
             {
-                it.ToTable(Helper.AsmConfiger.ConfigFileReader.AppSettings("Datagrid_TableName"));
+                it.ToTable(AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings("Datagrid_TableName"));
             });
 
             modelBuilder.Entity<DatagridCol>().Map(it =>
             {
-                it.ToTable(Helper.AsmConfiger.ConfigFileReader.AppSettings("DatagridCol_TableName"));
+                it.ToTable(AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings("DatagridCol_TableName"));
             });
             base.OnModelCreating(modelBuilder);
         }

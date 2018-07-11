@@ -62,23 +62,24 @@ namespace Mini.Framework.WebUploader
             }
             using (var fs = GetFileStreamBySavePath(context, fileObj.SavePath))
             {
-                const long ChunkSize = 1024 * 1024;//100K 每次读取文件，只读取100Ｋ，这样可以缓解服务器的压力
-                byte[] buffer = new byte[ChunkSize];
+                //const long ChunkSize = 1024 * 1024;//100K 每次读取文件，只读取100Ｋ，这样可以缓解服务器的压力
+                //byte[] buffer = new byte[ChunkSize];
 
-                context.Response.Clear();
-                context.Response.ContentType = "application/octet-stream";
-                context.Response.AddHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileObj.FileName));
-                Int32 read = 0;
-                do
-                {
-                    read = fs.Read(buffer, 0, Convert.ToInt32(ChunkSize));//读取的大小
-                    if (read > 0 && context.Response.IsClientConnected)
-                    {
-                        context.Response.OutputStream.Write(buffer, 0, read);
-                        context.Response.Flush();
-                    }
-                } while (read > 0 && context.Response.IsClientConnected);
-                context.Response.End();
+                //context.Response.Clear();
+                //context.Response.ContentType = "application/octet-stream";
+                //context.Response.AddHeader("Content-Disposition", "attachment; filename=" + HttpUtility.UrlEncode(fileObj.FileName));
+                //Int32 read = 0;
+                //do
+                //{
+                //    read = fs.Read(buffer, 0, Convert.ToInt32(ChunkSize));//读取的大小
+                //    if (read > 0 && context.Response.IsClientConnected)
+                //    {
+                //        context.Response.OutputStream.Write(buffer, 0, read);
+                //        context.Response.Flush();
+                //    }
+                //} while (read > 0 && context.Response.IsClientConnected);
+                //context.Response.End();
+                MyWebUtility.WriteFileToClient(context, fs, fileObj.FileName);
             }
         }
 

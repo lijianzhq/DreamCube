@@ -1,0 +1,5 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<items>
+  <add key="NoData" value="查询无数据"></add>
+  <add key="ConfigError" value="数据表格未配置，请联系管理员！"></add>
+</items>

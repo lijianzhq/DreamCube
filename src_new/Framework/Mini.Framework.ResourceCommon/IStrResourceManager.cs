@@ -4,6 +4,6 @@ namespace Mini.Framework.ResourceCommon
 {
     public interface IStrResourceManager
     {
-        string GetString(string key);
+        String GetString(String key, String ns = "", String language = "");
     }
 }

@@ -18,7 +18,7 @@ namespace Mini.Foundation.LogService.Logger
             {
 
                 //String cfgFilePath = ConfigurationManager.AppSettings["LogConfigFilePath"];
-                String cfgFilePath = AsmConfigerHelper.AsmConfiger.ConfigFileReader.AppSettings("LogConfigFilePath");
+                String cfgFilePath = AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings("LogConfigFilePath");
                 cfgFilePath = String.IsNullOrEmpty(cfgFilePath) ? @"config\logconfig.xml" : cfgFilePath;
                 String cfgFileFullPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, cfgFilePath);
                 return cfgFileFullPath;

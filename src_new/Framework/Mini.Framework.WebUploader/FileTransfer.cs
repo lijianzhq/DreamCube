@@ -50,7 +50,7 @@ namespace Mini.Framework.WebUploader
                 }
                 else
                 {
-                    savepath = String.IsNullOrWhiteSpace(savepath) ? Helper.AsmConfiger.ConfigFileReader.AppSettings("File_SavePath") : savepath;
+                    savepath = String.IsNullOrWhiteSpace(savepath) ? AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings("File_SavePath") : savepath;
                     var worker = Helper.GetFileWorker(savepath);
                     result = worker.ProcessRequest(savepath, context);
                 }

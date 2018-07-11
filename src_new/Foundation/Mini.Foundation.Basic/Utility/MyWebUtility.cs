@@ -2,6 +2,7 @@
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.IO;
 #if !NETSTANDARD1_0 && !NETSTANDARD1_3
 using System.Web;
 #endif
@@ -100,5 +101,54 @@ namespace Mini.Foundation.Basic.Utility
             if (!HasUrlEncode(value)) return UrlEncode(value);
             return value;
         }
+
+#if !(NETSTANDARD1_0||NETSTANDARD1_3||NETSTANDARD2_0||NETCOREAPP2_0)
+
+        /// <summary>
+        /// 向客户端写出文件流
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="fileFullPath"></param>
+        /// <param name="fileName"></param>
+        public static void WriteFileToClient(HttpContext context, String fileFullPath, String fileName = "")
+        {
+            if (MyString.IsInvisibleString(fileName))
+                fileName = Path.GetFileName(fileName);
+            using (var fs = File.OpenRead(fileFullPath))
+            {
+                WriteFileToClient(context, fs, fileName);
+            }
+        }
+
+        /// <summary>
+        /// 向客户端写出文件流
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="fs"></param>
+        /// <param name="fileName"></param>
+        public static void WriteFileToClient(HttpContext context, Stream fs, String fileName)
+        {
+            const long ChunkSize = 1024 * 1024;//100K 每次读取文件，只读取100Ｋ，这样可以缓解服务器的压力
+            byte[] buffer = new byte[ChunkSize];
+
+            if (!HasUrlEncode(fileName))
+                fileName = HttpUtility.UrlEncode(fileName);
+            context.Response.Clear();
+            context.Response.ContentType = "application/octet-stream";
+            context.Response.AddHeader("Content-Disposition", "attachment; filename=" + fileName);
+            Int32 read = 0;
+            do
+            {
+                read = fs.Read(buffer, 0, Convert.ToInt32(ChunkSize));//读取的大小
+                if (read > 0 && context.Response.IsClientConnected)
+                {
+                    context.Response.OutputStream.Write(buffer, 0, read);
+                    context.Response.Flush();
+                }
+            } while (read > 0 && context.Response.IsClientConnected);
+            context.Response.End();
+        }
+#endif
+
     }
 }

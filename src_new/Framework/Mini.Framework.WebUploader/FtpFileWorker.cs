@@ -44,7 +44,7 @@ namespace Mini.Framework.WebUploader
             result.Chunked = rqParam.chunks > 0;
             if (result.Chunked) //如果是分片，则先在缓存目录缓存下来
             {
-                var cacheSavePath = Helper.AsmConfiger.ConfigFileReader.AppSettings("CachePath");
+                var cacheSavePath = AsmConfigerHelper.GetConfiger().ConfigFileReader.AppSettings("CachePath");
                 return Helper.GetFileWorker(cacheSavePath).ProcessRequest(cacheSavePath, context);
             }
             else

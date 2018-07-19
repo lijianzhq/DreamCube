@@ -1,3 +1,0 @@
-﻿默认读取日志配置文件路径是：~\config\logconfig.xml
-用户可以通过以下方式重新指定读取路径：
-在app.config或者web.config文件的appsetting节点中增加项LogConfigFilePath（注意：是相对程序运行的路径）

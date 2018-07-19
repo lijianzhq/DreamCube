@@ -1,5 +1,0 @@
-﻿<?xml version="1.0" encoding="utf-8" ?>
-<items>
-  <!--判定用户的角色名称-->
-  <add key="judgeUserRole" value="1111"></add>
-</items>

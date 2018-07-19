@@ -1,6 +1,0 @@
-﻿add by jianl
-
-Json.NET git上面的Json100r1版本的源码重新编译的（没有修改任何的代码），
-
-http://www.newtonsoft.com/json
-https://github.com/JamesNK/Newtonsoft.Json

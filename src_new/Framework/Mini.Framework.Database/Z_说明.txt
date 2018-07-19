@@ -1,3 +1,0 @@
-﻿最基础的数据库访问代码封装。
-
-调用案例可以参考：Mini.Framework.Database.Test
